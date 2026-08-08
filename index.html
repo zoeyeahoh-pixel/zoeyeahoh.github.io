@@ -3,24 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YANG Yanyu (Zoe) | Portfolio</title>
+    <title>YANG Yanyu (Zoe) | Journal Portfolio</title>
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
-            --panel-bg: rgba(30, 41, 59, 0.7);
-            --panel-border: rgba(255, 255, 255, 0.12);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-glow: #6366f1;
-            --accent-cyan: #38bdf8;
-            --card-shadow: 
-                8px 8px 16px rgba(0, 0, 0, 0.4),
-                -4px -4px 12px rgba(255, 255, 255, 0.03),
-                inset 1px 1px 1px rgba(255, 255, 255, 0.1);
-            --card-shadow-hover: 
-                12px 12px 24px rgba(0, 0, 0, 0.5),
-                -6px -6px 16px rgba(255, 255, 255, 0.05),
-                inset 1px 1px 2px rgba(255, 255, 255, 0.2);
+            --bg-color: #f3ece1;
+            --binder-red: #a8242d;
+            --binder-clasp: #851a22;
+            --paper-bg: #fdfbf7;
+            --text-dark: #2d2623;
+            --text-muted: #6b5f57;
+            --accent-red: #a8242d;
+            --sticky-yellow: #fff4b8;
+            --tape-pink: rgba(244, 166, 172, 0.65);
+            --tape-blue: rgba(162, 210, 255, 0.65);
+            --shadow-soft: 0 12px 35px rgba(0, 0, 0, 0.15);
         }
 
         * {
@@ -30,435 +26,620 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: var(--bg-gradient);
-            background-attachment: fixed;
-            color: var(--text-primary);
-            line-height: 1.6;
-            padding: 3rem 1rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(#d3c5b4 1.2px, transparent 1.2px);
+            background-size: 24px 24px;
+            color: var(--text-dark);
             min-height: 100vh;
+            padding: 1.5rem 1rem 3rem 1rem;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
+        /* Top Navigation Bar */
+        nav {
+            max-width: 960px;
+            margin: 0 auto 2rem auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
         }
 
-        /* 3D Glassmorphism Panel */
-        .card-3d {
-            background: var(--panel-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--panel-border);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--card-shadow);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateY(0);
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-red);
+            letter-spacing: -0.5px;
         }
 
-        .card-3d:hover {
-            transform: translateY(-4px) scale(1.005);
-            box-shadow: var(--card-shadow-hover);
-            border-color: rgba(99, 102, 241, 0.4);
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
         }
 
-        /* Header / About Section */
-        header.card-3d {
-            text-align: center;
-            padding: 3rem 2rem;
+        .nav-item {
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
             position: relative;
+            padding-bottom: 4px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--accent-red);
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-red);
+            border-radius: 2px;
+        }
+
+        /* Main Binder Container */
+        .binder-wrapper {
+            max-width: 980px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .binder-outer {
+            background: var(--binder-red);
+            border-radius: 28px;
+            padding: 2rem 2.2rem;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.22), inset 0 2px 6px rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        /* Binder Clasp on Right */
+        .binder-clasp {
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 55px;
+            height: 80px;
+            background: var(--binder-clasp);
+            border-radius: 0 16px 16px 0;
+            box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .clasp-button {
+            width: 32px;
+            height: 32px;
+            background: #f1ddb6;
+            border-radius: 50%;
+            border: 2px solid #b89868;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: #634b22;
+        }
+
+        /* Open Journal Inner Pages */
+        .journal-pages {
+            background: var(--paper-bg);
+            border-radius: 16px;
+            display: flex;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.06), 0 8px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+            min-height: 580px;
             overflow: hidden;
         }
 
-        header::before {
-            content: '';
+        /* Center Rings binding the pages */
+        .ring-binder-spine {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
-            pointer-events: none;
-        }
-
-        .avatar-3d {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 1.5rem auto;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-glow), var(--accent-cyan));
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 30px;
+            transform: translateX(-50%);
             display: flex;
+            flex-direction: column;
+            justify-content: space-around;
             align-items: center;
-            justify-content: center;
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: #ffffff;
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3), inset -2px -2px 6px rgba(0,0,0,0.3);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 20px 0;
+            z-index: 10;
         }
 
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            background: linear-gradient(to right, #ffffff, #cbd5e1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
+        .ring {
+            width: 36px;
+            height: 12px;
+            background: linear-gradient(180deg, #e0e0e0 0%, #ffffff 40%, #9e9e9e 100%);
+            border-radius: 6px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
         }
 
-        .subtitle {
-            color: var(--accent-cyan);
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
+        /* Left and Right Page Layout */
+        .page {
+            flex: 1;
+            padding: 2.2rem;
+            width: 50%;
         }
 
-        .bio {
-            color: var(--text-secondary);
-            max-width: 650px;
-            margin: 0 auto;
-            font-size: 0.98rem;
+        .page-left {
+            border-right: 1px solid #eae3d2;
+            padding-right: 2.5rem;
+            background-image: linear-gradient(to right, rgba(0,0,0,0.02), transparent 15%);
         }
 
-        /* Section Titles */
-        h2 {
-            font-size: 1.4rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--text-primary);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 0.75rem;
+        .page-right {
+            padding-left: 2.5rem;
+            background-image: linear-gradient(to left, rgba(0,0,0,0.02), transparent 15%);
         }
 
-        h2::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 18px;
-            background: linear-gradient(to bottom, var(--accent-glow), var(--accent-cyan));
-            border-radius: 4px;
-            box-shadow: 0 0 8px var(--accent-glow);
-        }
-
-        /* Timeline & Item Cards */
-        .item {
-            margin-bottom: 1.5rem;
-        }
-
-        .item:last-child {
-            margin-bottom: 0;
-        }
-
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
-            margin-bottom: 0.25rem;
-        }
-
-        .item-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #f1f5f9;
-        }
-
-        .item-subtitle {
-            font-size: 0.95rem;
-            color: var(--accent-cyan);
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .item-date {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            background: rgba(255, 255, 255, 0.05);
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        ul.bullets {
-            list-style-type: none;
-            padding-left: 0;
-        }
-
-        ul.bullets li {
+        /* Left Page Stickers & Elements */
+        .polaroid-card {
+            background: #ffffff;
+            padding: 12px 12px 20px 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+            transform: rotate(-3deg);
+            width: 210px;
+            margin: 0 auto 1.8rem auto;
             position: relative;
-            padding-left: 1.25rem;
-            color: var(--text-secondary);
-            font-size: 0.93rem;
-            margin-bottom: 0.4rem;
+            border-radius: 2px;
         }
 
-        ul.bullets li::before {
-            content: '•';
+        .washi-tape {
             position: absolute;
-            left: 0;
-            color: var(--accent-glow);
-            font-size: 1.2rem;
-            line-height: 1;
+            top: -10px;
+            left: 30%;
+            width: 70px;
+            height: 22px;
+            background: var(--tape-pink);
+            transform: rotate(-4deg);
+            opacity: 0.85;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        /* Tags / Pills for Skills & Interests */
-        .tags-group {
-            margin-bottom: 1rem;
-        }
-
-        .tags-group-title {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #e2e8f0;
-            margin-bottom: 0.5rem;
-        }
-
-        .tag-container {
+        .polaroid-img {
+            width: 100%;
+            height: 160px;
+            background: #2a3439;
+            border-radius: 2px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-        }
-
-        .tag {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #cbd5e1;
-            padding: 0.4rem 0.8rem;
-            border-radius: 8px;
-            font-size: 0.88rem;
-            box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.05), 2px 2px 4px rgba(0,0,0,0.2);
-            transition: all 0.2s ease;
-        }
-
-        .tag:hover {
-            border-color: var(--accent-glow);
-            color: #ffffff;
-            transform: translateY(-2px);
-        }
-
-        /* Buttons & Contact Section */
-        .contact-links {
-            display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 1.2rem;
-            flex-wrap: wrap;
+            color: #ffffff;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .polaroid-caption {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            font-family: cursive, sans-serif;
+        }
+
+        /* Sticky Note Element */
+        .sticky-note {
+            background: var(--sticky-yellow);
+            padding: 1.2rem;
+            border-radius: 2px;
+            box-shadow: 4px 6px 14px rgba(0, 0, 0, 0.1);
+            transform: rotate(2deg);
+            position: relative;
             margin-top: 1rem;
         }
 
-        .btn-3d {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border-radius: 10px;
+        .push-pin {
+            position: absolute;
+            top: -8px;
+            right: 15px;
+            width: 16px;
+            height: 16px;
+            background: #d9383a;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .sticky-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--accent-red);
+            margin-bottom: 0.6rem;
+            border-bottom: 1px stroke rgba(0,0,0,0.1);
+        }
+
+        .sticky-info {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #4a4035;
+        }
+
+        .sticky-info div {
+            margin-bottom: 0.3rem;
+        }
+
+        /* Pill Contact Buttons */
+        .pill-buttons {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pill-btn {
+            background: #ffffff;
+            border: 1.5px solid var(--accent-red);
+            color: var(--accent-red);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 700;
             text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #ffffff;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.8), rgba(56, 189, 248, 0.8));
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.06);
             transition: all 0.2s ease;
         }
 
-        .btn-3d:hover {
+        .pill-btn:hover {
+            background: var(--accent-red);
+            color: #ffffff;
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.6);
-            opacity: 0.95;
         }
 
-        footer {
-            text-align: center;
-            color: var(--text-secondary);
+        /* Right Page Content Styles */
+        .greeting-badge {
+            display: inline-block;
+            background: var(--accent-red);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 1.1rem;
+            padding: 0.4rem 1.2rem;
+            border-radius: 12px;
+            box-shadow: 2px 4px 8px rgba(168, 36, 45, 0.3);
+            margin-bottom: 1.2rem;
+            transform: rotate(-1deg);
+        }
+
+        .section-panel {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out forwards;
+        }
+
+        .section-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            color: var(--accent-red);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 2px dotted #e2d9c8;
+            padding-bottom: 0.4rem;
+        }
+
+        .paragraph-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .entry-block {
+            margin-bottom: 1.2rem;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-red);
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .entry-subheader {
             font-size: 0.85rem;
-            margin-top: 2rem;
+            color: var(--accent-red);
+            font-weight: 600;
+            margin-bottom: 0.4rem;
         }
 
-        @media (max-width: 640px) {
-            body { padding: 1.5rem 0.75rem; }
-            .card-3d { padding: 1.5rem; }
-            .item-header { flex-direction: column; gap: 0.2rem; }
+        .entry-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .sticker-tag {
+            background: #ffffff;
+            border: 1px solid #e0d5c1;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            box-shadow: 1px 2px 4px rgba(0,0,0,0.04);
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 820px) {
+            .journal-pages {
+                flex-direction: column;
+            }
+            .page {
+                width: 100%;
+                padding: 1.5rem;
+            }
+            .page-left {
+                border-right: none;
+                border-bottom: 1px solid #eae3d2;
+            }
+            .ring-binder-spine {
+                display: none;
+            }
+            .binder-clasp {
+                display: none;
+            }
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        
-        <!-- 1. ABOUT SECTION -->
-        <header class="card-3d">
-            <div class="avatar-3d">ZY</div>
-            <h1>YANG Yanyu (Zoe)</h1>
-            <div class="subtitle">Master in Translation & Localization Specialist</div>
-            <p class="bio">
-                Passionate localization enthusiast with practical experience across marketing, media, and digital content[cite: 1]. Skilled in English-Chinese translation, interpretation, and cross-cultural product adaptation[cite: 1].
-            </p>
-        </header>
 
-        <!-- 2. EDUCATION SECTION -->
-        <section class="card-3d">
-            <h2>Education</h2>
-            <div class="item">
-                <div class="item-header">
-                    <span class="item-title">The University of Hong Kong</span>
-                    <span class="item-date">Sept. 2025 – Nov. 2026</span>
-                </div>
-                <div class="item-subtitle">Master in the Field of Translation (GPA: 3.43/4.3)</div>
-                <ul class="bullets">
-                    <li>Coursework: Financial Translation, Mass Media Translation, Introduction to Interpreting, Government & Commercial Texts, Legal Translation[cite: 1].</li>
-                </ul>
-            </div>
-            <div class="item">
-                <div class="item-header">
-                    <span class="item-title">City University of Macau</span>
-                    <span class="item-date">Sept. 2021 – Jun. 2025</span>
-                </div>
-                <div class="item-subtitle">Bachelor of English (GPA: 3.82/4.0)</div>
-                <ul class="bullets">
-                    <li>Coursework: Consecutive & Simultaneous Interpretation (EN/ZH), Translation Theory, Translation Criticism, News Translation[cite: 1].</li>
-                </ul>
-            </div>
-        </section>
+    <!-- Header Navigation -->
+    <nav>
+        <div class="nav-logo">Yanyu ZOE</div>
+        <ul class="nav-links">
+            <li class="nav-item active" onclick="switchTab('about', this)">About</li>
+            <li class="nav-item" onclick="switchTab('education', this)">Education</li>
+            <li class="nav-item" onclick="switchTab('experience', this)">Experience</li>
+            <li class="nav-item" onclick="switchTab('awards', this)">Awards</li>
+            <li class="nav-item" onclick="switchTab('skills', this)">Skills</li>
+        </ul>
+    </nav>
 
-        <!-- 3. EXPERIENCE SECTION -->
-        <section class="card-3d">
-            <h2>Experience</h2>
-            <div class="item">
-                <div class="item-header">
-                    <span class="item-title">Smith & Associates</span>
-                    <span class="item-date">Jun. 2026 – Present</span>
+    <!-- Main Notebook Container -->
+    <div class="binder-wrapper">
+        <div class="binder-outer">
+            
+            <div class="journal-pages">
+                <!-- Center Metal Rings -->
+                <div class="ring-binder-spine">
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="ring"></div>
                 </div>
-                <div class="item-subtitle">Marketing Intern (Hong Kong)</div>
-                <ul class="bullets">
-                    <li>Translated and localized over 50 marketing assets, including brochures, newsletters, and presentations[cite: 1].</li>
-                    <li>Maintained company website by translating 20+ press releases and market insights[cite: 1].</li>
-                    <li>Assisted integrated marketing campaigns across multi-digital channels[cite: 1].</li>
-                </ul>
-            </div>
-            <div class="item">
-                <div class="item-header">
-                    <span class="item-title">MAIYA MEDIA</span>
-                    <span class="item-date">Jan. 2025 – May 2025</span>
-                </div>
-                <div class="item-subtitle">Translation Intern (Hangzhou)</div>
-                <ul class="bullets">
-                    <li>Completed translation for 50+ short dramas across modern, historical, and urban genres (900+ episodes total)[cite: 1].</li>
-                    <li>Proofread, polished, and reviewed dialogue translations and dubbing for 360+ episodes[cite: 1].</li>
-                </ul>
-            </div>
-            <div class="item">
-                <div class="item-header">
-                    <span class="item-title">Rector's Office, City University of Macau</span>
-                    <span class="item-date">Nov. 2023 – Dec. 2024</span>
-                </div>
-                <div class="item-subtitle">Student Ambassador (Copywriting)</div>
-                <ul class="bullets">
-                    <li>Drafted and translated bilingual content for the university website, including news articles and higher education documents[cite: 1].</li>
-                    <li>Supported event coordination for orientations, lectures, and official ceremonies[cite: 1].</li>
-                </ul>
-            </div>
-            <div class="item">
-                <div class="item-header">
-                    <span class="item-title">Zhejiang Yinqingli Co., Ltd.</span>
-                    <span class="item-date">Jun. 2024 – Aug. 2024</span>
-                </div>
-                <div class="item-subtitle">Intern</div>
-                <ul class="bullets">
-                    <li>Produced press releases and digital content for 10+ companies; translated 30+ manuscripts for official website backend[cite: 1].</li>
-                </ul>
-            </div>
-            <div class="item">
-                <div class="item-header">
-                    <span class="item-title">Hangzhou Connect Fun Technology Co., Ltd.</span>
-                    <span class="item-date">Jun. 2023 – Jul. 2023</span>
-                </div>
-                <div class="item-subtitle">Internship Team Leader</div>
-                <ul class="bullets">
-                    <li>Collaborated with UI/IT teams to modify English copywriting for an app launched on Google Play and Apple Store[cite: 1].</li>
-                </ul>
-            </div>
-        </section>
 
-        <!-- 4. EXTRACURRICULAR & AWARDS -->
-        <section class="card-3d">
-            <h2>Extracurricular & Awards</h2>
-            <div class="item">
-                <div class="item-title" style="margin-bottom: 0.5rem;">Honors & Competitions</div>
-                <ul class="bullets">
-                    <li>Third Prize (EN-ZH & ZH-EN) – 3rd China Young Translators' Contest (2024)[cite: 1]</li>
-                    <li>Third Prize – 2023 National News Translation and Editing Competition (2024)[cite: 1]</li>
-                    <li>National Third Prize – 2023 National English Translation Competition for College Students (2023)[cite: 1]</li>
-                    <li>Honorable Mention – Macao-wide English Essay Competition (2022, 2023)[cite: 1]</li>
-                    <li>Honorable Mention – 2022 "FLTRP ETIC CUP" English Writing Contest (2023)[cite: 1]</li>
-                </ul>
-            </div>
-            <div class="item" style="margin-top: 1rem;">
-                <div class="item-header">
-                    <span class="item-title">City University of Macau</span>
-                    <span class="item-date">Nov. 2021 – Dec. 2022</span>
-                </div>
-                <div class="item-subtitle">Student Assistant</div>
-                <p style="color: var(--text-secondary); font-size: 0.93rem;">Organized teaching materials, managed classroom logistics, and supported assessment feedback processes[cite: 1].</p>
-            </div>
-        </section>
+                <!-- LEFT PAGE: Fixed Profile & Quick Facts -->
+                <div class="page page-left">
+                    <div class="polaroid-card">
+                        <div class="washi-tape"></div>
+                        <div class="polaroid-img">ZY</div>
+                        <div class="polaroid-caption">days @ HKU 🎓</div>
+                    </div>
 
-        <!-- 5. INTERESTS & SKILLS SECTION -->
-        <section class="card-3d">
-            <h2>Interests & Skills</h2>
-            <div class="tags-group">
-                <div class="tags-group-title">Languages</div>
-                <div class="tag-container">
-                    <span class="tag">Mandarin (Native)</span>
-                    <span class="tag">English (Advanced / IELTS 7.0)</span>
-                    <span class="tag">Cantonese (Conversational)</span>
-                </div>
-            </div>
-            <div class="tags-group">
-                <div class="tags-group-title">Certification & Focus</div>
-                <div class="tag-container">
-                    <span class="tag">Business English Translation Test (Elementary)</span>
-                    <span class="tag">Localization</span>
-                    <span class="tag">Copywriting</span>
-                    <span class="tag">Interpretation</span>
-                </div>
-            </div>
-            <div class="tags-group">
-                <div class="tags-group-title">IT & Software Skills</div>
-                <div class="tag-container">
-                    <span class="tag">Microsoft Office</span>
-                    <span class="tag">Canva</span>
-                    <span class="tag">Photoshop</span>
-                    <span class="tag">Aegisub</span>
-                </div>
-            </div>
-        </section>
+                    <div class="sticky-note">
+                        <div class="push-pin"></div>
+                        <div class="sticky-title">Quick Facts · 小档案</div>
+                        <div class="sticky-info">
+                            <div>🎓 <b>MA in Translation</b> @ HKU</div>
+                            <div>🗣️ <b>Mandarin</b> · <b>English</b> · <b>Cantonese</b></div>
+                            <div>📍 <b>Hong Kong</b> / <b>Macao</b></div>
+                            <div>✉️ <b>zoeyeahoh@gmail.com</b></div>
+                        </div>
+                    </div>
 
-        <!-- 6. CONTACT SECTION -->
-        <section class="card-3d" style="text-align: center;">
-            <h2>Contact</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
-                Feel free to reach out for opportunities, collaborations, or localization inquiries[cite: 1].
-            </p>
-            <div class="contact-links">
-                <a href="mailto:zoeyeahoh@gmail.com" class="btn-3d">
-                    ✉ Email Me
-                </a>
-                <a href="https://www.linkedin.com/in/yanyu-yang" target="_blank" class="btn-3d">
-                    🔗 LinkedIn Profile
-                </a>
-                <span class="btn-3d" style="cursor: default; background: rgba(255,255,255,0.05);">
-                    📞 (852) 84958875
-                </span>
-            </div>
-        </section>
+                    <div class="pill-buttons">
+                        <a href="mailto:zoeyeahoh@gmail.com" class="pill-btn">Email</a>
+                        <a href="https://www.linkedin.com/in/yanyu-yang" target="_blank" class="pill-btn">LinkedIn</a>
+                        <span class="pill-btn">(852) 84958875</span>
+                    </div>
+                </div>
 
-        <footer>
-            <p>&copy; 2026 YANG Yanyu (Zoe). Built with GitHub Pages.</p>
-        </footer>
+                <!-- RIGHT PAGE: Interactive Content Tabs -->
+                <div class="page page-right">
+                    
+                    <!-- ABOUT TAB -->
+                    <div id="tab-about" class="section-panel active">
+                        <div class="greeting-badge">Hi! I'm Zoe.</div>
+                        <p class="paragraph-text">
+                            I am currently pursuing a <b>Master in the Field of Translation</b> at <b>The University of Hong Kong</b>. My professional focus centers on <b>marketing localization</b>, <b>media translation</b>, and <b>cross-cultural digital content strategy</b>.
+                        </p>
+                        <p class="paragraph-text">
+                            With hands-on internship experience across corporate marketing, short drama subtitle localization, and university news copywriting, I specialize in delivering accurate, culturally engaging, and high-quality bilingual solutions.
+                        </p>
+                    </div>
+
+                    <!-- EDUCATION TAB -->
+                    <div id="tab-education" class="section-panel">
+                        <div class="section-title">🎓 Education</div>
+                        
+                        <div class="entry-block">
+                            <div class="entry-header">
+                                <span>The University of Hong Kong</span>
+                                <span>2025 – 2026</span>
+                            </div>
+                            <div class="entry-subheader">Master in the Field of Translation (GPA: 3.43/4.3)</div>
+                            <div class="entry-desc">
+                                Specializing in <b>Financial Translation</b>, <b>Mass Media Translation</b>, <b>Interpreting</b>, <b>Government & Commercial Texts</b>, and <b>Legal Translation</b>.
+                            </div>
+                        </div>
+
+                        <div class="entry-block">
+                            <div class="entry-header">
+                                <span>City University of Macau</span>
+                                <span>2021 – 2025</span>
+                            </div>
+                            <div class="entry-subheader">Bachelor of English (GPA: 3.82/4.0)</div>
+                            <div class="entry-desc">
+                                Core coursework in <b>Consecutive & Simultaneous Interpretation</b>, <b>Translation Theory</b>, <b>Translation Criticism</b>, and <b>News Translation</b>.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EXPERIENCE TAB -->
+                    <div id="tab-experience" class="section-panel">
+                        <div class="section-title">💼 Work Experience</div>
+                        
+                        <div class="entry-block">
+                            <div class="entry-header">
+                                <span>Smith & Associates</span>
+                                <span>Jun. 2026 – Present</span>
+                            </div>
+                            <div class="entry-subheader">Marketing Intern (Hong Kong)</div>
+                            <div class="entry-desc">
+                                Translated and localized over <b>50 marketing assets</b> and maintained company website with <b>20+ translated press releases</b>.
+                            </div>
+                        </div>
+
+                        <div class="entry-block">
+                            <div class="entry-header">
+                                <span>MAIYA MEDIA</span>
+                                <span>Jan. 2025 – May 2025</span>
+                            </div>
+                            <div class="entry-subheader">Translation Intern (Hangzhou)</div>
+                            <div class="entry-desc">
+                                Delivered <b>900+ episodes</b> of short drama localization across genres, proofreading dialogue and dubbing for <b>360+ episodes</b>.
+                            </div>
+                        </div>
+
+                        <div class="entry-block">
+                            <div class="entry-header">
+                                <span>Rector's Office, CityU Macau</span>
+                                <span>2023 – 2024</span>
+                            </div>
+                            <div class="entry-subheader">Student Ambassador (Copywriting)</div>
+                            <div class="entry-desc">
+                                Drafted bilingual news articles and higher education documents for the official university platform.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AWARDS TAB -->
+                    <div id="tab-awards" class="section-panel">
+                        <div class="section-title">🏆 Honors & Awards</div>
+                        
+                        <div class="entry-block">
+                            <div class="entry-header">
+                                <span>China Young Translators' Contest</span>
+                                <span>Jun. 2024</span>
+                            </div>
+                            <div class="entry-desc">
+                                Awarded <b>Third Prize</b> in both English-to-Chinese and Chinese-to-English categories.
+                            </div>
+                        </div>
+
+                        <div class="entry-block">
+                            <div class="entry-header">
+                                <span>National News Translation Competition</span>
+                                <span>Mar. 2024</span>
+                            </div>
+                            <div class="entry-desc">
+                                Won <b>Third Prize</b> in the 2023 National News Translation and Editing Competition.
+                            </div>
+                        </div>
+
+                        <div class="entry-block">
+                            <div class="entry-header">
+                                <span>Macao-wide English Essay Competition</span>
+                                <span>2022 – 2023</span>
+                            </div>
+                            <div class="entry-desc">
+                                Received <b>Honorable Mention</b> for two consecutive contest editions.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SKILLS TAB -->
+                    <div id="tab-skills" class="section-panel">
+                        <div class="section-title">🛠️ Skills & Certifications</div>
+                        
+                        <p class="paragraph-text"><b>Language Proficiency</b></p>
+                        <div class="tag-cloud" style="margin-bottom: 1.2rem;">
+                            <span class="sticker-tag">Mandarin (Native)</span>
+                            <span class="sticker-tag">English (IELTS 7.0)</span>
+                            <span class="sticker-tag">Cantonese (Conversational)</span>
+                        </div>
+
+                        <p class="paragraph-text"><b>Professional Qualifications</b></p>
+                        <div class="tag-cloud" style="margin-bottom: 1.2rem;">
+                            <span class="sticker-tag">Business English Translation Test</span>
+                            <span class="sticker-tag">Content Localization</span>
+                        </div>
+
+                        <p class="paragraph-text"><b>Software & Tools</b></p>
+                        <div class="tag-cloud">
+                            <span class="sticker-tag">Microsoft Office</span>
+                            <span class="sticker-tag">Canva</span>
+                            <span class="sticker-tag">Photoshop</span>
+                            <span class="sticker-tag">Aegisub</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Outer Clasp Decorative Detail -->
+            <div class="binder-clasp">
+                <div class="clasp-button">ZOE</div>
+            </div>
+
+        </div>
     </div>
+
+    <!-- JavaScript for Tab Switching -->
+    <script>
+        function switchTab(tabName, element) {
+            // Remove active class from all nav items
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+
+            // Add active class to clicked nav item
+            element.classList.remove('active');
+            element.classList.add('active');
+
+            // Hide all section panels
+            const panels = document.querySelectorAll('.section-panel');
+            panels.forEach(panel => panel.classList.remove('active'));
+
+            // Show selected panel
+            const targetPanel = document.getElementById('tab-' + tabName);
+            if (targetPanel) {
+                targetPanel.classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
