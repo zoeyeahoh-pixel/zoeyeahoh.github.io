@@ -4,101 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Story of Zoey</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --cover-bg: #355E3B;
-            --kraft-paper: #d2b48c;
-            --kraft-texture: #e2c49c;
-            --text-color: #1a1a1a;
-            --gold-color: #D4AF37;
-            --tab-edu: #ffb3ba;
-            --tab-work: #bae1ff;
-            --tab-about: #baffc9;
-            --tab-thoughts: #e8dff5;
-            --tab-contact: #1b4d2e;
-            --highlight-blue: #bae1ff;
-        }
-
+        /* 全局及重置 */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
-
         body {
-            font-family: 'Times New Roman', Times, serif;
             background-color: #ffffff;
-            color: var(--text-color);
-            min-height: 100vh;
+            font-family: 'Times New Roman', Times, serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow-x: hidden;
+            min-height: 100vh;
+            overflow: hidden;
         }
 
-        /* ----------------------------------
-           1. Typing Overlay Screen
-        ----------------------------------- */
-        #typing-overlay {
+        /* ---------------- 第一屏：打字机特效 ---------------- */
+        #intro-screen {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0; width: 100vw; height: 100vh;
             background-color: #ffffff;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
             cursor: pointer;
             transition: opacity 0.8s ease, visibility 0.8s ease;
         }
-
-        #typing-overlay.hidden {
+        #intro-screen.hidden {
             opacity: 0;
             visibility: hidden;
-            pointer-events: none;
         }
-
-        .typing-container {
+        .typing-text {
             font-size: 14pt;
             color: #000000;
             text-align: center;
+            white-space: pre-wrap;
             line-height: 1.8;
-            max-width: 80%;
-            white-space: pre-line;
-            font-family: 'Times New Roman', Times, serif;
         }
-
         .cursor {
             display: inline-block;
-            width: 2px;
-            height: 16px;
-            background-color: #000000;
-            margin-left: 2px;
-            vertical-align: middle;
-            animation: blink 0.8s infinite;
+            width: 2px; height: 1em;
+            background-color: #000;
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
         }
+        @keyframes blink { 50% { opacity: 0; } }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* ----------------------------------
-           2. Notebook Structure & Animation
-        ----------------------------------- */
+        /* ---------------- 笔记本容器与3D舞台 ---------------- */
         .stage {
-            perspective: 2000px;
-            width: 920px;
-            height: 600px;
+            perspective: 2500px;
+            width: 1000px;
+            height: 650px;
             position: relative;
-            background-color: #ffffff;
         }
-
-        .notebook {
+        .book {
             width: 100%;
             height: 100%;
             position: relative;
@@ -106,16 +68,14 @@
             transition: transform 1s ease;
         }
 
-        /* Closed Leather Cover */
-        .cover-external {
+        /* ---------------- 封面 ---------------- */
+        .cover {
             position: absolute;
-            width: 460px;
-            height: 600px;
-            right: 0;
-            top: 0;
-            background-color: var(--cover-bg);
-            border-radius: 4px 16px 16px 4px;
-            box-shadow: -10px 15px 30px rgba(0,0,0,0.3), inset -3px 0 8px rgba(0,0,0,0.2);
+            width: 50%; height: 100%;
+            right: 0; top: 0;
+            background-color: #355E3B;
+            border-radius: 4px 15px 15px 4px;
+            box-shadow: inset -5px 0 15px rgba(0,0,0,0.3), -10px 10px 20px rgba(0,0,0,0.4);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -123,671 +83,452 @@
             z-index: 100;
             transform-origin: left center;
             transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-            border-left: 10px solid #233e27;
+            border-left: 12px solid #203a24;
         }
-
-        .cover-external h1 {
-            color: var(--gold-color);
-            font-size: 26pt;
+        .cover h1 {
+            color: #D4AF37;
+            font-size: 32pt;
             font-weight: bold;
-            letter-spacing: 1px;
-            text-align: center;
-            padding: 1.5rem 2rem;
-            border: 3px double var(--gold-color);
-            box-shadow: inset 0 0 12px rgba(212,175,55,0.25);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-            font-family: 'Times New Roman', Times, serif;
+            border: 3px double #D4AF37;
+            padding: 20px 40px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
-
-        .notebook.open .cover-external {
+        .book.open .cover {
             transform: rotateY(-180deg);
-            pointer-events: none;
         }
 
-        /* Realistic Kraft Paper Book Spread */
-        .journal-spread {
+        /* ---------------- 内页基础与牛皮纸质感 ---------------- */
+        .spread {
             position: absolute;
-            width: 920px;
-            height: 600px;
-            top: 0;
-            left: 0;
+            width: 100%; height: 100%;
+            top: 0; left: 0;
+            display: none;
+            background: #dcb37b;
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.15"/></svg>');
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        .spread.active {
             display: flex;
-            background: #d8b87e;
-            background-image: 
-                radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 0),
-                linear-gradient(to right, rgba(0,0,0,0.15) 0%, transparent 6%, transparent 94%, rgba(0,0,0,0.15) 100%),
-                linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, transparent 5%, transparent 95%, rgba(0,0,0,0.08) 100%);
-            background-size: 8px 8px, 100% 100%, 100% 100%;
-            border-radius: 6px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-            opacity: 0;
-            transition: opacity 0.5s ease 0.4s;
         }
-
-        .notebook.open .journal-spread {
-            opacity: 1;
-        }
-
-        /* Center Spine Decor Clip */
-        .spine-clip {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 16px;
-            height: 94%;
-            background: #111111;
-            border-radius: 3px;
-            z-index: 50;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
-
-        .spine-clip::before, .spine-clip::after {
-            content: '';
-            position: absolute;
-            left: -5px;
-            width: 26px;
-            height: 10px;
-            background: #2a2a2a;
-            border-radius: 2px;
-        }
-        .spine-clip::before { top: 15%; }
-        .spine-clip::after { bottom: 15%; }
-
-        /* Pages */
         .page {
-            width: 50%;
-            height: 100%;
-            padding: 2.5rem 2.2rem;
+            width: 50%; height: 100%;
+            padding: 40px;
             position: relative;
             overflow-y: auto;
-            font-size: 11pt;
-            line-height: 1.5;
+            line-height: 1.6;
+            color: #1a1a1a;
         }
-
         .page-left {
-            border-right: 1px solid rgba(0,0,0,0.12);
-            box-shadow: inset -15px 0 20px -10px rgba(0,0,0,0.15);
+            border-right: 1px solid rgba(0,0,0,0.1);
+            box-shadow: inset -20px 0 30px -20px rgba(0,0,0,0.3);
         }
-
         .page-right {
-            border-left: 1px solid rgba(0,0,0,0.12);
-            box-shadow: inset 15px 0 20px -10px rgba(0,0,0,0.15);
+            border-left: 1px solid rgba(0,0,0,0.1);
+            box-shadow: inset 20px 0 30px -20px rgba(0,0,0,0.3);
         }
 
-        /* ----------------------------------
-           3. Side Tabs (Sticky Notes)
-        ----------------------------------- */
-        .side-tabs {
+        /* ---------------- 黑夹子装饰 ---------------- */
+        .binder-clip {
             position: absolute;
-            right: -42px;
-            top: 50px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            z-index: 60;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+            width: 25px; height: 90%;
+            background-color: #111;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.6);
+            z-index: 50;
         }
-
-        .tab {
-            width: 44px;
-            height: 85px;
-            border-radius: 0 8px 8px 0;
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11pt;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 4px 2px 8px rgba(0,0,0,0.25);
-            transition: transform 0.25 ease, width 0.25s ease;
-            user-select: none;
-            font-family: 'Times New Roman', Times, serif;
+        .binder-clip::before, .binder-clip::after {
+            content: ''; position: absolute;
+            width: 35px; height: 15px;
+            background-color: #222;
+            left: -5px; border-radius: 2px;
         }
+        .binder-clip::before { top: 15%; }
+        .binder-clip::after { bottom: 15%; }
 
-        .tab:hover, .tab.active {
-            transform: translateX(8px);
-            width: 50px;
-        }
-
-        .tab-edu { background-color: var(--tab-edu); color: #000; }
-        .tab-work { background-color: var(--tab-work); color: #000; }
-        .tab-about { background-color: var(--tab-about); color: #000; }
-        .tab-thoughts { background-color: var(--tab-thoughts); color: #000; }
-        .tab-contact { background-color: var(--tab-contact); color: #fff; }
-
-        /* Realistic Page Turn Transition Layer */
-        .flipper-overlay {
+        /* ---------------- 翻页动画层 ---------------- */
+        .flip-layer {
             position: absolute;
-            top: 0;
-            right: 0;
-            width: 50%;
-            height: 100%;
+            top: 0; right: 0;
+            width: 50%; height: 100%;
             transform-origin: left center;
             transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 40;
-            pointer-events: none;
+            z-index: 60;
             display: none;
         }
-
-        .flipper-overlay.turning {
+        .flip-layer.is-flipping {
             display: block;
-            transform: rotateY(-180deg);
+            animation: flipPage 0.8s ease-in-out forwards;
         }
-
-        .flipper-face {
+        @keyframes flipPage {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(-180deg); }
+        }
+        .flip-face {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             backface-visibility: hidden;
-            background: #d8b87e;
-            background-image: radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 0);
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.15);
+            background: #dcb37b;
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.15"/></svg>');
+            overflow: hidden;
         }
-
-        .flipper-back {
+        .flip-front {
+            box-shadow: inset 20px 0 30px -20px rgba(0,0,0,0.3);
+        }
+        .flip-back {
             transform: rotateY(180deg);
+            box-shadow: inset -20px 0 30px -20px rgba(0,0,0,0.3);
         }
 
-        /* ----------------------------------
-           4. Panel Content Styling
-        ----------------------------------- */
-        .panel {
-            display: none;
-            width: 100%;
-            height: 100%;
+        /* ---------------- 便签纸 (Tabs) ---------------- */
+        .tabs {
+            position: absolute;
+            right: -45px; top: 40px;
+            display: flex; flex-direction: column; gap: 15px;
+            z-index: 20;
         }
-
-        .panel.active {
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Directory List (Index Page) */
-        .directory-container {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .directory-list {
-            list-style: none;
+        .tab {
+            width: 45px; height: 80px;
+            writing-mode: vertical-rl;
             text-align: center;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11pt; font-weight: bold;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+            user-select: none;
         }
+        .tab:hover { transform: translateX(5px); }
+        .tab-edu { background-color: #ffb3ba; color: #000; }
+        .tab-work { background-color: #bae1ff; color: #000; }
+        .tab-about { background-color: #baffc9; color: #000; }
+        .tab-thoughts { background-color: #e8dff5; color: #000; }
+        .tab-contact { background-color: #1b4d2e; color: #fff; }
 
-        .directory-list li {
-            font-family: 'Caveat', cursive;
+        /* ---------------- 页面内容排版 ---------------- */
+        /* Index */
+        .index-title {
+            font-family: 'Brush Script MT', 'Comic Sans MS', cursive;
             font-size: 16pt;
-            font-weight: 700;
-            color: #000000;
-            margin-bottom: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.2s ease, color 0.2s ease;
-        }
-
-        .directory-list li:hover {
-            transform: scale(1.15);
-            color: #355E3B;
-        }
-
-        /* Education Page Seals */
-        .seal-logo {
-            width: 70px;
-            height: 70px;
-            object-fit: contain;
-            position: absolute;
-            filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.3));
-        }
-
-        .seal-hku {
-            top: 15px;
-            left: 15px;
-        }
-
-        .seal-cityu {
-            bottom: 15px;
-            right: 15px;
-        }
-
-        /* Work Page Highlighting */
-        .bold-title {
-            font-weight: bold;
-            color: #000;
-        }
-
-        .date-location {
-            color: #555555;
-            font-size: 10.5pt;
-            margin-bottom: 0.4rem;
-        }
-
-        .hl {
-            background-color: var(--highlight-blue);
-            padding: 0 3px;
-            border-radius: 2px;
-        }
-
-        /* Bullet point styling inside Work page */
-        .work-bullet {
-            display: block;
-            margin-left: 0.5rem;
-            margin-bottom: 0.4rem;
-            position: relative;
-            padding-left: 1rem;
-        }
-
-        .work-bullet::before {
-            content: "⚫";
-            font-size: 6pt;
-            position: absolute;
-            left: 0;
-            top: 2px;
-            color: #000;
-        }
-
-        /* About Me Polaroid Photo */
-        .polaroid-frame {
-            background: #ffffff;
-            padding: 10px 10px 22px 10px;
-            box-shadow: 2px 4px 10px rgba(0,0,0,0.25);
-            transform: rotate(-2deg);
-            width: 170px;
-            margin: 0 auto 1.2rem auto;
             text-align: center;
-        }
-
-        .polaroid-photo {
-            width: 100%;
-            height: 150px;
-            background: #e6e6e6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            font-size: 9pt;
-            border: 1px solid #ddd;
-        }
-
-        /* Thoughts Journal View */
-        .blog-card {
-            background: rgba(255, 255, 255, 0.35);
-            border: 1px dashed #777;
-            padding: 1rem;
-            border-radius: 4px;
+            margin-top: 20px;
             cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        .blog-card:hover {
-            background: rgba(255, 255, 255, 0.7);
-        }
-
-        .thoughts-full-overlay {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #d8b87e;
-            background-image: radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 0);
-            padding: 2.2rem;
-            z-index: 70;
-            overflow-y: auto;
-        }
-
-        .thoughts-full-overlay.active {
             display: block;
-            animation: fadeIn 0.3s ease;
+            margin-bottom: 25px;
+            color: #000;
+            text-decoration: none;
+            transition: color 0.3s;
         }
+        .index-title:hover { color: #355E3B; }
+        
+        /* Education */
+        .edu-logo { position: absolute; width: 70px; mix-blend-mode: multiply; opacity: 0.9; }
+        .logo-hku { top: 20px; left: 20px; }
+        .logo-cityu { bottom: 20px; right: 20px; }
+        .bold-black { font-weight: bold; color: #000; font-size: 14pt; margin-bottom: 4px; }
+        .grey-date { color: #666; font-size: 11pt; margin-bottom: 12px; }
+        .section-mt { margin-top: 80px; }
+        
+        /* Work */
+        .work-hl { background-color: rgba(186, 225, 255, 0.7); padding: 0 4px; }
+        .work-block { margin-bottom: 25px; font-size: 10.5pt; }
+        .work-ul { list-style: none; padding-left: 15px; }
+        .work-ul li { position: relative; margin-bottom: 6px; text-align: justify; }
+        .work-ul li::before { content: '⚫'; position: absolute; left: -15px; font-size: 8pt; top: 2px; }
+        
+        /* About Me */
+        .polaroid {
+            width: 200px;
+            background: #fff; padding: 12px 12px 30px 12px;
+            box-shadow: 2px 4px 10px rgba(0,0,0,0.3);
+            transform: rotate(-3deg);
+            margin: 20px auto; display: block;
+        }
+        .polaroid-img { width: 100%; height: 160px; background: #e0e0e0; display: flex; align-items: center; justify-content: center; color: #888; font-style: italic; }
+        .about-text { text-align: justify; margin-top: 20px; text-indent: 2em; }
+        
+        /* Thoughts */
+        .blog-list-item {
+            font-size: 14pt; font-weight: bold; text-decoration: underline; cursor: pointer; color: #355E3B;
+        }
+        .full-article { display: none; margin-top: 20px; }
+        .full-article.show { display: block; }
+        .article-p { text-indent: 2em; margin-bottom: 15px; text-align: justify; }
 
-        .back-link {
-            font-size: 10pt;
-            cursor: pointer;
-            text-decoration: underline;
-            color: #333;
-            margin-bottom: 1rem;
-            display: inline-block;
-        }
+        /* Contact */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; }
+        .form-input { width: 100%; padding: 8px; font-family: 'Times New Roman', serif; background: rgba(255,255,255,0.4); border: 1px solid #777; border-radius: 3px; }
+        .btn-send { font-family: 'Times New Roman', serif; font-size: 12pt; font-weight: bold; padding: 8px 25px; background: #fff; border: 2px solid #000; cursor: pointer; box-shadow: 3px 3px 0 #000; }
+        .btn-send:active { transform: translate(3px, 3px); box-shadow: 0 0 0 #000; }
 
-        /* Contact Form */
-        .contact-field {
-            margin-bottom: 0.8rem;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .contact-field label {
-            font-size: 10.5pt;
-            font-weight: bold;
-            margin-bottom: 0.2rem;
-        }
-
-        .contact-field input, .contact-field textarea {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 10.5pt;
-            padding: 0.4rem;
-            border: 1px solid #666;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 2px;
-            outline: none;
-        }
-
-        .btn-send {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 11pt;
-            font-weight: bold;
-            padding: 0.4rem 1.4rem;
-            background: #ffffff;
-            border: 1px solid #000;
-            cursor: pointer;
-            box-shadow: 2px 2px 0 #000;
-            transition: all 0.1s ease;
-            margin-top: 0.4rem;
-        }
-
-        .btn-send:active {
-            transform: translate(2px, 2px);
-            box-shadow: 0 0 0 #000;
-        }
     </style>
 </head>
 <body>
 
-    <!-- 1. Typing Overlay Screen -->
-    <div id="typing-overlay" onclick="enterHomepage()">
-        <div class="typing-container">
-            <span id="typed-text"></span><span class="cursor"></span>
-        </div>
+    <!-- 第一屏：打字机 -->
+    <div id="intro-screen" onclick="openHomepage()">
+        <div class="typing-text"><span id="typed"></span><span class="cursor"></span></div>
     </div>
 
-    <!-- 2. Notebook Stage -->
-    <div class="stage">
-        <div class="notebook" id="notebook">
-            
-            <!-- Pure Color Leather Cover -->
-            <div class="cover-external" onclick="openNotebook()">
+    <!-- 主体：笔记本舞台 -->
+    <div class="stage" id="main-stage">
+        <div class="book" id="my-book">
+            <!-- 封面 -->
+            <div class="cover" onclick="openBook()">
                 <h1>The Story of Zoey</h1>
             </div>
 
-            <!-- Kraft Paper Journal Spread -->
-            <div class="journal-spread">
-                <div class="spine-clip"></div>
+            <!-- 黑夹子装饰 -->
+            <div class="binder-clip" style="display:none;" id="binder-clip"></div>
 
-                <!-- Page Turner Overlay Effect -->
-                <div class="flipper-overlay" id="flipper">
-                    <div class="flipper-face flipper-front"></div>
-                    <div class="flipper-face flipper-back"></div>
-                </div>
-
-                <!-- Side Sticky Tabs -->
-                <div class="side-tabs">
-                    <div class="tab tab-edu" onclick="navTo('edu')">Education</div>
-                    <div class="tab tab-work" onclick="navTo('work')">Work</div>
-                    <div class="tab tab-about" onclick="navTo('about')">About Me</div>
-                    <div class="tab tab-thoughts" onclick="navTo('thoughts')">Thoughts</div>
-                    <div class="tab tab-contact" onclick="navTo('contact')">Contact</div>
-                </div>
-
-                <!-- HOMEPAGE DIRECTORY / INDEX -->
-                <div id="panel-index" class="panel active">
-                    <div class="page page-left"></div>
-                    <div class="page page-right">
-                        <div class="directory-container">
-                            <ul class="directory-list">
-                                <li onclick="navTo('edu')">Education</li>
-                                <li onclick="navTo('work')">Work</li>
-                                <li onclick="navTo('about')">About Me</li>
-                                <li onclick="navTo('thoughts')">Thoughts</li>
-                                <li onclick="navTo('contact')">Contact</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- EDUCATION PANEL -->
-                <div id="panel-edu" class="panel">
-                    <div class="page page-left">
-                        <!-- HKU Seal Illustration Sticker -->
-                        <img src="https://www.hku.hk/f/page/7667/HKU_Logo.png" alt="HKU Seal" class="seal-logo seal-hku" onerror="this.style.display='none'">
-                        
-                        <div style="margin-top: 3.8rem;">
-                            <div style="font-weight: bold; font-size: 13pt; color: #000;">The University of Hong Kong</div>
-                            <div class="date-location">2025 – 2026</div>
-                            <div style="font-weight: bold; margin-bottom: 0.4rem;">MA in Translation</div>
-                            <p>Coursework covers Financial Translation, Mass Media Translation, Interpreting, Government & Commercial Texts, and Legal Translation.</p>
-                        </div>
-                    </div>
-
-                    <div class="page page-right">
-                        <div style="margin-top: 1rem;">
-                            <div style="font-weight: bold; font-size: 13pt; color: #000;">City University of Macau</div>
-                            <div class="date-location">2021 – 2025</div>
-                            <div style="font-weight: bold; margin-bottom: 0.4rem;">Bachelor of Arts in English</div>
-                            <p>Coursework includes Consecutive & Simultaneous Interpretation, Translation Theory, and News Translation.</p>
-                        </div>
-
-                        <!-- CityU Macau Seal Illustration Sticker -->
-                        <img src="https://www.cityu.edu.mo/wp-content/uploads/2021/04/cityu_logo.png" alt="CityU Seal" class="seal-logo seal-cityu" onerror="this.style.display='none'">
-                    </div>
-                </div>
-
-                <!-- WORK PANEL -->
-                <div id="panel-work" class="panel">
-                    <div class="page page-left">
-                        <div style="margin-bottom: 1.2rem;">
-                            <div class="bold-title">Marketing Intern at Smith & Associates</div>
-                            <div class="date-location">Jun. 2026-Present | Hong Kong</div>
-                            <span class="work-bullet">Translated and localized over 50 marketing assets, including brochures, newsletters, and presentations</span>
-                            <span class="work-bullet">Maintained and updated <span class="hl">company’s website</span>, translating 20+ English press releases and market insights to ensure precise and timely localized communications</span>
-                            <span class="work-bullet">Assisted <span class="hl">integrated marketing campaigns</span> across multi-digital channels, driving consistent brand messaging and audience reach</span>
-                        </div>
-
-                        <div>
-                            <div class="bold-title">Translation Intern at MAIYA MEDIA</div>
-                            <div class="date-location">Jan. 2025-May, 2025 | Hangzhou</div>
-                            <span class="work-bullet">Completed translation for 50+ short dramas across modern, historical, and urban genres, delivering <span class="hl">900+ episodes</span> with a peak monthly output of 280 episodes</span>
-                            <span class="work-bullet">Proofread, polished, and reviewed dialogue translations and dubbing for <span class="hl">360+ episodes</span>, ensuring localization and logical accuracy</span>
-                            <span class="work-bullet">Managed multiple translation tasks simultaneously, including translation for log keepers and script proofreading, ensuring end-to-end quality and efficiency</span>
-                        </div>
-                    </div>
-
-                    <div class="page page-right">
-                        <div style="margin-bottom: 1rem;">
-                            <div class="bold-title">Student Ambassador (Copywriting) at Rector’s Office</div>
-                            <div class="date-location">Nov. 2023-Dec. 2024 | Macao</div>
-                            <span class="work-bullet">Drafted and translated <span class="hl">bilingual content</span> for the university website, including news articles and higher education documents</span>
-                            <span class="work-bullet">Supported event coordination for orientations, lectures, and official ceremonies, ensuring smooth execution and effective communication with diverse stakeholders.</span>
-                        </div>
-
-                        <div style="margin-bottom: 1rem;">
-                            <div class="bold-title">Intern at Zhejiang Yinqingli Co., Ltd.</div>
-                            <div class="date-location">Jun. 2024-Aug. 2024 | Hangzhou</div>
-                            <span class="work-bullet">Produced press releases and digital content for 10+ companies and maintained other English information, including English copy, images, and videos, to the backend</span>
-                            <span class="work-bullet">Translated more than 30 Chinese manuscripts provided by customers and uploaded them to their official websites, which received <span class="hl">unanimous praise</span> from customers</span>
-                        </div>
-
-                        <div>
-                            <div class="bold-title">Intern at Hangzhou Connect Fun Technology Co., Ltd.</div>
-                            <div class="date-location">Jun. 2023-Jul. 2023 | Hangzhou</div>
-                            <span class="work-bullet">Role as the <span class="hl">leader of the internship team</span>, collected, compiled and reviewed more than 1,000 pieces of overseas user information and uploaded them to the platform</span>
-                            <span class="work-bullet">Collaborated with UI and IT colleagues to modify the English copywriting of the APP and the website, which has been <span class="hl">successfully launched</span> on Google Play and Apple store</span>
-                            <span class="work-bullet">Gained practical experience in digital marketing and cross-cultural product localization</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ABOUT ME PANEL -->
-                <div id="panel-about" class="panel">
-                    <div class="page page-left" style="display: flex; flex-direction: column; align-items: center;">
-                        <div class="polaroid-frame">
-                            <div class="polaroid-photo">Photo Placeholder</div>
-                            <div style="font-size: 8.5pt; margin-top: 4px; color: #444;">Zoe Yang</div>
-                        </div>
-                        <p style="text-align: justify; margin-top: 0.2rem;">
-                            Hi, I'm Zoe Yang! I'm a fresh graduate from the University of Hong Kong, currently seeking full-time opportunities in Marketing, Communications, Public Relations, Advertising, and Translation.
-                        </p>
-                    </div>
-
-                    <div class="page page-right">
-                        <!-- Upgraded & Enhanced English Text -->
-                        <p style="margin-bottom: 1rem;">
-                            I am a native Mandarin speaker who was born and raised in the beautiful southeastern city of Hangzhou. I am fluent in English and specialize in translation, which enables me to enjoy the distinct charm of different cultures and histories. In addition, I am enthusiastically learning Cantonese and look forward to mastering it in the near future.
-                        </p>
-                        <p style="text-indent: 1em;">
-                            In my daily life, I enjoy penning my thoughts, taking photographs, sipping coffee, and playing squash. I am always excited to embrace new experiences and connect with new friends.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- THOUGHTS PANEL -->
-                <div id="panel-thoughts" class="panel">
-                    <div class="page page-left">
-                        <div style="font-weight: bold; font-size: 13pt; margin-bottom: 1rem;">Journal Entries</div>
-                        <div class="blog-card" onclick="openThoughtEntry()">
-                            <div style="font-weight: bold; font-size: 11pt;">Some thoughts 2026.3.28</div>
-                            <div class="date-location" style="margin-top: 0.2rem;">Date: 2026.03.28</div>
-                        </div>
-                    </div>
-
-                    <div class="page page-right">
-                        <p style="color: #666; font-style: italic; margin-top: 1rem;">Click on the title on the left page to read the full journal entry.</p>
-                    </div>
-
-                    <!-- Full Journal Entry Layer -->
-                    <div id="thoughts-full-view" class="thoughts-full-overlay">
-                        <span class="back-link" onclick="closeThoughtEntry()">← Back to list</span>
-                        <div style="font-weight: bold; font-size: 14pt; margin-bottom: 0.3rem;">Some thoughts 2026.3.28</div>
-                        <div class="date-location" style="margin-bottom: 1.2rem;">3.26</div>
-                        
-                        <p style="margin-bottom: 0.8rem; text-indent: 2em; line-height: 1.6;">
-                            这段时间跑了不少面试，被问到最多、也最绕不开的一个问题，就是“talk about your career plan”。说实话，我不知道自己的职业规划是什么，甚至，我也不确定未来想走进哪个行业。嘴上总是故作轻松：“哎呀，我做什么都行，哪个公司愿意要我，我就去哪”。可每晚躺在床上复盘白天面试的时候，还是会反反复复地问自己，我到底想做什么。
-                        </p>
-                        <p style="margin-bottom: 0.8rem; text-indent: 2em; line-height: 1.6;">
-                            我们好像总在拼命寻找一个确定的状态：一份确定的offer，一段确定的关系，一个确定的未来。可二十多岁的年纪，注定裹挟着太多的稚嫩、迷茫、焦虑与不确定。又有多少人能在二十岁出头，就笃定地看清自己往后几十年的方向。
-                        </p>
-                        <p style="margin-bottom: 0.8rem; text-indent: 2em; line-height: 1.6;">
-                            虽然耳边总有人鼓励说“你可以去任何行业”，可真当自己鼓起勇气踏进新的领域、试着做出不同选择时，迎面而来的却是一次次不自信的低头，一次次在心底反复质疑自己，还有一次次被拒之门外，漫长的沉默。
-                        </p>
-                        <p style="margin-bottom: 0.8rem; text-indent: 2em; line-height: 1.6;">
-                            我喜欢写点东西，像是碎碎念，又更像是为这一团乱麻般的思绪理清头绪。也许，就在这些看似无厘头的记录里，我会慢慢找到未来的方向。大概是因为在这个空间里，我终于可以只做自己，没有考核，没有标准，也没有非此不可的答案。我只需要，把最真实的念头一字一句地写下来。
-                        </p>
-                        <p style="margin-bottom: 0.8rem; text-indent: 2em; line-height: 1.6;">
-                            说来也怪，明明在文字里可以坦然地面对一切不确定，可一旦回到现实里的人际关系，我就像换了个人。虽然平时总像个高能量的人，可总有某些时刻，我是真的怕那些复杂的人际关系。我讨厌矛盾，讨厌分歧，讨厌尴尬，更讨厌别人因为我而心里不痛快。所以总是不自觉地想做那个活跃气氛的人，拼命找话题，笑着热场子。可每次遇到那些拧巴又烦人的人际关系，我脑子里冒出来的第一个念头，不是面对，而是逃。只想缩回一个小小的角落，把自己藏起来，不去看，不去听，也不想再去解决什么。
-                        </p>
-                        <p style="margin-bottom: 0.8rem; text-indent: 2em; line-height: 1.6;">
-                            大概也是因为这个，我才那么需要那个可以只做自己的空间吧。在那里，不用讨好谁，不用热场子，也不用小心翼翼地照顾所有人的情绪。我只需要，安安静静地，做我自己。
-                        </p>
-                    </div>
-                </div>
-
-                <!-- CONTACT PANEL -->
-                <div id="panel-contact" class="panel">
-                    <div class="page page-left">
-                        <p style="font-size: 12pt; margin-bottom: 1rem;">Thank you for visiting my little corner!</p>
-                        <p style="text-indent: 1em; font-size: 11pt; margin-bottom: 1rem;">Let's have some chats!</p>
-                        <p style="text-indent: 1em; font-size: 11pt;">Share with me anything in your mind!</p>
-                    </div>
-
-                    <div class="page page-right">
-                        <form action="https://formsubmit.co/zoeyeahoh@gmail.com" method="POST">
-                            <input type="hidden" name="_captcha" value="false">
-                            <div class="contact-field">
-                                <label>Name:</label>
-                                <input type="text" name="name" required>
-                            </div>
-                            <div class="contact-field">
-                                <label>Contact Info:</label>
-                                <input type="text" name="contact" required>
-                            </div>
-                            <div class="contact-field">
-                                <label>Anything you want to share with me:</label>
-                                <textarea name="message" rows="4" required></textarea>
-                            </div>
-                            <button type="submit" class="btn-send">Send!</button>
-                        </form>
-                    </div>
-                </div>
-
+            <!-- 便签 -->
+            <div class="tabs" style="display:none;" id="side-tabs">
+                <div class="tab tab-edu" onclick="turnTo('edu')">Education</div>
+                <div class="tab tab-work" onclick="turnTo('work')">Work</div>
+                <div class="tab tab-about" onclick="turnTo('about')">About Me</div>
+                <div class="tab tab-thoughts" onclick="turnTo('thoughts')">Thoughts</div>
+                <div class="tab tab-contact" onclick="turnTo('contact')">Contact</div>
             </div>
+
+            <!-- 动态翻页层 (用于模拟物理翻书) -->
+            <div class="flip-layer" id="flip-layer">
+                <div class="flip-face flip-front" id="flip-front-content"></div>
+                <div class="flip-face flip-back" id="flip-back-content"></div>
+            </div>
+
+            <!-- 内页1：Index -->
+            <div class="spread active" id="spread-index">
+                <div class="page page-left"></div>
+                <div class="page page-right" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <a class="index-title" onclick="turnTo('edu')">Education</a>
+                    <a class="index-title" onclick="turnTo('work')">Work</a>
+                    <a class="index-title" onclick="turnTo('about')">About Me</a>
+                    <a class="index-title" onclick="turnTo('thoughts')">Thoughts</a>
+                    <a class="index-title" onclick="turnTo('contact')">Contact</a>
+                </div>
+            </div>
+
+            <!-- 内页2：Education -->
+            <div class="spread" id="spread-edu">
+                <div class="page page-left">
+                    <img src="https://www.hku.hk/f/page/7667/HKU_Logo.png" class="edu-logo logo-hku" alt="HKU">
+                    <div class="section-mt">
+                        <div class="bold-black">The University of Hong Kong</div>
+                        <div class="grey-date">2025 – 2026</div>
+                        <div style="font-weight: bold; margin-bottom: 5px;">MA in Translation</div>
+                        <p>Coursework covers Financial Translation, Mass Media Translation, Interpreting, Government & Commercial Texts, and Legal Translation.</p>
+                    </div>
+                </div>
+                <div class="page page-right">
+                    <div class="section-mt" style="margin-top: 40px;">
+                        <div class="bold-black">City University of Macau</div>
+                        <div class="grey-date">2021 – 2025</div>
+                        <div style="font-weight: bold; margin-bottom: 5px;">Bachelor of Arts in English</div>
+                        <p>Coursework includes Consecutive & Simultaneous Interpretation, Translation Theory, and News Translation.</p>
+                    </div>
+                    <img src="https://www.cityu.edu.mo/wp-content/uploads/2021/04/cityu_logo.png" class="edu-logo logo-cityu" alt="CityU">
+                </div>
+            </div>
+
+            <!-- 内页3：Work -->
+            <div class="spread" id="spread-work">
+                <div class="page page-left">
+                    <div class="work-block">
+                        <div class="bold-black" style="font-size:12pt;">Marketing Intern at Smith & Associates</div>
+                        <div class="grey-date">Jun. 2026-Present<br>Hong Kong</div>
+                        <ul class="work-ul">
+                            <li>Translated and localized over 50 marketing assets, including brochures, newsletters, and presentations</li>
+                            <li>Maintained and updated <span class="work-hl">company’s website</span>, translating 20+ English press releases and market insights to ensure precise and timely localized communications</li>
+                            <li>Assisted <span class="work-hl">integrated marketing campaigns</span> across multi-digital channels, driving consistent brand messaging and audience reach</li>
+                        </ul>
+                    </div>
+                    <div class="work-block">
+                        <div class="bold-black" style="font-size:12pt;">Translation Intern at MAIYA MEDIA</div>
+                        <div class="grey-date">Jan. 2025-May, 2025<br>Hangzhou</div>
+                        <ul class="work-ul">
+                            <li>Completed translation for 50+ short dramas across modern, historical, and urban genres, delivering <span class="work-hl">900+ episodes</span> with a peak monthly output of 280 episodes</li>
+                            <li>Proofread, polished, and reviewed dialogue translations and dubbing for <span class="work-hl">360+ episodes</span>, ensuring localization and logical accuracy</li>
+                            <li>Managed multiple translation tasks simultaneously, including translation for log keepers and script proofreading, ensuring end-to-end quality and efficiency</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="page page-right">
+                    <div class="work-block">
+                        <div class="bold-black" style="font-size:12pt;">Student Ambassador (Copywriting) at Rector’s Office</div>
+                        <div class="grey-date">Nov. 2023-Dec. 2024<br>Macao</div>
+                        <ul class="work-ul">
+                            <li>Drafted and translated <span class="work-hl">bilingual content</span> for the university website, including news articles and higher education documents</li>
+                            <li>Supported event coordination for orientations, lectures, and official ceremonies, ensuring smooth execution and effective communication with diverse stakeholders.</li>
+                        </ul>
+                    </div>
+                    <div class="work-block">
+                        <div class="bold-black" style="font-size:12pt;">Intern at Zhejiang Yinqingli Co., Ltd.</div>
+                        <div class="grey-date">Jun. 2024-Aug. 2024<br>Hangzhou</div>
+                        <ul class="work-ul">
+                            <li>Produced press releases and digital content for 10+ companies and maintained other English information, including English copy, images, and videos, to the backend</li>
+                            <li>Translated more than 30 Chinese manuscripts provided by customers and uploaded them to their official websites, which received <span class="work-hl">unanimous praise</span> from customers</li>
+                        </ul>
+                    </div>
+                    <div class="work-block">
+                        <div class="bold-black" style="font-size:12pt;">Intern at Hangzhou Connect Fun Technology Co., Ltd.</div>
+                        <div class="grey-date">Jun. 2023-Jul. 2023<br>Hangzhou</div>
+                        <ul class="work-ul">
+                            <li>Role as the <span class="work-hl">leader of the internship team</span>, collected, compiled and reviewed more than 1,000 pieces of overseas user information and uploaded them to the platform</li>
+                            <li>Collaborated with UI and IT colleagues to modify the English copywriting of the APP and the website, which has been <span class="work-hl">successfully launched</span> on Google Play and Apple store</li>
+                            <li>Gained practical experience in digital marketing and cross-cultural product localization</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内页4：About Me -->
+            <div class="spread" id="spread-about">
+                <div class="page page-left">
+                    <div class="polaroid">
+                        <div class="polaroid-img">Photo</div>
+                    </div>
+                    <div class="about-text" style="text-indent: 0;">Hi, I'm Zoe Yang! I'm a fresh graduate from the University of Hong Kong, currently seeking full-time opportunities in Marketing, Communications, Public Relations, Advertising, and Translation.</div>
+                </div>
+                <div class="page page-right">
+                    <div class="about-text">
+                        I am a native Mandarin speaker, born and raised in the beautiful southeastern city of Hangzhou. I am fluent in English and specialize in translation, which enables me to truly appreciate the charm of diverse cultures and histories. In addition, I am passionately learning Cantonese, with the goal of mastering the language in the near future.
+                    </div>
+                    <div class="about-text">
+                        In my daily life, I enjoy writing down my thoughts, taking photos, drinking coffee, and playing squash. I am always excited to try new things and meet new friends.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内页5：Thoughts -->
+            <div class="spread" id="spread-thoughts">
+                <div class="page page-left">
+                    <div class="blog-list-item" onclick="toggleArticle()">Some thoughts 2026.3.28</div>
+                    <div class="full-article" id="thoughts-article">
+                        <div class="grey-date">3.26</div>
+                        <div class="article-p">这段时间跑了不少面试，被问到最多、也最绕不开的一个问题，就是“talk about your career plan”。说实话，我不知道自己的职业规划是什么，甚至，我也不确定未来想走进哪个行业。嘴上总是故作轻松：“哎呀，我做什么都行，哪个公司愿意要我，我就去哪”。可每晚躺在床上复盘白天面试的时候，还是会反反复复地问自己，我到底想做什么。</div>
+                        <div class="article-p">我们好像总在拼命寻找一个确定的状态：一份确定的offer，一段确定的关系，一个确定的未来。可二十多岁的年纪，注定裹挟着太多的稚嫩、迷茫、焦虑与不确定。又有多少人能在二十岁出头，就笃定地看清自己往后几十年的方向。</div>
+                    </div>
+                </div>
+                <div class="page page-right">
+                    <div class="full-article" id="thoughts-article-p2">
+                        <div class="article-p">虽然耳边总有人鼓励说“你可以去任何行业”，可真当自己鼓起勇气踏进新的领域、试着做出不同选择时，迎面而来的却是一次次不自信的低头，一次次在心底反复质疑自己，还有一次次被拒之门外，漫长的沉默。</div>
+                        <div class="article-p">我喜欢写点东西，像是碎碎念，又更像是为这一团乱麻般的思绪理清头绪。也许，就在这些看似无厘头的记录里，我会慢慢找到未来的方向。大概是因为在这个空间里，我终于可以只做自己，没有考核，没有标准，也没有非此不可的答案。我只需要，把最真实的念头一字一句地写下来。</div>
+                        <div class="article-p">说来也怪，明明在文字里可以坦然地面对一切不确定，可一旦回到现实里的人际关系，我就像换了个人。虽然平时总像个高能量的人，可总有某些时刻，我是真的怕那些复杂的人际关系。我讨厌矛盾，讨厌分歧，讨厌尴尬，更讨厌别人因为我而心里不痛快。所以总是不自觉地想做那个活跃气氛的人，拼命找话题，笑着热场子。可每次遇到那些拧巴又烦人的人际关系，我脑子里冒出来的第一个念头，不是面对，而是逃。只想缩回一个小小的角落，把自己藏起来，不去看，不去听，也不想再去解决什么。</div>
+                        <div class="article-p">大概也是因为这个，我才那么需要那个可以只做自己的空间吧。在那里，不用讨好谁，不用热场子，也不用小心翼翼地照顾所有人的情绪。我只需要，安安静静地，做我自己。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内页6：Contact -->
+            <div class="spread" id="spread-contact">
+                <div class="page page-left">
+                    <div style="font-size: 14pt; margin-bottom: 20px;">Thank you for visiting my little corner!</div>
+                    <div style="font-size: 14pt; margin-bottom: 20px; text-indent: 1em;">Let's have some chats!</div>
+                    <div style="font-size: 14pt; text-indent: 1em;">Share with me anything in your mind!</div>
+                </div>
+                <div class="page page-right">
+                    <form action="https://formsubmit.co/zoeyeahoh@gmail.com" method="POST">
+                        <input type="hidden" name="_captcha" value="false">
+                        <div class="form-group">
+                            <label>Name:</label>
+                            <input type="text" name="name" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Info:</label>
+                            <input type="text" name="contact" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Anything you want to share with me:</label>
+                            <textarea name="message" class="form-input" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-send">Send!</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
     <script>
-        // 1. Typing Animation logic
-        const line1 = "Hi, I'm Zoe.\n";
-        const line2 = "Welcome to my little corner of interests!";
-        const fullText = line1 + line2;
-        const typedTextElem = document.getElementById('typed-text');
-        let index = 0;
-
-        function typeChar() {
-            if (index < fullText.length) {
-                typedTextElem.textContent += fullText.charAt(index);
-                index++;
-                setTimeout(typeChar, 75);
+        // 打字机逻辑
+        const textToType = "Hi, I'm Zoe.\nWelcome to my little corner of interests!";
+        let charIndex = 0;
+        function typeWriter() {
+            if (charIndex < textToType.length) {
+                document.getElementById("typed").textContent += textToType.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 60);
             }
         }
+        window.onload = typeWriter;
 
-        window.addEventListener('DOMContentLoaded', typeChar);
-
-        function enterHomepage() {
-            document.getElementById('typing-overlay').classList.add('hidden');
+        // 关闭打字屏
+        function openHomepage() {
+            document.getElementById("intro-screen").classList.add("hidden");
         }
 
-        // 2. Notebook Open State
-        function openNotebook() {
-            document.getElementById('notebook').classList.add('open');
-        }
-
-        // 3. Navigation with Page Flip Animation
-        function navTo(targetPanelName) {
-            const notebook = document.getElementById('notebook');
-            if (!notebook.classList.contains('open')) {
-                notebook.classList.add('open');
-            }
-
-            closeThoughtEntry();
-
-            const flipper = document.getElementById('flipper');
-            flipper.classList.add('turning');
-
+        // 打开笔记本
+        let bookOpen = false;
+        function openBook() {
+            if(bookOpen) return;
+            document.getElementById("my-book").classList.add("open");
             setTimeout(() => {
-                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-                const nextPanel = document.getElementById('panel-' + targetPanelName);
-                if (nextPanel) {
-                    nextPanel.classList.add('active');
-                }
+                document.getElementById("binder-clip").style.display = "block";
+                document.getElementById("side-tabs").style.display = "flex";
+            }, 500);
+            bookOpen = true;
+        }
 
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                const activeTab = document.querySelector(`.tab-${targetPanelName}`);
-                if (activeTab) {
-                    activeTab.classList.add('active');
-                }
-            }, 300);
+        // 真实的翻页动画逻辑
+        let currentSection = 'index';
+        let isFlipping = false;
 
+        function turnTo(targetSection) {
+            if (currentSection === targetSection || isFlipping) return;
+            isFlipping = true;
+
+            const currentSpread = document.getElementById(`spread-${currentSection}`);
+            const targetSpread = document.getElementById(`spread-${targetSection}`);
+            const flipLayer = document.getElementById('flip-layer');
+            const flipFront = document.getElementById('flip-front-content');
+            const flipBack = document.getElementById('flip-back-content');
+
+            // 截取当前右页给翻页正面，目标左页给翻页背面
+            flipFront.innerHTML = currentSpread.querySelector('.page-right').innerHTML;
+            flipBack.innerHTML = targetSpread.querySelector('.page-left').innerHTML;
+            
+            // 样式对齐
+            flipFront.style.padding = '40px';
+            flipBack.style.padding = '40px';
+            flipFront.style.color = '#1a1a1a';
+            flipBack.style.color = '#1a1a1a';
+
+            // 开始翻页动画
+            flipLayer.classList.add('is-flipping');
+            
+            // 动画进行一半时，直接切换底层的 spread 显示，保证视觉连贯
             setTimeout(() => {
-                flipper.classList.remove('turning');
-            }, 600);
+                currentSpread.classList.remove('active');
+                targetSpread.classList.add('active');
+            }, 400);
+
+            // 动画结束清理状态
+            setTimeout(() => {
+                flipLayer.classList.remove('is-flipping');
+                currentSection = targetSection;
+                isFlipping = false;
+            }, 800);
         }
 
-        // 4. Thoughts Full Text Handler
-        function openThoughtEntry() {
-            document.getElementById('thoughts-full-view').classList.add('active');
-        }
-
-        function closeThoughtEntry() {
-            document.getElementById('thoughts-full-view').classList.remove('active');
+        // 展开 Thoughts 全文
+        function toggleArticle() {
+            document.getElementById("thoughts-article").classList.toggle("show");
+            document.getElementById("thoughts-article-p2").classList.toggle("show");
         }
     </script>
 </body>
