@@ -6,26 +6,23 @@
     <title>Zoe Yang | Journal Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Cutie Star Font & Supporting Fonts -->
     <link href="https://fonts.cdnfonts.com/css/cutie-star" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Grandstander:wght@600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-dark: #080808;
-            --leather-green: #182e20;
-            --leather-dark: #0f1f15;
-            --paper-cream: #faf5e8;
-            --paper-grid: rgba(180, 165, 135, 0.22);
-            --ink-black: #222222;
-            --pencil-gray: #3a3a3c;
-            --tape-kraft: #d9c099;
-            --tape-blue: #93c5d6;
-            --tape-pink: #ebadba;
-            --tape-yellow: #f5dc78;
-            --tape-mint: #a8d5ba;
-            --hl-yellow: rgba(255, 235, 59, 0.45);
-            --hl-green: rgba(165, 214, 167, 0.45);
+            --bg-dark: #121614;
+            --journal-cover: #1b2f23;
+            --paper-cream: #faf6ed;
+            --paper-grid: rgba(200, 185, 155, 0.25);
+            --ink-main: #242424;
+            --accent-pink: #f4c2c2;
+            --accent-blue: #b3cde0;
+            --accent-yellow: #fce38a;
+            --accent-green: #eaafaf;
+            --tape-mint: #b5e7a0;
+            --hl-yellow: rgba(254, 235, 122, 0.6);
+            --hl-green: rgba(184, 230, 200, 0.6);
         }
 
         * {
@@ -37,14 +34,17 @@
         body {
             font-family: 'Times New Roman', Times, serif;
             background-color: var(--bg-dark);
-            color: var(--ink-black);
+            color: var(--ink-main);
             min-height: 100vh;
             overflow-x: hidden;
             font-size: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         /* ----------------------------------
-           1. Opening Pencil Writing Screen
+           1. Welcome Overlay Screen
         ----------------------------------- */
         #welcome-overlay {
             position: fixed;
@@ -70,31 +70,30 @@
         .sketch-card {
             background: var(--paper-cream);
             background-image: 
-                linear-gradient(var(--paper-grid) 1px, transparent 1px),
-                linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px);
-            background-size: 20px 20px;
+                radial-gradient(#d6cbba 1.5px, transparent 1.5px);
+            background-size: 18px 18px;
             border: 3px solid #2d261e;
-            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            border-radius: 20px;
             padding: 4rem 3.5rem;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
             position: relative;
-            max-width: 880px;
+            max-width: 860px;
             width: 90%;
             text-align: center;
-            transform: rotate(-1deg);
+            transform: rotate(-0.8deg);
         }
 
         .pencil-stage {
             position: relative;
             display: inline-block;
-            min-height: 120px;
+            min-height: 110px;
             padding-right: 35px;
         }
 
         .pencil-text {
-            font-family: 'Cutie Star', 'Caveat', cursive, sans-serif;
-            font-size: 3.6rem;
-            color: var(--pencil-gray);
+            font-family: 'Cutie Star', 'Caveat', cursive;
+            font-size: 3.5rem;
+            color: #2c2c2c;
             letter-spacing: 1px;
             line-height: 1.3;
             white-space: pre-wrap;
@@ -103,8 +102,8 @@
 
         .pencil-cursor {
             position: absolute;
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             pointer-events: none;
             transition: transform 0.05s linear, left 0.08s linear, top 0.08s linear;
             z-index: 100;
@@ -119,9 +118,9 @@
         .animated-corgi {
             position: absolute;
             top: -45px;
-            right: 25px;
-            width: 100px;
-            height: 100px;
+            right: 20px;
+            width: 95px;
+            height: 95px;
             pointer-events: none;
             z-index: 50;
             animation: corgiBounce 2s infinite ease-in-out;
@@ -129,42 +128,28 @@
 
         .corgi-tail {
             transform-origin: 88px 65px;
-            animation: corgiTailWag 0.35s infinite ease-in-out alternate;
-        }
-
-        .corgi-ear-l {
-            transform-origin: 35px 45px;
-            animation: corgiEarWag 1.8s infinite ease-in-out;
-        }
-
-        .corgi-ear-r {
-            transform-origin: 85px 45px;
-            animation: corgiEarWag 1.8s infinite ease-in-out 0.2s;
+            animation: corgiTailWag 0.3s infinite ease-in-out alternate;
         }
 
         @keyframes corgiBounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+            50% { transform: translateY(-6px); }
         }
 
         @keyframes corgiTailWag {
-            0% { transform: rotate(-10deg); }
-            100% { transform: rotate(15deg); }
-        }
-
-        @keyframes corgiEarWag {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(6deg); }
+            0% { transform: rotate(-12deg); }
+            100% { transform: rotate(18deg); }
         }
 
         /* ----------------------------------
-           2. Dark Green Leather Journal Layout
+           2. Siraenglish Style Journal Layout
         ----------------------------------- */
         .main-container {
-            padding: 2.5rem 1rem;
+            padding: 2rem 1rem;
             opacity: 0;
             transition: opacity 0.8s ease;
-            max-width: 1100px;
+            max-width: 1080px;
+            width: 100%;
             margin: 0 auto;
         }
 
@@ -172,117 +157,130 @@
             opacity: 1;
         }
 
-        /* Navigation Header with Ripped Paper / Tape Stickers */
-        nav {
+        /* Cute Scrapbook Header & Navigation */
+        header {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
             margin-bottom: 2rem;
             position: relative;
         }
 
+        .site-title-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
         .nav-logo {
             font-family: 'Times New Roman', Times, serif;
-            font-size: 3.2rem;
+            font-size: 3.5rem;
             font-weight: bold;
-            color: #f2ebd9;
-            letter-spacing: 1px;
-            transform: rotate(-1deg);
-            text-shadow: 2px 3px 6px rgba(0,0,0,0.8);
+            color: #f7f2e6;
+            letter-spacing: 2px;
+            text-shadow: 3px 4px 10px rgba(0,0,0,0.8);
         }
 
         .nav-links {
             display: flex;
-            gap: 1.2rem;
+            gap: 1rem;
             list-style: none;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
-        /* Paper Patch Sticker Tabs (No Emoji) */
+        /* Sticker Patch Navigation Tabs */
         .nav-item {
             font-family: 'Times New Roman', Times, serif;
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: bold;
             color: #2b2b2b;
             cursor: pointer;
             padding: 0.5rem 1.4rem;
             position: relative;
-            box-shadow: 3px 4px 8px rgba(0,0,0,0.5);
-            transition: all 0.2s ease;
+            box-shadow: 3px 4px 10px rgba(0,0,0,0.4);
+            transition: all 0.25s ease;
+            border-radius: 4px;
             user-select: none;
         }
 
-        .nav-tab-home {
-            background: var(--tape-kraft);
-            clip-path: polygon(0% 5%, 95% 0%, 100% 90%, 5% 100%, 0% 92%);
+        .nav-tab-1 {
+            background: var(--accent-yellow);
+            clip-path: polygon(0% 4%, 96% 0%, 100% 92%, 4% 100%);
             transform: rotate(-2deg);
         }
-        .nav-tab-about {
-            background: var(--tape-blue);
-            clip-path: polygon(4% 0%, 100% 3%, 96% 98%, 0% 95%);
+        .nav-tab-2 {
+            background: var(--accent-blue);
+            clip-path: polygon(3% 0%, 100% 5%, 95% 100%, 0% 95%);
             transform: rotate(1.5deg);
         }
-        .nav-tab-edu {
-            background: var(--tape-pink);
-            clip-path: polygon(2% 8%, 98% 0%, 100% 92%, 0% 100%);
-            transform: rotate(-1deg);
+        .nav-tab-3 {
+            background: var(--accent-pink);
+            clip-path: polygon(0% 0%, 98% 3%, 100% 96%, 2% 100%);
+            transform: rotate(-1.5deg);
         }
-        .nav-tab-exp {
-            background: var(--tape-yellow);
-            clip-path: polygon(0% 0%, 96% 4%, 100% 95%, 4% 92%);
+        .nav-tab-4 {
+            background: var(--tape-mint);
+            clip-path: polygon(4% 0%, 100% 0%, 96% 98%, 0% 92%);
             transform: rotate(2deg);
         }
-        .nav-tab-contact {
-            background: var(--tape-mint);
-            clip-path: polygon(5% 2%, 100% 0%, 95% 100%, 0% 96%);
+        .nav-tab-5 {
+            background: #f0e68c;
+            clip-path: polygon(0% 3%, 95% 0%, 100% 100%, 3% 96%);
             transform: rotate(-2deg);
         }
 
         .nav-item:hover, .nav-item.active {
             transform: scale(1.08) translateY(-4px) rotate(0deg);
-            box-shadow: 5px 8px 12px rgba(0,0,0,0.7);
+            box-shadow: 6px 10px 15px rgba(0,0,0,0.6);
             filter: brightness(1.05);
         }
 
-        /* Main Dark Green Leather Journal Cover */
+        /* Leather Journal Spread */
         .journal-binder {
-            background: linear-gradient(135deg, var(--leather-green) 0%, var(--leather-dark) 100%);
-            border: 2px solid #2a4734;
-            border-radius: 20px;
-            padding: 2.2rem;
+            background: linear-gradient(145deg, #182c20 0%, #0d1a12 100%);
+            border: 2px solid #284431;
+            border-radius: 18px;
+            padding: 2rem;
             position: relative;
             box-shadow: 
-                0 30px 60px rgba(0,0,0,0.95), 
-                inset 0 0 15px rgba(0,0,0,0.8),
-                inset 0 0 0 3px rgba(255,255,255,0.05);
+                0 30px 60px rgba(0,0,0,0.95),
+                inset 0 0 20px rgba(0,0,0,0.7);
         }
 
-        /* Leather Metal Side Clamp (Image 2 style) */
+        /* Side Metal Binder Clip */
         .binder-clamp-side {
             position: absolute;
-            right: -18px;
-            top: 40%;
-            width: 48px;
-            height: 70px;
-            background: linear-gradient(180deg, #d8d8d8 0%, #8c8c8c 50%, #525252 100%);
+            right: -16px;
+            top: 38%;
+            width: 44px;
+            height: 72px;
+            background: linear-gradient(180deg, #e0e0e0 0%, #999999 50%, #555555 100%);
             border: 2px solid #1a1a1a;
             border-radius: 6px;
             box-shadow: -4px 6px 12px rgba(0,0,0,0.6);
             z-index: 60;
         }
-        .binder-clamp-side::after {
-            content: '';
+
+        .pink-ticket-tag {
             position: absolute;
-            right: -16px;
-            top: 22px;
-            width: 20px;
-            height: 22px;
-            background: linear-gradient(90deg, #999, #eee, #666);
-            border: 2px solid #222;
-            border-radius: 50%;
+            top: -18px;
+            right: 40px;
+            width: 50px;
+            height: 130px;
+            background: #e91e63;
+            border: 1px dashed #ffffff;
+            color: #ffffff;
+            padding: 8px;
+            font-size: 0.85rem;
+            writing-mode: vertical-rl;
+            text-align: center;
+            letter-spacing: 3px;
+            box-shadow: 4px 6px 12px rgba(0,0,0,0.3);
+            z-index: 15;
+            transform: rotate(2deg);
         }
 
-        /* Pages Spread */
+        /* Journal Inner Spread */
         .journal-spread {
             background-color: var(--paper-cream);
             background-image: 
@@ -290,26 +288,24 @@
                 linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px);
             background-size: 22px 22px;
             border-radius: 8px;
-            border: 1px solid #c8bfae;
+            border: 1px solid #d4cbb8;
             display: flex;
             min-height: 640px;
             position: relative;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.12);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.08);
         }
 
-        /* Center Red Thread Stitched Spine (Image 3 style) */
         .spine-center-thread {
             position: absolute;
             left: 50%;
             top: 0;
             bottom: 0;
             width: 2px;
-            border-right: 2px dashed #b83232;
+            border-right: 2px dashed #a83232;
             transform: translateX(-50%);
             z-index: 40;
         }
 
-        /* Pages */
         .page-col {
             flex: 1;
             padding: 2.2rem;
@@ -318,55 +314,36 @@
         }
 
         .page-col-left {
-            border-right: 1px solid rgba(0,0,0,0.06);
+            border-right: 1px solid rgba(0,0,0,0.05);
         }
 
-        /* Metallic Paperclip & Ticket Attachments */
+        /* Decorative Accessories */
         .metal-paperclip {
             position: absolute;
             width: 14px;
-            height: 42px;
-            border: 3px solid #78909c;
-            border-radius: 12px;
-            box-shadow: 2px 4px 6px rgba(0,0,0,0.3);
+            height: 40px;
+            border: 3px solid #607d8b;
+            border-radius: 10px;
+            box-shadow: 2px 4px 6px rgba(0,0,0,0.25);
             z-index: 35;
-            transform: rotate(10deg);
-        }
-
-        .pink-ticket-tag {
-            position: absolute;
-            top: -20px;
-            right: 30px;
-            width: 55px;
-            height: 140px;
-            background: #f06292;
-            border: 1.5px solid #c2185b;
-            color: #ffffff;
-            padding: 8px;
-            font-size: 0.9rem;
-            writing-mode: vertical-rl;
-            text-align: center;
-            letter-spacing: 2px;
-            box-shadow: 4px 6px 12px rgba(0,0,0,0.25);
-            z-index: 15;
-            transform: rotate(3deg);
+            transform: rotate(8deg);
         }
 
         .tape-strip {
             position: absolute;
-            height: 24px;
-            background: rgba(245, 220, 120, 0.75);
+            height: 22px;
+            background: rgba(252, 227, 138, 0.8);
             z-index: 20;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
         }
 
         /* Polaroid Photo Stack */
         .polaroid-frame {
             background: #ffffff;
-            padding: 10px 10px 20px 10px;
-            border: 1px solid #ccc;
-            box-shadow: 6px 10px 15px rgba(0,0,0,0.18);
-            transform: rotate(-3deg);
+            padding: 12px 12px 22px 12px;
+            border: 1px solid #ddd;
+            box-shadow: 6px 10px 18px rgba(0,0,0,0.15);
+            transform: rotate(-2.5deg);
             width: 220px;
             margin: 0 auto 1.5rem auto;
             position: relative;
@@ -375,12 +352,12 @@
         .polaroid-img {
             width: 100%;
             height: 155px;
-            background: #1e2d24;
+            background: #1c2b20;
             border: 1px solid #101a14;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #f5efe0;
+            color: #faf5e8;
             font-family: 'Times New Roman', Times, serif;
             font-size: 2.8rem;
             font-weight: bold;
@@ -388,15 +365,16 @@
         }
 
         .sticky-card {
-            background: #fff3c4;
+            background: #fff8d6;
             padding: 1.2rem;
-            border: 1px solid #e2d29b;
-            box-shadow: 4px 6px 10px rgba(0,0,0,0.12);
-            transform: rotate(1.5deg);
+            border: 1px solid #ece0ad;
+            box-shadow: 4px 6px 12px rgba(0,0,0,0.08);
+            transform: rotate(1deg);
             margin-top: 1rem;
+            border-radius: 2px;
         }
 
-        /* Content Blocks */
+        /* Content Sections */
         .content-panel {
             display: none;
         }
@@ -433,12 +411,12 @@
         }
 
         .journal-entry {
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid #dcd3c1;
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid #ded5c5;
             border-radius: 6px;
             padding: 1rem;
             margin-bottom: 1rem;
-            box-shadow: 2px 3px 6px rgba(0,0,0,0.05);
+            box-shadow: 2px 3px 6px rgba(0,0,0,0.04);
         }
 
         .entry-heading {
@@ -463,11 +441,11 @@
         .paragraph-text {
             font-size: 1.2rem;
             line-height: 1.75;
-            color: var(--ink-black);
+            color: var(--ink-main);
             margin-bottom: 0.8rem;
         }
 
-        /* Experience Subpages */
+        /* Subpage Pagination */
         .exp-subpage { display: none; }
         .exp-subpage.active { display: block; }
 
@@ -491,7 +469,7 @@
         }
 
         .journal-btn.active {
-            background: var(--tape-yellow);
+            background: var(--accent-yellow);
         }
 
         /* Form Styling */
@@ -517,7 +495,7 @@
             font-size: 1.25rem;
             font-weight: bold;
             padding: 0.5rem 1.5rem;
-            background: var(--tape-kraft);
+            background: var(--accent-yellow);
             border: 1px solid #2b2b2b;
             box-shadow: 3px 3px 0px #2b2b2b;
             cursor: pointer;
@@ -536,15 +514,15 @@
 </head>
 <body>
 
-    <!-- 1. Pencil Stroke Writing Screen with Animated Corgi -->
+    <!-- 1. Opening Pencil Writing Animation Cover -->
     <div id="welcome-overlay" onclick="enterSite()">
         <div class="sketch-card">
             <!-- Animated Corgi Sticker -->
             <svg class="animated-corgi" viewBox="0 0 120 120">
                 <g>
                     <!-- Ears -->
-                    <path class="corgi-ear-l" d="M 35 45 L 20 15 C 18 10, 32 12, 42 35 Z" fill="#e59849" stroke="#2b2b2b" stroke-width="2.5"/>
-                    <path class="corgi-ear-r" d="M 85 45 L 100 15 C 102 10, 88 12, 78 35 Z" fill="#e59849" stroke="#2b2b2b" stroke-width="2.5"/>
+                    <path d="M 35 45 L 20 15 C 18 10, 32 12, 42 35 Z" fill="#e59849" stroke="#2b2b2b" stroke-width="2.5"/>
+                    <path d="M 85 45 L 100 15 C 102 10, 88 12, 78 35 Z" fill="#e59849" stroke="#2b2b2b" stroke-width="2.5"/>
                     <path d="M 32 40 L 23 20 C 22 17, 30 18, 38 34 Z" fill="#f4c28c"/>
                     <path d="M 88 40 L 97 20 C 98 17, 90 18, 82 34 Z" fill="#f4c28c"/>
                     <!-- Tail -->
@@ -565,11 +543,10 @@
                 </g>
             </svg>
 
-            <!-- Pencil Text Container -->
+            <!-- Pencil Stage -->
             <div class="pencil-stage" id="pencil-stage">
                 <span class="pencil-text" id="pencil-text-target"></span>
                 
-                <!-- Vector Pencil Cursor -->
                 <svg id="pencil-icon" class="pencil-cursor" viewBox="0 0 24 24" fill="none" stroke="#2b2b2b" stroke-width="2">
                     <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" fill="#f57f17"/>
                 </svg>
@@ -581,45 +558,40 @@
         </div>
     </div>
 
-    <!-- 2. Main Dark Green Leather Journal -->
+    <!-- 2. Main Scrapbook Journal Page -->
     <div class="main-container" id="main-content">
-        <!-- Navigation with Ripped Paper / Tape Stickers (No Emoji) -->
-        <nav>
-            <div class="nav-logo">Zoe Yang</div>
+        <header>
+            <div class="site-title-container">
+                <div class="nav-logo">Zoe Yang</div>
+            </div>
             <ul class="nav-links">
-                <li class="nav-item nav-tab-home active" onclick="openSection('home', this)">Home</li>
-                <li class="nav-item nav-tab-about" onclick="openSection('about', this)">About</li>
-                <li class="nav-item nav-tab-edu" onclick="openSection('education', this)">Education</li>
-                <li class="nav-item nav-tab-exp" onclick="openSection('experience', this)">Experience</li>
-                <li class="nav-item nav-tab-contact" onclick="openSection('contact', this)">Contact</li>
+                <li class="nav-item nav-tab-1 active" onclick="openSection('home', this)">Home</li>
+                <li class="nav-item nav-tab-2" onclick="openSection('about', this)">About</li>
+                <li class="nav-item nav-tab-3" onclick="openSection('education', this)">Education</li>
+                <li class="nav-item nav-tab-4" onclick="openSection('experience', this)">Experience</li>
+                <li class="nav-item nav-tab-5" onclick="openSection('contact', this)">Contact</li>
             </ul>
-        </nav>
+        </header>
 
-        <!-- Leather Book Cover -->
+        <!-- Journal Binder Spread -->
         <div class="journal-binder">
-            <!-- Side Metal Clamp -->
             <div class="binder-clamp-side"></div>
-
-            <!-- Pink Ticket Tag Bookmark -->
             <div class="pink-ticket-tag">JOURNAL 2026</div>
 
             <div class="journal-spread">
-                <!-- Stitched Center Seam Thread -->
                 <div class="spine-center-thread"></div>
 
-                <!-- Left Page: Fixed Profile Collages -->
+                <!-- Left Column -->
                 <div class="page-col page-col-left">
                     <div class="tape-strip" style="width: 70px; top: -10px; left: 20%; transform: rotate(-4deg);"></div>
                     <div class="metal-paperclip" style="top: -12px; right: 25px;"></div>
 
-                    <!-- Polaroid Photo Container -->
                     <div class="polaroid-frame">
                         <div class="polaroid-img">ZOE</div>
                     </div>
 
-                    <!-- Sticky Note -->
                     <div class="sticky-card">
-                        <div style="font-family: 'Times New Roman', Times, serif; font-size: 1.5rem; font-weight: bold; margin-bottom: 0.4rem; color: #1b2e21;">Quick Notes</div>
+                        <div style="font-family: 'Times New Roman', Times, serif; font-size: 1.4rem; font-weight: bold; margin-bottom: 0.4rem; color: #1c2b20;">Quick Notes</div>
                         <div style="font-size: 1.1rem; line-height: 1.6;">
                             <b>Degree:</b> MA in Translation @ <span class="mark-bg-yellow">HKU</span><br>
                             <b>Location:</b> Hong Kong<br>
@@ -628,9 +600,9 @@
                     </div>
                 </div>
 
-                <!-- Right Page: Dynamic Content Sections -->
+                <!-- Right Column (Dynamic Tabs) -->
                 <div class="page-col page-col-right">
-                    <div class="tape-strip" style="width: 80px; top: -10px; right: 20%; transform: rotate(3deg); background: var(--tape-pink);"></div>
+                    <div class="tape-strip" style="width: 80px; top: -10px; right: 20%; transform: rotate(3deg); background: #f4c2c2;"></div>
 
                     <!-- TAB 1: HOME -->
                     <div id="sec-home" class="content-panel active">
@@ -764,12 +736,11 @@
         </div>
     </div>
 
-    <!-- JS Scripts -->
+    <!-- Interactive Scripts -->
     <script>
         const targetText = "Hi, I'm Zoe! Welcome to my website.";
         const textElem = document.getElementById('pencil-text-target');
         const pencilIcon = document.getElementById('pencil-icon');
-        const stage = document.getElementById('pencil-stage');
         let index = 0;
 
         function runHandwritingAnimation() {
@@ -812,7 +783,7 @@
 
             document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
             const target = document.getElementById('sec-' + secName);
-            if (target) target.classList.active ? null : target.classList.add('active');
+            if (target) target.classList.add('active');
         }
 
         function switchExpSub(pageNum) {
