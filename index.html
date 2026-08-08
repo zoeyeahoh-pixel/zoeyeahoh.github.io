@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YANG Yanyu (Zoe) | Personal Website</title>
-    <!-- Google Fonts for Bubble-style Welcome Text -->
+    <title>Zoe Yang | Hand-drawn Journal</title>
+    <!-- Google Fonts for Handwriting & Fun Stickers -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f3ece1;
-            --binder-red: #a8242d;
-            --binder-clasp: #851a22;
-            --paper-bg: #fdfbf7;
-            --text-dark: #2d2623;
-            --text-muted: #6b5f57;
-            --accent-red: #a8242d;
-            --sticky-yellow: #fff4b8;
-            --tape-pink: rgba(244, 166, 172, 0.65);
-            --shadow-soft: 0 12px 35px rgba(0, 0, 0, 0.15);
+            /* Yellow & Blue Aesthetic Theme */
+            --bg-color: #f0f4f8;
+            --binder-blue: #2a5298;
+            --binder-blue-dark: #1e3c72;
+            --binder-accent: #fbc02d;
+            --paper-bg: #fffdf5;
+            --text-dark: #2c3e50;
+            --text-muted: #607d8b;
+            --yellow-sticky: #fff59d;
+            --tape-blue: rgba(100, 181, 246, 0.75);
+            --tape-yellow: rgba(255, 238, 88, 0.75);
+            
+            /* Highlighter Colors */
+            --hl-yellow: linear-gradient(100deg, rgba(255, 235, 59, 0) 1%, rgba(255, 235, 59, 0.8) 25%, rgba(255, 235, 59, 0.8) 80%, rgba(255, 235, 59, 0) 98%);
+            --hl-blue: linear-gradient(100deg, rgba(129, 212, 250, 0) 1%, rgba(129, 212, 250, 0.85) 25%, rgba(129, 212, 250, 0.85) 80%, rgba(129, 212, 250, 0) 98%);
         }
 
         * {
@@ -29,17 +34,21 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: 'Patrick Hand', cursive, sans-serif;
             background-color: var(--bg-color);
-            background-image: radial-gradient(#d3c5b4 1.2px, transparent 1.2px);
-            background-size: 24px 24px;
+            background-image: 
+                radial-gradient(#b0bec5 1.5px, transparent 1.5px),
+                radial-gradient(#b0bec5 1.5px, #f0f4f8 1.5px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
             color: var(--text-dark);
             min-height: 100vh;
             overflow-x: hidden;
+            font-size: 1.2rem;
         }
 
         /* ----------------------------------
-           1. Welcome Overlay (Landing Screen)
+           1. Welcome Screen (Typing & Rainbow)
         ----------------------------------- */
         #welcome-overlay {
             position: fixed;
@@ -48,22 +57,15 @@
             width: 100vw;
             height: 100vh;
             background-color: var(--bg-color);
-            background-image: radial-gradient(#c8baaa 1.5px, transparent 1.5px);
-            background-size: 28px 28px;
+            background-image: radial-gradient(#90caf9 1.5px, transparent 1.5px);
+            background-size: 26px 26px;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
             cursor: pointer;
-            opacity: 0;
-            animation: fadeInWelcome 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
-
-        @keyframes fadeInWelcome {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
+            opacity: 1;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
         }
 
         #welcome-overlay.hidden {
@@ -72,42 +74,67 @@
             pointer-events: none;
         }
 
-        .bubble-card {
+        .welcome-card {
             background: #ffffff;
-            border: 4px solid var(--accent-red);
+            border: 5px solid var(--binder-accent);
             border-radius: 40px;
-            padding: 3rem 4rem;
-            box-shadow: 0 20px 40px rgba(168, 36, 45, 0.15), inset 0 -6px 0 rgba(168, 36, 45, 0.1);
+            padding: 3.5rem 4.5rem;
+            box-shadow: 0 25px 50px rgba(30, 60, 114, 0.2), inset 0 -8px 0 rgba(251, 192, 45, 0.3);
             text-align: center;
             max-width: 90%;
             position: relative;
-            transform: rotate(-1deg);
+            transform: rotate(-1.5deg);
         }
 
-        .bubble-text {
+        /* Typing Effect Container */
+        .typing-container {
             font-family: 'Fredoka', cursive, sans-serif;
-            font-size: 3rem;
-            color: var(--accent-red);
-            letter-spacing: 1px;
+            font-size: 3.6rem;
             line-height: 1.3;
-            text-shadow: 2px 2px 0px #fce8e9;
+            display: inline-block;
+            white-space: pre-wrap;
+            position: relative;
         }
 
-        .click-hint {
-            margin-top: 2rem;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.8);
-            padding: 0.6rem 1.6rem;
-            border-radius: 30px;
-            border: 2px dashed var(--accent-red);
-            animation: pulseHint 1.8s infinite;
+        /* Animated Colored Handwriting Text */
+        .rainbow-char {
+            display: inline-block;
+            opacity: 0;
+            transform: scale(0.3) translateY(-10px);
+            animation: writeIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.27) forwards;
         }
 
-        @keyframes pulseHint {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.05); opacity: 1; }
+        @keyframes writeIn {
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Stickers on Welcome Screen */
+        .welcome-sticker-1 {
+            position: absolute;
+            top: -30px;
+            left: -20px;
+            font-size: 3.5rem;
+            transform: rotate(-15deg);
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.15));
+            animation: floatSticker 3s infinite ease-in-out;
+        }
+
+        .welcome-sticker-2 {
+            position: absolute;
+            bottom: -25px;
+            right: -15px;
+            font-size: 3.5rem;
+            transform: rotate(12deg);
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.15));
+            animation: floatSticker 3.5s infinite ease-in-out reverse;
+        }
+
+        @keyframes floatSticker {
+            0%, 100% { transform: translateY(0) rotate(-15deg); }
+            50% { transform: translateY(-8px) rotate(-10deg); }
         }
 
         /* ----------------------------------
@@ -123,6 +150,7 @@
             opacity: 1;
         }
 
+        /* Navigation Bar */
         nav {
             max-width: 980px;
             margin: 0 auto 1.8rem auto;
@@ -133,269 +161,302 @@
         }
 
         .nav-logo {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--accent-red);
-            letter-spacing: -0.5px;
+            font-family: 'Caveat', cursive;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--binder-blue);
+            text-shadow: 2px 2px 0px var(--binder-accent);
         }
 
         .nav-links {
             display: flex;
-            gap: 1.2rem;
+            gap: 1rem;
             list-style: none;
             flex-wrap: wrap;
         }
 
         .nav-item {
-            font-weight: 700;
-            color: var(--text-muted);
+            font-family: 'Fredoka', cursive;
+            font-size: 1.2rem;
+            color: var(--text-dark);
             cursor: pointer;
             position: relative;
-            padding: 0.3rem 0.8rem;
-            border-radius: 12px;
+            padding: 0.4rem 1.1rem;
+            border-radius: 20px;
+            background: #ffffff;
+            border: 2px solid #b0bec5;
+            box-shadow: 2px 3px 0px #b0bec5;
             transition: all 0.2s ease;
         }
 
         .nav-item:hover, .nav-item.active {
-            color: var(--accent-red);
-            background: rgba(168, 36, 45, 0.08);
+            color: #ffffff;
+            background: var(--binder-blue);
+            border-color: var(--binder-blue-dark);
+            box-shadow: 2px 4px 0px var(--binder-accent);
+            transform: translateY(-2px);
         }
 
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 15%;
-            width: 70%;
-            height: 3px;
-            background: var(--accent-red);
-            border-radius: 2px;
-        }
-
-        /* Binder Container */
+        /* 3D Binder Frame */
         .binder-wrapper {
             max-width: 980px;
             margin: 0 auto;
             position: relative;
+            perspective: 1200px;
         }
 
         .binder-outer {
-            background: var(--binder-red);
+            background: linear-gradient(135deg, var(--binder-blue) 0%, var(--binder-blue-dark) 100%);
             border-radius: 28px;
-            padding: 2rem 2.2rem;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.22), inset 0 2px 6px rgba(255, 255, 255, 0.2);
+            padding: 2.2rem;
+            box-shadow: 0 25px 50px rgba(25, 42, 86, 0.35), inset 0 2px 4px rgba(255,255,255,0.3);
             position: relative;
+            border: 3px solid rgba(255,255,255,0.2);
         }
 
+        /* Real Metallic Clasp */
         .binder-clasp {
             position: absolute;
             right: -25px;
             top: 50%;
             transform: translateY(-50%);
             width: 55px;
-            height: 80px;
-            background: var(--binder-clasp);
+            height: 90px;
+            background: linear-gradient(135deg, #fbc02d 0%, #f57f17 100%);
             border-radius: 0 16px 16px 0;
-            box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.25);
+            box-shadow: 4px 8px 15px rgba(0,0,0,0.3), inset 1px 1px 2px rgba(255,255,255,0.5);
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 2px solid #f9a825;
         }
 
         .clasp-button {
             width: 32px;
             height: 32px;
-            background: #f1ddb6;
+            background: radial-gradient(circle, #ffffff 0%, #e0e0e0 70%, #9e9e9e 100%);
             border-radius: 50%;
-            border: 2px solid #b89868;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: bold;
-            color: #634b22;
+            border: 2px solid #757575;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.8);
         }
 
+        /* Journal Open Pages */
         .journal-pages {
             background: var(--paper-bg);
             border-radius: 16px;
             display: flex;
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.06), 0 8px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.08), 0 10px 25px rgba(0, 0, 0, 0.12);
             position: relative;
-            min-height: 600px;
+            min-height: 610px;
+            transform-style: preserve-3d;
         }
 
+        /* Real 3D Metallic Rings Spine */
         .ring-binder-spine {
             position: absolute;
             left: 50%;
             top: 0;
             bottom: 0;
-            width: 30px;
+            width: 36px;
             transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             justify-content: space-around;
             align-items: center;
-            padding: 20px 0;
-            z-index: 10;
+            padding: 25px 0;
+            z-index: 50;
         }
 
         .ring {
-            width: 36px;
-            height: 12px;
-            background: linear-gradient(180deg, #e0e0e0 0%, #ffffff 40%, #9e9e9e 100%);
-            border-radius: 6px;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+            width: 44px;
+            height: 14px;
+            background: linear-gradient(180deg, #9e9e9e 0%, #ffffff 45%, #757575 70%, #424242 100%);
+            border-radius: 7px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255,255,255,0.8);
+            border: 1px solid #616161;
         }
 
+        /* Left & Right Page Sections */
         .page {
             flex: 1;
             padding: 2.2rem;
             width: 50%;
+            position: relative;
         }
 
         .page-left {
-            border-right: 1px solid #eae3d2;
+            border-right: 2px solid #e0e0e0;
             padding-right: 2.5rem;
-            background-image: linear-gradient(to right, rgba(0,0,0,0.02), transparent 15%);
+            background-image: 
+                linear-gradient(to right, rgba(0,0,0,0.03), transparent 15%),
+                linear-gradient(#e1f5fe 1px, transparent 1px);
+            background-size: 100% 100%, 100% 28px;
         }
 
         .page-right {
             padding-left: 2.5rem;
-            background-image: linear-gradient(to left, rgba(0,0,0,0.02), transparent 15%);
+            background-image: 
+                linear-gradient(to left, rgba(0,0,0,0.03), transparent 15%),
+                linear-gradient(#e1f5fe 1px, transparent 1px);
+            background-size: 100% 100%, 100% 28px;
         }
 
-        /* Left Page Details */
+        /* Left Page Elements */
         .polaroid-card {
             background: #ffffff;
-            padding: 12px 12px 20px 12px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+            padding: 12px 12px 18px 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
             transform: rotate(-3deg);
-            width: 200px;
+            width: 190px;
             margin: 0 auto 1.5rem auto;
             position: relative;
             border-radius: 2px;
+            border: 1px solid #eee;
         }
 
-        .washi-tape {
+        .washi-tape-blue {
             position: absolute;
-            top: -10px;
-            left: 30%;
-            width: 70px;
-            height: 22px;
-            background: var(--tape-pink);
+            top: -12px;
+            left: 25%;
+            width: 75px;
+            height: 24px;
+            background: var(--tape-blue);
             transform: rotate(-4deg);
-            opacity: 0.85;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .polaroid-img {
             width: 100%;
-            height: 150px;
-            background: #2a3439;
+            height: 140px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
             border-radius: 2px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            font-size: 2.2rem;
+            font-family: 'Caveat', cursive;
+            font-size: 3rem;
             font-weight: bold;
-        }
-
-        .polaroid-caption {
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 8px;
-            font-family: cursive, sans-serif;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
         }
 
         .sticky-note {
-            background: var(--sticky-yellow);
+            background: var(--yellow-sticky);
             padding: 1.2rem;
             border-radius: 2px;
-            box-shadow: 4px 6px 14px rgba(0, 0, 0, 0.1);
+            box-shadow: 5px 8px 16px rgba(0, 0, 0, 0.12);
             transform: rotate(2deg);
             position: relative;
-            margin-top: 1rem;
+            margin-top: 1.2rem;
+            border-bottom-right-radius: 25px 5px;
         }
 
         .push-pin {
             position: absolute;
-            top: -8px;
-            right: 15px;
-            width: 16px;
-            height: 16px;
-            background: #d9383a;
+            top: -10px;
+            right: 20px;
+            width: 18px;
+            height: 18px;
+            background: #e53935;
             border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
         }
 
         .sticky-title {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
             font-weight: 700;
-            font-size: 1rem;
-            color: var(--accent-red);
-            margin-bottom: 0.6rem;
+            color: var(--binder-blue);
+            margin-bottom: 0.4rem;
+            border-bottom: 2px stroke var(--binder-blue);
         }
 
         .sticky-info {
-            font-size: 0.85rem;
+            font-size: 1.15rem;
             line-height: 1.6;
-            color: #4a4035;
+            color: #37474f;
         }
 
-        /* Right Page Panels */
+        /* 3D Page Flip Animation Effect */
+        .page-flip-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            perspective: 1000px;
+        }
+
         .section-panel {
             display: none;
-            animation: fadeIn 0.3s ease-in-out forwards;
+            opacity: 0;
+            transform-origin: left center;
+            transform: rotateY(-15deg);
+            transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .section-panel.active {
             display: block;
+            opacity: 1;
+            transform: rotateY(0deg);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        /* Dynamic Highlighters & Handwriting */
         .section-title {
-            font-size: 1.25rem;
-            color: var(--accent-red);
-            font-weight: 800;
-            margin-bottom: 1.2rem;
-            border-bottom: 2px dotted #e2d9c8;
-            padding-bottom: 0.4rem;
-        }
-
-        .entry-block {
-            margin-bottom: 1.2rem;
-            background: rgba(255, 255, 255, 0.75);
-            padding: 0.9rem 1.1rem;
-            border-radius: 8px;
-            border-left: 3px solid var(--accent-red);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-        }
-
-        .entry-title {
+            font-family: 'Caveat', cursive;
+            font-size: 2.2rem;
+            color: var(--binder-blue);
             font-weight: 700;
-            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            display: inline-block;
+            background: var(--hl-yellow);
+            padding: 0 0.8rem;
+            border-radius: 4px;
+        }
+
+        .hl-yellow {
+            background: var(--hl-yellow);
+            padding: 0 0.3rem;
+            border-radius: 3px;
+        }
+
+        .hl-blue {
+            background: var(--hl-blue);
+            padding: 0 0.3rem;
+            border-radius: 3px;
+        }
+
+        .handwritten-text {
+            font-size: 1.25rem;
+            line-height: 1.8;
             color: var(--text-dark);
         }
 
+        .entry-block {
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            border: 2px dashed #b0bec5;
+            position: relative;
+        }
+
+        .entry-title {
+            font-family: 'Fredoka', cursive;
+            font-size: 1.2rem;
+            color: var(--binder-blue);
+        }
+
         .entry-meta {
-            font-size: 0.82rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
             margin-bottom: 0.3rem;
             font-weight: 600;
         }
 
         .entry-sub {
-            font-size: 0.9rem;
-            color: var(--accent-red);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+            color: #d84315;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
         }
 
         .entry-bullet-list {
@@ -404,101 +465,135 @@
         }
 
         .entry-bullet-list li {
-            font-size: 0.88rem;
+            font-size: 1.05rem;
             color: var(--text-dark);
             margin-bottom: 0.4rem;
             line-height: 1.5;
         }
 
-        /* Contact Form Styles */
+        /* Experience Multi-Page Pagination */
+        .exp-page {
+            display: none;
+        }
+        .exp-page.active {
+            display: block;
+        }
+
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 0.5rem;
+        }
+
+        .page-btn {
+            background: #ffffff;
+            border: 2px solid var(--binder-blue);
+            color: var(--binder-blue);
+            font-family: 'Fredoka', cursive;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px var(--binder-accent);
+            transition: all 0.2s ease;
+        }
+
+        .page-btn.active, .page-btn:hover {
+            background: var(--binder-blue);
+            color: #ffffff;
+        }
+
+        /* Hand-drawn Contact Form */
         .contact-form {
             display: flex;
             flex-direction: column;
-            gap: 0.9rem;
-            background: rgba(255, 255, 255, 0.6);
-            padding: 1.2rem;
-            border-radius: 12px;
-            border: 1px stroke rgba(0,0,0,0.05);
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
+            gap: 0.8rem;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 1rem 1.2rem;
+            border-radius: 16px;
+            border: 2px solid #b0bec5;
+            box-shadow: 3px 4px 0px #cfd8dc;
         }
 
         .form-group label {
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: var(--text-dark);
+            font-family: 'Fredoka', cursive;
+            font-size: 1.1rem;
+            color: var(--binder-blue);
         }
 
         .form-group input, .form-group textarea {
             width: 100%;
-            padding: 0.6rem;
-            border: 1.5px solid #e0d5c1;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 0.9rem;
+            padding: 0.5rem 0.8rem;
+            border: 2px solid #b0bec5;
+            border-radius: 10px;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.15rem;
             background: #ffffff;
             color: var(--text-dark);
             outline: none;
-            transition: border-color 0.2s ease;
         }
 
         .form-group input:focus, .form-group textarea:focus {
-            border-color: var(--accent-red);
+            border-color: var(--binder-blue);
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.15);
         }
 
         .btn-send {
-            background: var(--accent-red);
-            color: #ffffff;
-            border: none;
-            padding: 0.7rem 1.5rem;
+            background: var(--binder-accent);
+            color: var(--text-dark);
+            border: 2px solid #f57f17;
+            padding: 0.6rem 1.8rem;
             border-radius: 20px;
-            font-size: 0.95rem;
-            font-weight: 700;
+            font-family: 'Fredoka', cursive;
+            font-size: 1.15rem;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(168, 36, 45, 0.3);
-            transition: all 0.2s ease;
+            box-shadow: 3px 4px 0px #f57f17;
             align-self: flex-start;
-            margin-top: 0.4rem;
+            transition: all 0.2s ease;
         }
 
         .btn-send:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 14px rgba(168, 36, 45, 0.4);
+            box-shadow: 3px 6px 0px #f57f17;
+        }
+
+        /* Decorative Hand-Drawn Stickers */
+        .sticker-decor {
+            position: absolute;
+            font-size: 2rem;
+            pointer-events: none;
+            filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.15));
+            z-index: 20;
         }
 
         @media (max-width: 820px) {
             .journal-pages { flex-direction: column; }
             .page { width: 100%; padding: 1.5rem; }
-            .page-left { border-right: none; border-bottom: 1px solid #eae3d2; }
+            .page-left { border-right: none; border-bottom: 2px solid #e0e0e0; }
             .ring-binder-spine, .binder-clasp { display: none; }
             nav { flex-direction: column; gap: 1rem; }
-            .bubble-text { font-size: 2rem; }
+            .typing-container { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. Welcome Overlay Screen -->
+    <!-- 1. Welcome Overlay Screen with Animated Rainbow Pen Writing -->
     <div id="welcome-overlay" onclick="enterSite()">
-        <div class="bubble-card">
-            <div class="bubble-text">
-                Hi, I'm Zoe!<br>Welcome to my website!
-            </div>
-        </div>
-        <div class="click-hint">
-            👉 Click anywhere to enter
+        <div class="welcome-card">
+            <span class="sticker-decor welcome-sticker-1">🎨</span>
+            <span class="sticker-decor welcome-sticker-2">✨</span>
+            <div class="typing-container" id="rainbow-text-target"></div>
         </div>
     </div>
 
-    <!-- 2. Main Site Wrapper -->
+    <!-- 2. Main Hand-drawn Journal Interface -->
     <div class="main-container" id="main-content">
-        <!-- Navigation Bar -->
+        <!-- Header Nav with Customized Logo -->
         <nav>
-            <div class="nav-logo">Zoe YANG</div>
+            <div class="nav-logo">Zoe Yang</div>
             <ul class="nav-links">
                 <li class="nav-item active" onclick="switchTab('home', this)">Home</li>
                 <li class="nav-item" onclick="switchTab('about', this)">About</li>
@@ -508,12 +603,12 @@
             </ul>
         </nav>
 
-        <!-- Binder Outer Container -->
+        <!-- 3D Leather Journal Binder Frame -->
         <div class="binder-wrapper">
             <div class="binder-outer">
                 <div class="journal-pages">
                     
-                    <!-- Center Binder Rings -->
+                    <!-- Metallic Ring Spine -->
                     <div class="ring-binder-spine">
                         <div class="ring"></div>
                         <div class="ring"></div>
@@ -522,175 +617,210 @@
                         <div class="ring"></div>
                     </div>
 
-                    <!-- Left Page (Fixed Personal Profile Card) -->
+                    <!-- Left Page: Fixed Profile & Quick Facts -->
                     <div class="page page-left">
+                        <span class="sticker-decor" style="top: 10px; right: 15px; rotate: 15deg;">📌</span>
                         <div class="polaroid-card">
-                            <div class="washi-tape"></div>
+                            <div class="washi-tape-blue"></div>
                             <div class="polaroid-img">ZOE</div>
-                            <div class="polaroid-caption">days @ HKU 🎓</div>
                         </div>
 
                         <div class="sticky-note">
                             <div class="push-pin"></div>
-                            <div class="sticky-title">Quick Profile</div>
+                            <div class="sticky-title">Quick Facts</div>
                             <div class="sticky-info">
-                                <div>🎓 <b>MA in Translation</b> @ HKU</div>
-                                <div>📍 <b>Hong Kong</b></div>
-                                <div>✉️ <b>zoeyeahoh@gmail.com</b></div>
-                                <div>📞 <b>(852) 84958875</b></div>
+                                <div>🎓 <span class="hl-yellow">MA in Translation @ HKU</span></div>
+                                <div>📍 <span class="hl-blue">Hong Kong</span></div>
+                                <div>🗣️ Mandarin · English · Cantonese</div>
                             </div>
                         </div>
+
+                        <span class="sticker-decor" style="bottom: 15px; left: 20px; rotate: -20deg;">🌸</span>
                     </div>
 
-                    <!-- Right Page (Dynamic Content Tabs) -->
+                    <!-- Right Page: Dynamic Page-flipping Tabs -->
                     <div class="page page-right">
-                        
-                        <!-- TAB 1: HOME -->
-                        <div id="tab-home" class="section-panel active">
-                            <div class="section-title">✨ Welcome</div>
-                            <p style="font-size: 1.05rem; line-height: 1.8; color: var(--text-dark); background: rgba(255,255,255,0.7); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--accent-red);">
-                                Hello, I'm Zoe Yang. I'm a fresh graduate from the University of Hong Kong majoring in MA in the field of Translation, currently looking for opportunities in Marketing, Communications, Public Relations, Advertising and Translation.
-                            </p>
-                        </div>
-
-                        <!-- TAB 2: ABOUT -->
-                        <div id="tab-about" class="section-panel">
-                            <div class="section-title">🙋‍♀️ About Me</div>
-                            <p style="font-size: 0.95rem; line-height: 1.7; color: var(--text-dark); margin-bottom: 1rem;">
-                                Passioned localization and communications specialist with extensive academic training from HKU and CityU Macau. Skilled in cross-cultural copywriting, content strategy, and multi-channel campaign execution.
-                            </p>
-                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 1px dashed var(--accent-red);">
-                                <b>Languages:</b> Mandarin (Native), English (IELTS 7.0), Cantonese (Conversational)
-                            </div>
-                        </div>
-
-                        <!-- TAB 3: EDUCATION -->
-                        <div id="tab-education" class="section-panel">
-                            <div class="section-title">🎓 Education</div>
+                        <div class="page-flip-container">
                             
-                            <div class="entry-block">
-                                <div class="entry-title">The University of Hong Kong</div>
-                                <div class="entry-meta">2025 – 2026</div>
-                                <div class="entry-sub">Master in the Field of Translation</div>
-                                <p style="font-size: 0.88rem; color: var(--text-dark);">
-                                    <b>Core Course:</b> Financial Translation, Mass Media Translation, Interpreting, Government & Commercial Texts, and Legal Translation.
+                            <!-- TAB 1: HOME -->
+                            <div id="tab-home" class="section-panel active">
+                                <div class="section-title">✨ Welcome!</div>
+                                <p class="handwritten-text" style="background: rgba(255,255,255,0.9); padding: 1.2rem; border-radius: 12px; border: 2px solid #b0bec5; box-shadow: 2px 3px 0px #cfd8dc;">
+                                    Hello, I'm <span class="hl-yellow">Zoe Yang</span>. I'm a fresh graduate from <span class="hl-blue">The University of Hong Kong</span> majoring in MA in the field of Translation, currently looking for opportunities in <span class="hl-yellow">Marketing</span>, <span class="hl-yellow">Communications</span>, <span class="hl-yellow">Public Relations</span>, <span class="hl-yellow">Advertising</span> and <span class="hl-yellow">Translation</span>.
                                 </p>
+                                <span class="sticker-decor" style="bottom: 20px; right: 20px; rotate: 10deg;">🌟</span>
                             </div>
 
-                            <div class="entry-block">
-                                <div class="entry-title">City University of Macau</div>
-                                <div class="entry-meta">2021 – 2025</div>
-                                <div class="entry-sub">Bachelor of English</div>
-                                <p style="font-size: 0.88rem; color: var(--text-dark);">
-                                    <b>Core coursework:</b> Consecutive & Simultaneous Interpretation, Translation Theory, Translation Criticism, and News Translation.
+                            <!-- TAB 2: ABOUT -->
+                            <div id="tab-about" class="section-panel">
+                                <div class="section-title">🙋‍♀️ About Me</div>
+                                <p class="handwritten-text" style="margin-bottom: 1rem;">
+                                    Passionate localization and communications specialist with extensive academic training from <span class="hl-blue">HKU</span> and <span class="hl-blue">CityU Macau</span>[cite: 1]. Skilled in cross-cultural copywriting, content strategy, and multi-channel campaign execution[cite: 1].
                                 </p>
-                            </div>
-                        </div>
-
-                        <!-- TAB 4: EXPERIENCE -->
-                        <div id="tab-experience" class="section-panel" style="max-height: 480px; overflow-y: auto; padding-right: 0.5rem;">
-                            <div class="section-title">💼 Experience</div>
-                            
-                            <!-- 1 -->
-                            <div class="entry-block">
-                                <div class="entry-title">Smith & Associates</div>
-                                <div class="entry-sub">Marketing Intern</div>
-                                <div class="entry-meta">Jun. 2026 – Aug. 2026 | Hong Kong</div>
-                                <ul class="entry-bullet-list">
-                                    <li>Translated and localized over 50 marketing assets, including brochures, newsletters, and presentations</li>
-                                    <li>Maintained and updated company’s website, translating 20+ English press releases and market insights to ensure precise and timely localized communications</li>
-                                    <li>Assisted integrated marketing campaigns across multi-digital channels, driving consistent brand messaging and audience reach</li>
-                                </ul>
+                                <div style="background: var(--yellow-sticky); padding: 1rem; border-radius: 8px; border: 2px dashed #f57f17; font-size: 1.15rem;">
+                                    💡 <b>Language Skills:</b><br>
+                                    Mandarin (Native), English (IELTS 7.0), Cantonese (Conversational)[cite: 1]
+                                </div>
                             </div>
 
-                            <!-- 2 -->
-                            <div class="entry-block">
-                                <div class="entry-title">MAIYA MEDIA</div>
-                                <div class="entry-sub">Translation Intern</div>
-                                <div class="entry-meta">Jan. 2025 – May 2025 | Hangzhou</div>
-                                <ul class="entry-bullet-list">
-                                    <li>Completed translation for 50+ short dramas across modern, historical, and urban genres, delivering 900+ episodes with a peak monthly output of 280 episodes</li>
-                                    <li>Proofread, polished, and reviewed dialogue translations and dubbing for 360+ episodes, ensuring localization and logical accuracy</li>
-                                    <li>Managed multiple translation tasks simultaneously, including translation for log keepers and script proofreading, ensuring end-to-end quality and efficiency</li>
-                                </ul>
-                            </div>
-
-                            <!-- 3 -->
-                            <div class="entry-block">
-                                <div class="entry-title">Rector’s Office</div>
-                                <div class="entry-sub">Student Ambassador (Copywriting)</div>
-                                <div class="entry-meta">Nov. 2023 – Dec. 2024 | Macao</div>
-                                <ul class="entry-bullet-list">
-                                    <li>Drafted and translated bilingual content for the university website, including news articles and higher education documents</li>
-                                    <li>Supported event coordination for orientations, lectures, and official ceremonies, ensuring smooth execution and effective communication with diverse stakeholders.</li>
-                                </ul>
-                            </div>
-
-                            <!-- 4 -->
-                            <div class="entry-block">
-                                <div class="entry-title">Zhejiang Yinqingli Co., Ltd.</div>
-                                <div class="entry-sub">Intern</div>
-                                <div class="entry-meta">Jun. 2024 – Aug. 2024 | Hangzhou</div>
-                                <ul class="entry-bullet-list">
-                                    <li>Produced press releases and digital content for 10+ companies and maintained other English information, including English copy, images, and videos, to the backend</li>
-                                    <li>Translated more than 30 Chinese manuscripts provided by customers and uploaded them to their official websites, which received unanimous praise from customers</li>
-                                </ul>
-                            </div>
-
-                            <!-- 5 -->
-                            <div class="entry-block">
-                                <div class="entry-title">Hangzhou Connect Fun Technology Co., Ltd.</div>
-                                <div class="entry-sub">Intern</div>
-                                <div class="entry-meta">Jun. 2023 – Jul. 2023 | Hangzhou</div>
-                                <ul class="entry-bullet-list">
-                                    <li>Role as the leader of the internship team, collected, compiled and reviewed more than 1,000 pieces of overseas user information and uploaded them to the platform</li>
-                                    <li>Collaborated with UI and IT colleagues to modify the English copywriting of the APP and the website, which has been successfully launched on Google Play and Apple store</li>
-                                    <li>Gained practical experience in digital marketing and cross-cultural product localization</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- TAB 5: CONTACT -->
-                        <div id="tab-contact" class="section-panel">
-                            <div class="section-title">💌 Let's Chat!</div>
-                            <form class="contact-form" action="https://formsubmit.co/zoeyeahoh@gmail.com" method="POST">
-                                <!-- FormSubmit Configuration -->
-                                <input type="hidden" name="_captcha" value="false">
-                                <input type="hidden" name="_subject" value="New Website Inquiry for Zoe!">
-
-                                <div class="form-group">
-                                    <label for="user-name">Name:</label>
-                                    <input type="text" id="user-name" name="name" placeholder="Your Name" required>
+                            <!-- TAB 3: EDUCATION -->
+                            <div id="tab-education" class="section-panel">
+                                <div class="section-title">🎓 Education</div>
+                                
+                                <div class="entry-block">
+                                    <div class="entry-title">The University of Hong Kong</div>
+                                    <div class="entry-meta">2025 – 2026</div>
+                                    <div class="entry-sub">Master in the Field of Translation</div>
+                                    <p class="handwritten-text" style="font-size: 1.05rem;">
+                                        <span class="hl-yellow">Core Course:</span> Financial Translation, Mass Media Translation, Interpreting, Government & Commercial Texts, and Legal Translation.
+                                    </p>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="user-contact">Contact Info:</label>
-                                    <input type="text" id="user-contact" name="contact" placeholder="Your Email or Phone Number" required>
+                                <div class="entry-block">
+                                    <div class="entry-title">City University of Macau</div>
+                                    <div class="entry-meta">2021 – 2025</div>
+                                    <div class="entry-sub">Bachelor of English</div>
+                                    <p class="handwritten-text" style="font-size: 1.05rem;">
+                                        <span class="hl-blue">Core coursework:</span> Consecutive & Simultaneous Interpretation, Translation Theory, Translation Criticism, and News Translation.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- TAB 4: EXPERIENCE (Multi-page Paginated Layout) -->
+                            <div id="tab-experience" class="section-panel">
+                                <div class="section-title">💼 Experience</div>
+                                
+                                <!-- PAGE 1 -->
+                                <div id="exp-page-1" class="exp-page active">
+                                    <div class="entry-block">
+                                        <div class="entry-title">Smith & Associates</div>
+                                        <div class="entry-sub">Marketing Intern</div>
+                                        <div class="entry-meta">Jun. 2026 – Aug. 2026 | Hong Kong</div>
+                                        <ul class="entry-bullet-list">
+                                            <li>Translated and localized over <span class="hl-yellow">50 marketing assets</span>, including brochures, newsletters, and presentations</li>
+                                            <li>Maintained and updated company’s website, translating <span class="hl-blue">20+ English press releases</span> and market insights to ensure precise and timely localized communications</li>
+                                            <li>Assisted integrated marketing campaigns across multi-digital channels, driving consistent brand messaging and audience reach</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="entry-block">
+                                        <div class="entry-title">MAIYA MEDIA</div>
+                                        <div class="entry-sub">Translation Intern</div>
+                                        <div class="entry-meta">Jan. 2025 – May 2025 | Hangzhou</div>
+                                        <ul class="entry-bullet-list">
+                                            <li>Completed translation for 50+ short dramas, delivering <span class="hl-yellow">900+ episodes</span> with a peak monthly output of 280 episodes</li>
+                                            <li>Proofread, polished, and reviewed dialogue translations for 360+ episodes</li>
+                                        </ul>
+                                    </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="user-message">What Can I help You?</label>
-                                    <textarea id="user-message" name="message" rows="4" placeholder="Type your message here..." required></textarea>
+                                <!-- PAGE 2 -->
+                                <div id="exp-page-2" class="exp-page">
+                                    <div class="entry-block">
+                                        <div class="entry-title">Rector’s Office</div>
+                                        <div class="entry-sub">Student Ambassador (Copywriting)</div>
+                                        <div class="entry-meta">Nov. 2023 – Dec. 2024 | Macao</div>
+                                        <ul class="entry-bullet-list">
+                                            <li>Drafted and translated bilingual content for the university website, including news articles and higher education documents</li>
+                                            <li>Supported event coordination for orientations, lectures, and official ceremonies</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="entry-block">
+                                        <div class="entry-title">Zhejiang Yinqingli Co., Ltd.</div>
+                                        <div class="entry-sub">Intern</div>
+                                        <div class="entry-meta">Jun. 2024 – Aug. 2024 | Hangzhou</div>
+                                        <ul class="entry-bullet-list">
+                                            <li>Produced press releases and digital content for 10+ companies</li>
+                                            <li>Translated more than 30 Chinese manuscripts provided by customers</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="entry-block">
+                                        <div class="entry-title">Hangzhou Connect Fun Tech</div>
+                                        <div class="entry-sub">Internship Team Leader</div>
+                                        <div class="entry-meta">Jun. 2023 – Jul. 2023 | Hangzhou</div>
+                                        <ul class="entry-bullet-list">
+                                            <li>Collaborated to modify English copywriting of the APP successfully launched on Google Play & App Store</li>
+                                        </ul>
+                                    </div>
                                 </div>
 
-                                <button type="submit" class="btn-send">Send 🚀</button>
-                            </form>
+                                <!-- Pagination Controls -->
+                                <div class="pagination-container">
+                                    <button class="page-btn active" id="pbtn-1" onclick="switchExpPage(1)">Page 1</button>
+                                    <button class="page-btn" id="pbtn-2" onclick="switchExpPage(2)">Page 2</button>
+                                </div>
+                            </div>
+
+                            <!-- TAB 5: CONTACT -->
+                            <div id="tab-contact" class="section-panel">
+                                <div class="section-title">💌 Let's Chat!</div>
+                                <form class="contact-form" action="https://formsubmit.co/zoeyeahoh@gmail.com" method="POST">
+                                    <input type="hidden" name="_captcha" value="false">
+                                    <input type="hidden" name="_subject" value="New Inquiry for Zoe!">
+
+                                    <div class="form-group">
+                                        <label for="user-name">Name:</label>
+                                        <input type="text" id="user-name" name="name" placeholder="Your Name" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="user-contact">Contact Info:</label>
+                                        <input type="text" id="user-contact" name="contact" placeholder="Your Email or Phone" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="user-message">What Can I help You?</label>
+                                        <textarea id="user-message" name="message" rows="3" placeholder="Type your message here..." required></textarea>
+                                    </div>
+
+                                    <button type="submit" class="btn-send">Send 🚀</button>
+                                </form>
+                            </div>
+
                         </div>
-
                     </div>
+
                 </div>
 
-                <!-- Clasp Detail -->
+                <!-- Clasp Metallic Detail -->
                 <div class="binder-clasp">
-                    <div class="clasp-button">ZOE</div>
+                    <div class="clasp-button"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Interactive Scripts -->
+    <!-- Interactive Logic -->
     <script>
-        // Enter Site from Welcome Overlay
+        // 1. Colorful Handwriting Simulation Effect for Welcome Overlay
+        const welcomeText = "Hi, I'm Zoe!\nWelcome to my website!";
+        const colors = ['#e53935', '#1e88e5', '#43a047', '#fb8c00', '#8e24aa', '#00acc1'];
+        const targetContainer = document.getElementById('rainbow-text-target');
+
+        function createRainbowText() {
+            let delay = 0;
+            for (let i = 0; i < welcomeText.length; i++) {
+                const char = welcomeText[i];
+                if (char === '\n') {
+                    targetContainer.appendChild(document.createElement('br'));
+                    continue;
+                }
+                const span = document.createElement('span');
+                span.className = 'rainbow-char';
+                span.textContent = char === ' ' ? '\u00A0' : char;
+                span.style.color = colors[Math.floor(Math.random() * colors.length)];
+                span.style.animationDelay = `${delay}s`;
+                targetContainer.appendChild(span);
+                delay += 0.06;
+            }
+        }
+
+        // Run animation on load
+        window.addEventListener('DOMContentLoaded', createRainbowText);
+
+        // 2. Enter Site
         function enterSite() {
             const overlay = document.getElementById('welcome-overlay');
             const mainContent = document.getElementById('main-content');
@@ -699,7 +829,7 @@
             mainContent.classList.add('visible');
         }
 
-        // Tab Switching Logic
+        // 3. Tab Switching with 3D Flip Effect
         function switchTab(tabName, element) {
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => item.classList.remove('active'));
@@ -713,6 +843,15 @@
             if (targetPanel) {
                 targetPanel.classList.add('active');
             }
+        }
+
+        // 4. Experience Multi-page Pagination
+        function switchExpPage(pageNum) {
+            document.querySelectorAll('.exp-page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+
+            document.getElementById('exp-page-' + pageNum).classList.add('active');
+            document.getElementById('pbtn-' + pageNum).classList.add('active');
         }
     </script>
 </body>
