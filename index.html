@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YANG Yanyu (Zoe) | Journal Portfolio</title>
+    <title>YANG Yanyu (Zoe) | Personal Website</title>
+    <!-- Google Fonts for Bubble-style Welcome Text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #f3ece1;
@@ -15,7 +19,6 @@
             --accent-red: #a8242d;
             --sticky-yellow: #fff4b8;
             --tape-pink: rgba(244, 166, 172, 0.65);
-            --tape-blue: rgba(162, 210, 255, 0.65);
             --shadow-soft: 0 12px 35px rgba(0, 0, 0, 0.15);
         }
 
@@ -32,13 +35,97 @@
             background-size: 24px 24px;
             color: var(--text-dark);
             min-height: 100vh;
-            padding: 1.5rem 1rem 3rem 1rem;
+            overflow-x: hidden;
         }
 
-        /* Top Navigation Bar */
+        /* ----------------------------------
+           1. Welcome Overlay (Landing Screen)
+        ----------------------------------- */
+        #welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(#c8baaa 1.5px, transparent 1.5px);
+            background-size: 28px 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeInWelcome 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        @keyframes fadeInWelcome {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        #welcome-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .bubble-card {
+            background: #ffffff;
+            border: 4px solid var(--accent-red);
+            border-radius: 40px;
+            padding: 3rem 4rem;
+            box-shadow: 0 20px 40px rgba(168, 36, 45, 0.15), inset 0 -6px 0 rgba(168, 36, 45, 0.1);
+            text-align: center;
+            max-width: 90%;
+            position: relative;
+            transform: rotate(-1deg);
+        }
+
+        .bubble-text {
+            font-family: 'Fredoka', cursive, sans-serif;
+            font-size: 3rem;
+            color: var(--accent-red);
+            letter-spacing: 1px;
+            line-height: 1.3;
+            text-shadow: 2px 2px 0px #fce8e9;
+        }
+
+        .click-hint {
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 0.6rem 1.6rem;
+            border-radius: 30px;
+            border: 2px dashed var(--accent-red);
+            animation: pulseHint 1.8s infinite;
+        }
+
+        @keyframes pulseHint {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* ----------------------------------
+           2. Main Journal Interface
+        ----------------------------------- */
+        .main-container {
+            padding: 1.5rem 1rem 3rem 1rem;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .main-container.visible {
+            opacity: 1;
+        }
+
         nav {
-            max-width: 960px;
-            margin: 0 auto 2rem auto;
+            max-width: 980px;
+            margin: 0 auto 1.8rem auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -46,7 +133,7 @@
         }
 
         .nav-logo {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 800;
             color: var(--accent-red);
             letter-spacing: -0.5px;
@@ -54,35 +141,38 @@
 
         .nav-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 1.2rem;
             list-style: none;
+            flex-wrap: wrap;
         }
 
         .nav-item {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-muted);
             cursor: pointer;
             position: relative;
-            padding-bottom: 4px;
-            transition: color 0.2s ease;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            transition: all 0.2s ease;
         }
 
         .nav-item:hover, .nav-item.active {
             color: var(--accent-red);
+            background: rgba(168, 36, 45, 0.08);
         }
 
         .nav-item.active::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+            bottom: -2px;
+            left: 15%;
+            width: 70%;
             height: 3px;
             background: var(--accent-red);
             border-radius: 2px;
         }
 
-        /* Main Binder Container */
+        /* Binder Container */
         .binder-wrapper {
             max-width: 980px;
             margin: 0 auto;
@@ -97,7 +187,6 @@
             position: relative;
         }
 
-        /* Binder Clasp on Right */
         .binder-clasp {
             position: absolute;
             right: -25px;
@@ -128,18 +217,15 @@
             color: #634b22;
         }
 
-        /* Open Journal Inner Pages */
         .journal-pages {
             background: var(--paper-bg);
             border-radius: 16px;
             display: flex;
             box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.06), 0 8px 20px rgba(0, 0, 0, 0.08);
             position: relative;
-            min-height: 580px;
-            overflow: hidden;
+            min-height: 600px;
         }
 
-        /* Center Rings binding the pages */
         .ring-binder-spine {
             position: absolute;
             left: 50%;
@@ -163,7 +249,6 @@
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
         }
 
-        /* Left and Right Page Layout */
         .page {
             flex: 1;
             padding: 2.2rem;
@@ -181,14 +266,14 @@
             background-image: linear-gradient(to left, rgba(0,0,0,0.02), transparent 15%);
         }
 
-        /* Left Page Stickers & Elements */
+        /* Left Page Details */
         .polaroid-card {
             background: #ffffff;
             padding: 12px 12px 20px 12px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
             transform: rotate(-3deg);
-            width: 210px;
-            margin: 0 auto 1.8rem auto;
+            width: 200px;
+            margin: 0 auto 1.5rem auto;
             position: relative;
             border-radius: 2px;
         }
@@ -207,14 +292,14 @@
 
         .polaroid-img {
             width: 100%;
-            height: 160px;
+            height: 150px;
             background: #2a3439;
             border-radius: 2px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: bold;
         }
 
@@ -226,7 +311,6 @@
             font-family: cursive, sans-serif;
         }
 
-        /* Sticky Note Element */
         .sticky-note {
             background: var(--sticky-yellow);
             padding: 1.2rem;
@@ -253,7 +337,6 @@
             font-size: 1rem;
             color: var(--accent-red);
             margin-bottom: 0.6rem;
-            border-bottom: 1px stroke rgba(0,0,0,0.1);
         }
 
         .sticky-info {
@@ -262,52 +345,7 @@
             color: #4a4035;
         }
 
-        .sticky-info div {
-            margin-bottom: 0.3rem;
-        }
-
-        /* Pill Contact Buttons */
-        .pill-buttons {
-            display: flex;
-            gap: 0.6rem;
-            margin-top: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .pill-btn {
-            background: #ffffff;
-            border: 1.5px solid var(--accent-red);
-            color: var(--accent-red);
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.82rem;
-            font-weight: 700;
-            text-decoration: none;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.06);
-            transition: all 0.2s ease;
-        }
-
-        .pill-btn:hover {
-            background: var(--accent-red);
-            color: #ffffff;
-            transform: translateY(-2px);
-        }
-
-        /* Right Page Content Styles */
-        .greeting-badge {
-            display: inline-block;
-            background: var(--accent-red);
-            color: #ffffff;
-            font-weight: 800;
-            font-size: 1.1rem;
-            padding: 0.4rem 1.2rem;
-            border-radius: 12px;
-            box-shadow: 2px 4px 8px rgba(168, 36, 45, 0.3);
-            margin-bottom: 1.2rem;
-            transform: rotate(-1deg);
-        }
-
+        /* Right Page Panels */
         .section-panel {
             display: none;
             animation: fadeIn 0.3s ease-in-out forwards;
@@ -326,315 +364,351 @@
             font-size: 1.25rem;
             color: var(--accent-red);
             font-weight: 800;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            margin-bottom: 1.2rem;
             border-bottom: 2px dotted #e2d9c8;
             padding-bottom: 0.4rem;
         }
 
-        .paragraph-text {
-            font-size: 0.95rem;
-            line-height: 1.7;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-        }
-
         .entry-block {
             margin-bottom: 1.2rem;
-            background: rgba(255, 255, 255, 0.6);
-            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.75);
+            padding: 0.9rem 1.1rem;
             border-radius: 8px;
             border-left: 3px solid var(--accent-red);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
         }
 
-        .entry-header {
-            display: flex;
-            justify-content: space-between;
+        .entry-title {
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: var(--text-dark);
         }
 
-        .entry-subheader {
-            font-size: 0.85rem;
-            color: var(--accent-red);
+        .entry-meta {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 0.3rem;
             font-weight: 600;
-            margin-bottom: 0.4rem;
         }
 
-        .entry-desc {
+        .entry-sub {
+            font-size: 0.9rem;
+            color: var(--accent-red);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .entry-bullet-list {
+            list-style-type: disc;
+            padding-left: 1.2rem;
+        }
+
+        .entry-bullet-list li {
             font-size: 0.88rem;
-            color: var(--text-muted);
+            color: var(--text-dark);
+            margin-bottom: 0.4rem;
             line-height: 1.5;
         }
 
-        .tag-cloud {
+        /* Contact Form Styles */
+        .contact-form {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
+            flex-direction: column;
+            gap: 0.9rem;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 1.2rem;
+            border-radius: 12px;
+            border: 1px stroke rgba(0,0,0,0.05);
         }
 
-        .sticker-tag {
-            background: #ffffff;
-            border: 1px solid #e0d5c1;
-            padding: 0.3rem 0.7rem;
-            border-radius: 6px;
-            font-size: 0.82rem;
-            font-weight: 600;
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .form-group label {
+            font-size: 0.88rem;
+            font-weight: 700;
             color: var(--text-dark);
-            box-shadow: 1px 2px 4px rgba(0,0,0,0.04);
         }
 
-        /* Responsive Layout */
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1.5px solid #e0d5c1;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: #ffffff;
+            color: var(--text-dark);
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--accent-red);
+        }
+
+        .btn-send {
+            background: var(--accent-red);
+            color: #ffffff;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(168, 36, 45, 0.3);
+            transition: all 0.2s ease;
+            align-self: flex-start;
+            margin-top: 0.4rem;
+        }
+
+        .btn-send:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(168, 36, 45, 0.4);
+        }
+
         @media (max-width: 820px) {
-            .journal-pages {
-                flex-direction: column;
-            }
-            .page {
-                width: 100%;
-                padding: 1.5rem;
-            }
-            .page-left {
-                border-right: none;
-                border-bottom: 1px solid #eae3d2;
-            }
-            .ring-binder-spine {
-                display: none;
-            }
-            .binder-clasp {
-                display: none;
-            }
-            nav {
-                flex-direction: column;
-                gap: 1rem;
-            }
+            .journal-pages { flex-direction: column; }
+            .page { width: 100%; padding: 1.5rem; }
+            .page-left { border-right: none; border-bottom: 1px solid #eae3d2; }
+            .ring-binder-spine, .binder-clasp { display: none; }
+            nav { flex-direction: column; gap: 1rem; }
+            .bubble-text { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation -->
-    <nav>
-        <div class="nav-logo">Yanyu ZOE</div>
-        <ul class="nav-links">
-            <li class="nav-item active" onclick="switchTab('about', this)">About</li>
-            <li class="nav-item" onclick="switchTab('education', this)">Education</li>
-            <li class="nav-item" onclick="switchTab('experience', this)">Experience</li>
-            <li class="nav-item" onclick="switchTab('awards', this)">Awards</li>
-            <li class="nav-item" onclick="switchTab('skills', this)">Skills</li>
-        </ul>
-    </nav>
-
-    <!-- Main Notebook Container -->
-    <div class="binder-wrapper">
-        <div class="binder-outer">
-            
-            <div class="journal-pages">
-                <!-- Center Metal Rings -->
-                <div class="ring-binder-spine">
-                    <div class="ring"></div>
-                    <div class="ring"></div>
-                    <div class="ring"></div>
-                    <div class="ring"></div>
-                    <div class="ring"></div>
-                </div>
-
-                <!-- LEFT PAGE: Fixed Profile & Quick Facts -->
-                <div class="page page-left">
-                    <div class="polaroid-card">
-                        <div class="washi-tape"></div>
-                        <div class="polaroid-img">ZY</div>
-                        <div class="polaroid-caption">days @ HKU 🎓</div>
-                    </div>
-
-                    <div class="sticky-note">
-                        <div class="push-pin"></div>
-                        <div class="sticky-title">Quick Facts · 小档案</div>
-                        <div class="sticky-info">
-                            <div>🎓 <b>MA in Translation</b> @ HKU</div>
-                            <div>🗣️ <b>Mandarin</b> · <b>English</b> · <b>Cantonese</b></div>
-                            <div>📍 <b>Hong Kong</b> / <b>Macao</b></div>
-                            <div>✉️ <b>zoeyeahoh@gmail.com</b></div>
-                        </div>
-                    </div>
-
-                    <div class="pill-buttons">
-                        <a href="mailto:zoeyeahoh@gmail.com" class="pill-btn">Email</a>
-                        <a href="https://www.linkedin.com/in/yanyu-yang" target="_blank" class="pill-btn">LinkedIn</a>
-                        <span class="pill-btn">(852) 84958875</span>
-                    </div>
-                </div>
-
-                <!-- RIGHT PAGE: Interactive Content Tabs -->
-                <div class="page page-right">
-                    
-                    <!-- ABOUT TAB -->
-                    <div id="tab-about" class="section-panel active">
-                        <div class="greeting-badge">Hi! I'm Zoe.</div>
-                        <p class="paragraph-text">
-                            I am currently pursuing a <b>Master in the Field of Translation</b> at <b>The University of Hong Kong</b>. My professional focus centers on <b>marketing localization</b>, <b>media translation</b>, and <b>cross-cultural digital content strategy</b>.
-                        </p>
-                        <p class="paragraph-text">
-                            With hands-on internship experience across corporate marketing, short drama subtitle localization, and university news copywriting, I specialize in delivering accurate, culturally engaging, and high-quality bilingual solutions.
-                        </p>
-                    </div>
-
-                    <!-- EDUCATION TAB -->
-                    <div id="tab-education" class="section-panel">
-                        <div class="section-title">🎓 Education</div>
-                        
-                        <div class="entry-block">
-                            <div class="entry-header">
-                                <span>The University of Hong Kong</span>
-                                <span>2025 – 2026</span>
-                            </div>
-                            <div class="entry-subheader">Master in the Field of Translation (GPA: 3.43/4.3)</div>
-                            <div class="entry-desc">
-                                Specializing in <b>Financial Translation</b>, <b>Mass Media Translation</b>, <b>Interpreting</b>, <b>Government & Commercial Texts</b>, and <b>Legal Translation</b>.
-                            </div>
-                        </div>
-
-                        <div class="entry-block">
-                            <div class="entry-header">
-                                <span>City University of Macau</span>
-                                <span>2021 – 2025</span>
-                            </div>
-                            <div class="entry-subheader">Bachelor of English (GPA: 3.82/4.0)</div>
-                            <div class="entry-desc">
-                                Core coursework in <b>Consecutive & Simultaneous Interpretation</b>, <b>Translation Theory</b>, <b>Translation Criticism</b>, and <b>News Translation</b>.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- EXPERIENCE TAB -->
-                    <div id="tab-experience" class="section-panel">
-                        <div class="section-title">💼 Work Experience</div>
-                        
-                        <div class="entry-block">
-                            <div class="entry-header">
-                                <span>Smith & Associates</span>
-                                <span>Jun. 2026 – Present</span>
-                            </div>
-                            <div class="entry-subheader">Marketing Intern (Hong Kong)</div>
-                            <div class="entry-desc">
-                                Translated and localized over <b>50 marketing assets</b> and maintained company website with <b>20+ translated press releases</b>.
-                            </div>
-                        </div>
-
-                        <div class="entry-block">
-                            <div class="entry-header">
-                                <span>MAIYA MEDIA</span>
-                                <span>Jan. 2025 – May 2025</span>
-                            </div>
-                            <div class="entry-subheader">Translation Intern (Hangzhou)</div>
-                            <div class="entry-desc">
-                                Delivered <b>900+ episodes</b> of short drama localization across genres, proofreading dialogue and dubbing for <b>360+ episodes</b>.
-                            </div>
-                        </div>
-
-                        <div class="entry-block">
-                            <div class="entry-header">
-                                <span>Rector's Office, CityU Macau</span>
-                                <span>2023 – 2024</span>
-                            </div>
-                            <div class="entry-subheader">Student Ambassador (Copywriting)</div>
-                            <div class="entry-desc">
-                                Drafted bilingual news articles and higher education documents for the official university platform.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- AWARDS TAB -->
-                    <div id="tab-awards" class="section-panel">
-                        <div class="section-title">🏆 Honors & Awards</div>
-                        
-                        <div class="entry-block">
-                            <div class="entry-header">
-                                <span>China Young Translators' Contest</span>
-                                <span>Jun. 2024</span>
-                            </div>
-                            <div class="entry-desc">
-                                Awarded <b>Third Prize</b> in both English-to-Chinese and Chinese-to-English categories.
-                            </div>
-                        </div>
-
-                        <div class="entry-block">
-                            <div class="entry-header">
-                                <span>National News Translation Competition</span>
-                                <span>Mar. 2024</span>
-                            </div>
-                            <div class="entry-desc">
-                                Won <b>Third Prize</b> in the 2023 National News Translation and Editing Competition.
-                            </div>
-                        </div>
-
-                        <div class="entry-block">
-                            <div class="entry-header">
-                                <span>Macao-wide English Essay Competition</span>
-                                <span>2022 – 2023</span>
-                            </div>
-                            <div class="entry-desc">
-                                Received <b>Honorable Mention</b> for two consecutive contest editions.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- SKILLS TAB -->
-                    <div id="tab-skills" class="section-panel">
-                        <div class="section-title">🛠️ Skills & Certifications</div>
-                        
-                        <p class="paragraph-text"><b>Language Proficiency</b></p>
-                        <div class="tag-cloud" style="margin-bottom: 1.2rem;">
-                            <span class="sticker-tag">Mandarin (Native)</span>
-                            <span class="sticker-tag">English (IELTS 7.0)</span>
-                            <span class="sticker-tag">Cantonese (Conversational)</span>
-                        </div>
-
-                        <p class="paragraph-text"><b>Professional Qualifications</b></p>
-                        <div class="tag-cloud" style="margin-bottom: 1.2rem;">
-                            <span class="sticker-tag">Business English Translation Test</span>
-                            <span class="sticker-tag">Content Localization</span>
-                        </div>
-
-                        <p class="paragraph-text"><b>Software & Tools</b></p>
-                        <div class="tag-cloud">
-                            <span class="sticker-tag">Microsoft Office</span>
-                            <span class="sticker-tag">Canva</span>
-                            <span class="sticker-tag">Photoshop</span>
-                            <span class="sticker-tag">Aegisub</span>
-                        </div>
-                    </div>
-
-                </div>
+    <!-- 1. Welcome Overlay Screen -->
+    <div id="welcome-overlay" onclick="enterSite()">
+        <div class="bubble-card">
+            <div class="bubble-text">
+                Hi, I'm Zoe!<br>Welcome to my website!
             </div>
-
-            <!-- Outer Clasp Decorative Detail -->
-            <div class="binder-clasp">
-                <div class="clasp-button">ZOE</div>
-            </div>
-
+        </div>
+        <div class="click-hint">
+            👉 Click anywhere to enter
         </div>
     </div>
 
-    <!-- JavaScript for Tab Switching -->
+    <!-- 2. Main Site Wrapper -->
+    <div class="main-container" id="main-content">
+        <!-- Navigation Bar -->
+        <nav>
+            <div class="nav-logo">Zoe YANG</div>
+            <ul class="nav-links">
+                <li class="nav-item active" onclick="switchTab('home', this)">Home</li>
+                <li class="nav-item" onclick="switchTab('about', this)">About</li>
+                <li class="nav-item" onclick="switchTab('education', this)">Education</li>
+                <li class="nav-item" onclick="switchTab('experience', this)">Experience</li>
+                <li class="nav-item" onclick="switchTab('contact', this)">Contact</li>
+            </ul>
+        </nav>
+
+        <!-- Binder Outer Container -->
+        <div class="binder-wrapper">
+            <div class="binder-outer">
+                <div class="journal-pages">
+                    
+                    <!-- Center Binder Rings -->
+                    <div class="ring-binder-spine">
+                        <div class="ring"></div>
+                        <div class="ring"></div>
+                        <div class="ring"></div>
+                        <div class="ring"></div>
+                        <div class="ring"></div>
+                    </div>
+
+                    <!-- Left Page (Fixed Personal Profile Card) -->
+                    <div class="page page-left">
+                        <div class="polaroid-card">
+                            <div class="washi-tape"></div>
+                            <div class="polaroid-img">ZOE</div>
+                            <div class="polaroid-caption">days @ HKU 🎓</div>
+                        </div>
+
+                        <div class="sticky-note">
+                            <div class="push-pin"></div>
+                            <div class="sticky-title">Quick Profile</div>
+                            <div class="sticky-info">
+                                <div>🎓 <b>MA in Translation</b> @ HKU</div>
+                                <div>📍 <b>Hong Kong</b></div>
+                                <div>✉️ <b>zoeyeahoh@gmail.com</b></div>
+                                <div>📞 <b>(852) 84958875</b></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Page (Dynamic Content Tabs) -->
+                    <div class="page page-right">
+                        
+                        <!-- TAB 1: HOME -->
+                        <div id="tab-home" class="section-panel active">
+                            <div class="section-title">✨ Welcome</div>
+                            <p style="font-size: 1.05rem; line-height: 1.8; color: var(--text-dark); background: rgba(255,255,255,0.7); padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--accent-red);">
+                                Hello, I'm Zoe Yang. I'm a fresh graduate from the University of Hong Kong majoring in MA in the field of Translation, currently looking for opportunities in Marketing, Communications, Public Relations, Advertising and Translation.
+                            </p>
+                        </div>
+
+                        <!-- TAB 2: ABOUT -->
+                        <div id="tab-about" class="section-panel">
+                            <div class="section-title">🙋‍♀️ About Me</div>
+                            <p style="font-size: 0.95rem; line-height: 1.7; color: var(--text-dark); margin-bottom: 1rem;">
+                                Passioned localization and communications specialist with extensive academic training from HKU and CityU Macau. Skilled in cross-cultural copywriting, content strategy, and multi-channel campaign execution.
+                            </p>
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 1px dashed var(--accent-red);">
+                                <b>Languages:</b> Mandarin (Native), English (IELTS 7.0), Cantonese (Conversational)
+                            </div>
+                        </div>
+
+                        <!-- TAB 3: EDUCATION -->
+                        <div id="tab-education" class="section-panel">
+                            <div class="section-title">🎓 Education</div>
+                            
+                            <div class="entry-block">
+                                <div class="entry-title">The University of Hong Kong</div>
+                                <div class="entry-meta">2025 – 2026</div>
+                                <div class="entry-sub">Master in the Field of Translation</div>
+                                <p style="font-size: 0.88rem; color: var(--text-dark);">
+                                    <b>Core Course:</b> Financial Translation, Mass Media Translation, Interpreting, Government & Commercial Texts, and Legal Translation.
+                                </p>
+                            </div>
+
+                            <div class="entry-block">
+                                <div class="entry-title">City University of Macau</div>
+                                <div class="entry-meta">2021 – 2025</div>
+                                <div class="entry-sub">Bachelor of English</div>
+                                <p style="font-size: 0.88rem; color: var(--text-dark);">
+                                    <b>Core coursework:</b> Consecutive & Simultaneous Interpretation, Translation Theory, Translation Criticism, and News Translation.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- TAB 4: EXPERIENCE -->
+                        <div id="tab-experience" class="section-panel" style="max-height: 480px; overflow-y: auto; padding-right: 0.5rem;">
+                            <div class="section-title">💼 Experience</div>
+                            
+                            <!-- 1 -->
+                            <div class="entry-block">
+                                <div class="entry-title">Smith & Associates</div>
+                                <div class="entry-sub">Marketing Intern</div>
+                                <div class="entry-meta">Jun. 2026 – Aug. 2026 | Hong Kong</div>
+                                <ul class="entry-bullet-list">
+                                    <li>Translated and localized over 50 marketing assets, including brochures, newsletters, and presentations</li>
+                                    <li>Maintained and updated company’s website, translating 20+ English press releases and market insights to ensure precise and timely localized communications</li>
+                                    <li>Assisted integrated marketing campaigns across multi-digital channels, driving consistent brand messaging and audience reach</li>
+                                </ul>
+                            </div>
+
+                            <!-- 2 -->
+                            <div class="entry-block">
+                                <div class="entry-title">MAIYA MEDIA</div>
+                                <div class="entry-sub">Translation Intern</div>
+                                <div class="entry-meta">Jan. 2025 – May 2025 | Hangzhou</div>
+                                <ul class="entry-bullet-list">
+                                    <li>Completed translation for 50+ short dramas across modern, historical, and urban genres, delivering 900+ episodes with a peak monthly output of 280 episodes</li>
+                                    <li>Proofread, polished, and reviewed dialogue translations and dubbing for 360+ episodes, ensuring localization and logical accuracy</li>
+                                    <li>Managed multiple translation tasks simultaneously, including translation for log keepers and script proofreading, ensuring end-to-end quality and efficiency</li>
+                                </ul>
+                            </div>
+
+                            <!-- 3 -->
+                            <div class="entry-block">
+                                <div class="entry-title">Rector’s Office</div>
+                                <div class="entry-sub">Student Ambassador (Copywriting)</div>
+                                <div class="entry-meta">Nov. 2023 – Dec. 2024 | Macao</div>
+                                <ul class="entry-bullet-list">
+                                    <li>Drafted and translated bilingual content for the university website, including news articles and higher education documents</li>
+                                    <li>Supported event coordination for orientations, lectures, and official ceremonies, ensuring smooth execution and effective communication with diverse stakeholders.</li>
+                                </ul>
+                            </div>
+
+                            <!-- 4 -->
+                            <div class="entry-block">
+                                <div class="entry-title">Zhejiang Yinqingli Co., Ltd.</div>
+                                <div class="entry-sub">Intern</div>
+                                <div class="entry-meta">Jun. 2024 – Aug. 2024 | Hangzhou</div>
+                                <ul class="entry-bullet-list">
+                                    <li>Produced press releases and digital content for 10+ companies and maintained other English information, including English copy, images, and videos, to the backend</li>
+                                    <li>Translated more than 30 Chinese manuscripts provided by customers and uploaded them to their official websites, which received unanimous praise from customers</li>
+                                </ul>
+                            </div>
+
+                            <!-- 5 -->
+                            <div class="entry-block">
+                                <div class="entry-title">Hangzhou Connect Fun Technology Co., Ltd.</div>
+                                <div class="entry-sub">Intern</div>
+                                <div class="entry-meta">Jun. 2023 – Jul. 2023 | Hangzhou</div>
+                                <ul class="entry-bullet-list">
+                                    <li>Role as the leader of the internship team, collected, compiled and reviewed more than 1,000 pieces of overseas user information and uploaded them to the platform</li>
+                                    <li>Collaborated with UI and IT colleagues to modify the English copywriting of the APP and the website, which has been successfully launched on Google Play and Apple store</li>
+                                    <li>Gained practical experience in digital marketing and cross-cultural product localization</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- TAB 5: CONTACT -->
+                        <div id="tab-contact" class="section-panel">
+                            <div class="section-title">💌 Let's Chat!</div>
+                            <form class="contact-form" action="https://formsubmit.co/zoeyeahoh@gmail.com" method="POST">
+                                <!-- FormSubmit Configuration -->
+                                <input type="hidden" name="_captcha" value="false">
+                                <input type="hidden" name="_subject" value="New Website Inquiry for Zoe!">
+
+                                <div class="form-group">
+                                    <label for="user-name">Name:</label>
+                                    <input type="text" id="user-name" name="name" placeholder="Your Name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="user-contact">Contact Info:</label>
+                                    <input type="text" id="user-contact" name="contact" placeholder="Your Email or Phone Number" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="user-message">What Can I help You?</label>
+                                    <textarea id="user-message" name="message" rows="4" placeholder="Type your message here..." required></textarea>
+                                </div>
+
+                                <button type="submit" class="btn-send">Send 🚀</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Clasp Detail -->
+                <div class="binder-clasp">
+                    <div class="clasp-button">ZOE</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Scripts -->
     <script>
+        // Enter Site from Welcome Overlay
+        function enterSite() {
+            const overlay = document.getElementById('welcome-overlay');
+            const mainContent = document.getElementById('main-content');
+            
+            overlay.classList.add('hidden');
+            mainContent.classList.add('visible');
+        }
+
+        // Tab Switching Logic
         function switchTab(tabName, element) {
-            // Remove active class from all nav items
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => item.classList.remove('active'));
 
-            // Add active class to clicked nav item
-            element.classList.remove('active');
             element.classList.add('active');
 
-            // Hide all section panels
             const panels = document.querySelectorAll('.section-panel');
             panels.forEach(panel => panel.classList.remove('active'));
 
-            // Show selected panel
             const targetPanel = document.getElementById('tab-' + tabName);
             if (targetPanel) {
                 targetPanel.classList.add('active');
