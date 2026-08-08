@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Story of Zoe Yang</title>
+    <title>The Story of Zoey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --cover-bg: #355E3B;
-            --paper-bg: #f2ea3b;
-            --paper-texture: #f6efd2;
-            --text-color: #000000;
+            --kraft-paper: #d2b48c;
+            --kraft-texture: #e2c49c;
+            --text-color: #1a1a1a;
             --gold-color: #D4AF37;
             --tab-edu: #ffb3ba;
             --tab-work: #bae1ff;
             --tab-about: #baffc9;
             --tab-thoughts: #e8dff5;
             --tab-contact: #1b4d2e;
-            --highlight-blue: rgba(186, 225, 255, 0.65);
+            --highlight-blue: #bae1ff;
         }
 
         * {
@@ -27,7 +28,7 @@
 
         body {
             font-family: 'Times New Roman', Times, serif;
-            background-color: #1a1a1a;
+            background-color: #ffffff;
             color: var(--text-color);
             min-height: 100vh;
             display: flex;
@@ -37,7 +38,7 @@
         }
 
         /* ----------------------------------
-           1. Typing Overlay (Screen 1)
+           1. Typing Overlay Screen
         ----------------------------------- */
         #typing-overlay {
             position: fixed;
@@ -68,12 +69,13 @@
             line-height: 1.8;
             max-width: 80%;
             white-space: pre-line;
+            font-family: 'Times New Roman', Times, serif;
         }
 
         .cursor {
             display: inline-block;
             width: 2px;
-            height: 18px;
+            height: 16px;
             background-color: #000000;
             margin-left: 2px;
             vertical-align: middle;
@@ -85,23 +87,15 @@
             50% { opacity: 0; }
         }
 
-        .click-hint {
-            margin-top: 2rem;
-            font-size: 10pt;
-            color: #888888;
-            font-style: italic;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
         /* ----------------------------------
            2. Notebook Structure & Animation
         ----------------------------------- */
         .stage {
             perspective: 2000px;
-            width: 900px;
-            height: 580px;
+            width: 920px;
+            height: 600px;
             position: relative;
+            background-color: #ffffff;
         }
 
         .notebook {
@@ -112,18 +106,16 @@
             transition: transform 1s ease;
         }
 
-        /* Closed Cover State */
+        /* Closed Leather Cover */
         .cover-external {
             position: absolute;
-            width: 450px;
-            height: 580px;
+            width: 460px;
+            height: 600px;
             right: 0;
             top: 0;
-            background: var(--cover-bg);
-            background-image: radial-gradient(rgba(0,0,0,0.15) 15%, transparent 16%);
-            background-size: 8px 8px;
+            background-color: var(--cover-bg);
             border-radius: 4px 16px 16px 4px;
-            box-shadow: -10px 15px 30px rgba(0,0,0,0.6), inset -2px 0 10px rgba(0,0,0,0.3);
+            box-shadow: -10px 15px 30px rgba(0,0,0,0.3), inset -3px 0 8px rgba(0,0,0,0.2);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -131,20 +123,20 @@
             z-index: 100;
             transform-origin: left center;
             transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-            border-left: 12px solid #233e27;
+            border-left: 10px solid #233e27;
         }
 
         .cover-external h1 {
             color: var(--gold-color);
-            font-size: 22pt;
-            font-weight: normal;
+            font-size: 26pt;
+            font-weight: bold;
             letter-spacing: 1px;
             text-align: center;
-            padding: 0 2rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-            border: 2px solid var(--gold-color);
-            padding: 2rem 1.5rem;
-            box-shadow: inset 0 0 10px rgba(212,175,55,0.2);
+            padding: 1.5rem 2rem;
+            border: 3px double var(--gold-color);
+            box-shadow: inset 0 0 12px rgba(212,175,55,0.25);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+            font-family: 'Times New Roman', Times, serif;
         }
 
         .notebook.open .cover-external {
@@ -152,21 +144,22 @@
             pointer-events: none;
         }
 
-        /* Inner Pages Spread */
+        /* Realistic Kraft Paper Book Spread */
         .journal-spread {
             position: absolute;
-            width: 900px;
-            height: 580px;
+            width: 920px;
+            height: 600px;
             top: 0;
             left: 0;
             display: flex;
-            background: var(--paper-texture);
+            background: #d8b87e;
             background-image: 
-                radial-gradient(rgba(0,0,0,0.03) 1px, transparent 0),
-                linear-gradient(to right, rgba(0,0,0,0.05) 0%, transparent 5%, transparent 95%, rgba(0,0,0,0.05) 100%);
-            background-size: 12px 12px, 100% 100%;
-            border-radius: 8px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+                radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 0),
+                linear-gradient(to right, rgba(0,0,0,0.15) 0%, transparent 6%, transparent 94%, rgba(0,0,0,0.15) 100%),
+                linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, transparent 5%, transparent 95%, rgba(0,0,0,0.08) 100%);
+            background-size: 8px 8px, 100% 100%, 100% 100%;
+            border-radius: 6px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
             opacity: 0;
             transition: opacity 0.5s ease 0.4s;
         }
@@ -175,49 +168,51 @@
             opacity: 1;
         }
 
-        /* Spine Binder Clip */
+        /* Center Spine Decor Clip */
         .spine-clip {
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            width: 18px;
-            height: 92%;
+            width: 16px;
+            height: 94%;
             background: #111111;
-            border-radius: 4px;
+            border-radius: 3px;
             z-index: 50;
-            box-shadow: 0 0 8px rgba(0,0,0,0.5);
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
 
         .spine-clip::before, .spine-clip::after {
             content: '';
             position: absolute;
-            left: -4px;
+            left: -5px;
             width: 26px;
-            height: 12px;
-            background: #333;
+            height: 10px;
+            background: #2a2a2a;
             border-radius: 2px;
         }
-        .spine-clip::before { top: 20%; }
-        .spine-clip::after { bottom: 20%; }
+        .spine-clip::before { top: 15%; }
+        .spine-clip::after { bottom: 15%; }
 
-        /* Left & Right Pages */
+        /* Pages */
         .page {
             width: 50%;
             height: 100%;
-            padding: 2.5rem 2rem;
+            padding: 2.5rem 2.2rem;
             position: relative;
             overflow-y: auto;
-            font-size: 12pt;
-            line-height: 1.6;
+            font-size: 11pt;
+            line-height: 1.5;
         }
 
         .page-left {
-            border-right: 1px solid rgba(0,0,0,0.1);
+            border-right: 1px solid rgba(0,0,0,0.12);
+            box-shadow: inset -15px 0 20px -10px rgba(0,0,0,0.15);
         }
 
         .page-right {
-            border-left: 1px solid rgba(0,0,0,0.1);
+            border-left: 1px solid rgba(0,0,0,0.12);
+            box-shadow: inset 15px 0 20px -10px rgba(0,0,0,0.15);
         }
 
         /* ----------------------------------
@@ -225,18 +220,18 @@
         ----------------------------------- */
         .side-tabs {
             position: absolute;
-            right: -38px;
-            top: 40px;
+            right: -42px;
+            top: 50px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
             z-index: 60;
         }
 
         .tab {
-            width: 42px;
+            width: 44px;
             height: 85px;
-            border-radius: 0 6px 6px 0;
+            border-radius: 0 8px 8px 0;
             writing-mode: vertical-rl;
             text-orientation: mixed;
             display: flex;
@@ -245,14 +240,15 @@
             font-size: 11pt;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 3px 2px 6px rgba(0,0,0,0.3);
-            transition: transform 0.2s ease, width 0.2s ease;
+            box-shadow: 4px 2px 8px rgba(0,0,0,0.25);
+            transition: transform 0.25 ease, width 0.25s ease;
             user-select: none;
+            font-family: 'Times New Roman', Times, serif;
         }
 
         .tab:hover, .tab.active {
-            transform: translateX(6px);
-            width: 48px;
+            transform: translateX(8px);
+            width: 50px;
         }
 
         .tab-edu { background-color: var(--tab-edu); color: #000; }
@@ -261,19 +257,52 @@
         .tab-thoughts { background-color: var(--tab-thoughts); color: #000; }
         .tab-contact { background-color: var(--tab-contact); color: #fff; }
 
+        /* Realistic Page Turn Transition Layer */
+        .flipper-overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 40;
+            pointer-events: none;
+            display: none;
+        }
+
+        .flipper-overlay.turning {
+            display: block;
+            transform: rotateY(-180deg);
+        }
+
+        .flipper-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background: #d8b87e;
+            background-image: radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 0);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.15);
+        }
+
+        .flipper-back {
+            transform: rotateY(180deg);
+        }
+
         /* ----------------------------------
-           4. Content Panels & Typography
+           4. Panel Content Styling
         ----------------------------------- */
         .panel {
             display: none;
+            width: 100%;
             height: 100%;
         }
 
         .panel.active {
             display: flex;
-            width: 100%;
-            height: 100%;
-            animation: fadeIn 0.4s ease;
+            animation: fadeIn 0.3s ease;
         }
 
         @keyframes fadeIn {
@@ -281,207 +310,226 @@
             to { opacity: 1; }
         }
 
-        .university-title, .company-title {
-            font-weight: bold;
-            font-size: 13pt;
-            color: #000000;
+        /* Directory List (Index Page) */
+        .directory-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .date-gray {
-            color: #666666;
-            font-size: 11pt;
-            margin-bottom: 0.3rem;
-        }
-
-        .highlight {
-            background-color: var(--highlight-blue);
-            padding: 0 2px;
-        }
-
-        /* Stickers / Seals */
-        .stamp-logo {
-            width: 65px;
-            height: 65px;
-            object-fit: contain;
-            opacity: 0.9;
-        }
-
-        .stamp-hku {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-        }
-
-        .stamp-cityu {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-        }
-
-        /* Polaroid Photo Style */
-        .polaroid {
-            background: #ffffff;
-            padding: 10px 10px 25px 10px;
-            box-shadow: 3px 5px 12px rgba(0,0,0,0.2);
-            transform: rotate(-3deg);
-            width: 180px;
-            margin: 1rem auto;
+        .directory-list {
+            list-style: none;
             text-align: center;
         }
 
-        .polaroid-img-placeholder {
+        .directory-list li {
+            font-family: 'Caveat', cursive;
+            font-size: 16pt;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .directory-list li:hover {
+            transform: scale(1.15);
+            color: #355E3B;
+        }
+
+        /* Education Page Seals */
+        .seal-logo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            position: absolute;
+            filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.3));
+        }
+
+        .seal-hku {
+            top: 15px;
+            left: 15px;
+        }
+
+        .seal-cityu {
+            bottom: 15px;
+            right: 15px;
+        }
+
+        /* Work Page Highlighting */
+        .bold-title {
+            font-weight: bold;
+            color: #000;
+        }
+
+        .date-location {
+            color: #555555;
+            font-size: 10.5pt;
+            margin-bottom: 0.4rem;
+        }
+
+        .hl {
+            background-color: var(--highlight-blue);
+            padding: 0 3px;
+            border-radius: 2px;
+        }
+
+        /* Bullet point styling inside Work page */
+        .work-bullet {
+            display: block;
+            margin-left: 0.5rem;
+            margin-bottom: 0.4rem;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .work-bullet::before {
+            content: "⚫";
+            font-size: 6pt;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: #000;
+        }
+
+        /* About Me Polaroid Photo */
+        .polaroid-frame {
+            background: #ffffff;
+            padding: 10px 10px 22px 10px;
+            box-shadow: 2px 4px 10px rgba(0,0,0,0.25);
+            transform: rotate(-2deg);
+            width: 170px;
+            margin: 0 auto 1.2rem auto;
+            text-align: center;
+        }
+
+        .polaroid-photo {
             width: 100%;
-            height: 160px;
-            background: #e0e0e0;
+            height: 150px;
+            background: #e6e6e6;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #777;
-            font-size: 10pt;
+            color: #888;
+            font-size: 9pt;
+            border: 1px solid #ddd;
         }
 
-        /* Thoughts Modal / Full Article View */
-        .blog-item {
-            cursor: pointer;
-            padding: 0.8rem;
-            border: 1px dashed #aaaaaa;
+        /* Thoughts Journal View */
+        .blog-card {
+            background: rgba(255, 255, 255, 0.35);
+            border: 1px dashed #777;
+            padding: 1rem;
             border-radius: 4px;
-            background: rgba(255,255,255,0.4);
+            cursor: pointer;
             transition: background 0.2s ease;
         }
 
-        .blog-item:hover {
-            background: rgba(255,255,255,0.8);
+        .blog-card:hover {
+            background: rgba(255, 255, 255, 0.7);
         }
 
-        .thoughts-full {
+        .thoughts-full-overlay {
             display: none;
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--paper-texture);
-            padding: 2.5rem 2rem;
-            z-index: 30;
+            background: #d8b87e;
+            background-image: radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 0);
+            padding: 2.2rem;
+            z-index: 70;
             overflow-y: auto;
         }
 
-        .thoughts-full.active {
+        .thoughts-full-overlay.active {
             display: block;
             animation: fadeIn 0.3s ease;
         }
 
-        .back-btn {
+        .back-link {
             font-size: 10pt;
             cursor: pointer;
             text-decoration: underline;
+            color: #333;
             margin-bottom: 1rem;
             display: inline-block;
-            color: #444;
         }
 
         /* Contact Form */
-        .contact-form {
+        .contact-field {
+            margin-bottom: 0.8rem;
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
-            margin-top: 1rem;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.2rem;
-        }
-
-        .form-group label {
-            font-size: 11pt;
+        .contact-field label {
+            font-size: 10.5pt;
             font-weight: bold;
+            margin-bottom: 0.2rem;
         }
 
-        .form-group input, .form-group textarea {
+        .contact-field input, .contact-field textarea {
             font-family: 'Times New Roman', Times, serif;
-            font-size: 11pt;
+            font-size: 10.5pt;
             padding: 0.4rem;
-            border: 1px solid #777;
-            background: rgba(255,255,255,0.6);
+            border: 1px solid #666;
+            background: rgba(255, 255, 255, 0.5);
             border-radius: 2px;
             outline: none;
         }
 
-        .send-btn {
+        .btn-send {
             font-family: 'Times New Roman', Times, serif;
-            font-size: 12pt;
-            padding: 0.4rem 1.2rem;
+            font-size: 11pt;
+            font-weight: bold;
+            padding: 0.4rem 1.4rem;
             background: #ffffff;
             border: 1px solid #000;
             cursor: pointer;
-            align-self: flex-start;
-            margin-top: 0.5rem;
             box-shadow: 2px 2px 0 #000;
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            transition: all 0.1s ease;
+            margin-top: 0.4rem;
         }
 
-        .send-btn:active {
+        .btn-send:active {
             transform: translate(2px, 2px);
             box-shadow: 0 0 0 #000;
-        }
-
-        /* Custom Bullet List */
-        ul.custom-bullets {
-            list-style-type: disc;
-            padding-left: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        ul.custom-bullets li {
-            margin-bottom: 0.4rem;
-        }
-
-        /* Index Directory List */
-        .index-list {
-            list-style: none;
-            margin-top: 2rem;
-        }
-
-        .index-list li {
-            font-size: 16pt;
-            margin-bottom: 1.2rem;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .index-list li:hover {
-            transform: translateX(8px);
-            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. Screen 1: Typing Intro Overlay -->
+    <!-- 1. Typing Overlay Screen -->
     <div id="typing-overlay" onclick="enterHomepage()">
         <div class="typing-container">
             <span id="typed-text"></span><span class="cursor"></span>
         </div>
-        <div id="click-hint" class="click-hint">( Click anywhere to continue )</div>
     </div>
 
-    <!-- 2. Screen 2: Leather Notebook Stage -->
+    <!-- 2. Notebook Stage -->
     <div class="stage">
         <div class="notebook" id="notebook">
             
-            <!-- External Cover -->
-            <div class="cover-external" onclick="toggleNotebook()">
-                <h1>The Story of Zoe Yang</h1>
+            <!-- Pure Color Leather Cover -->
+            <div class="cover-external" onclick="openNotebook()">
+                <h1>The Story of Zoey</h1>
             </div>
 
-            <!-- Journal Spread Pages -->
+            <!-- Kraft Paper Journal Spread -->
             <div class="journal-spread">
                 <div class="spine-clip"></div>
 
-                <!-- SIDE TABS -->
+                <!-- Page Turner Overlay Effect -->
+                <div class="flipper-overlay" id="flipper">
+                    <div class="flipper-face flipper-front"></div>
+                    <div class="flipper-face flipper-back"></div>
+                </div>
+
+                <!-- Side Sticky Tabs -->
                 <div class="side-tabs">
                     <div class="tab tab-edu" onclick="navTo('edu')">Education</div>
                     <div class="tab tab-work" onclick="navTo('work')">Work</div>
@@ -490,99 +538,90 @@
                     <div class="tab tab-contact" onclick="navTo('contact')">Contact</div>
                 </div>
 
-                <!-- INDEX / HOMEPAGE DIRECTORY (Default View) -->
+                <!-- HOMEPAGE DIRECTORY / INDEX -->
                 <div id="panel-index" class="panel active">
-                    <div class="page page-left">
-                        <!-- Left blank or decorative -->
-                    </div>
+                    <div class="page page-left"></div>
                     <div class="page page-right">
-                        <ul class="index-list">
-                            <li onclick="navTo('edu')">Education</li>
-                            <li onclick="navTo('work')">Work</li>
-                            <li onclick="navTo('about')">About Me</li>
-                            <li onclick="navTo('thoughts')">Thoughts</li>
-                            <li onclick="navTo('contact')">Contact</li>
-                        </ul>
+                        <div class="directory-container">
+                            <ul class="directory-list">
+                                <li onclick="navTo('edu')">Education</li>
+                                <li onclick="navTo('work')">Work</li>
+                                <li onclick="navTo('about')">About Me</li>
+                                <li onclick="navTo('thoughts')">Thoughts</li>
+                                <li onclick="navTo('contact')">Contact</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
                 <!-- EDUCATION PANEL -->
                 <div id="panel-edu" class="panel">
                     <div class="page page-left">
-                        <!-- HKU Logo Stamp -->
-                        <img src="https://www.hku.hk/f/page/7667/HKU_Logo.png" alt="HKU Logo" class="stamp-logo stamp-hku" onerror="this.style.display='none'">
+                        <!-- HKU Seal Illustration Sticker -->
+                        <img src="https://www.hku.hk/f/page/7667/HKU_Logo.png" alt="HKU Seal" class="seal-logo seal-hku" onerror="this.style.display='none'">
                         
-                        <div style="margin-top: 3.5rem;">
-                            <div class="university-title">The University of Hong Kong</div>
-                            <div class="date-gray">2025 – 2026</div>
-                            <div style="font-weight: bold; margin-bottom: 0.5rem;">MA in Translation</div>
+                        <div style="margin-top: 3.8rem;">
+                            <div style="font-weight: bold; font-size: 13pt; color: #000;">The University of Hong Kong</div>
+                            <div class="date-location">2025 – 2026</div>
+                            <div style="font-weight: bold; margin-bottom: 0.4rem;">MA in Translation</div>
                             <p>Coursework covers Financial Translation, Mass Media Translation, Interpreting, Government & Commercial Texts, and Legal Translation.</p>
                         </div>
                     </div>
+
                     <div class="page page-right">
                         <div style="margin-top: 1rem;">
-                            <div class="university-title">City University of Macau</div>
-                            <div class="date-gray">2021 – 2025</div>
-                            <div style="font-weight: bold; margin-bottom: 0.5rem;">Bachelor of Arts in English</div>
+                            <div style="font-weight: bold; font-size: 13pt; color: #000;">City University of Macau</div>
+                            <div class="date-location">2021 – 2025</div>
+                            <div style="font-weight: bold; margin-bottom: 0.4rem;">Bachelor of Arts in English</div>
                             <p>Coursework includes Consecutive & Simultaneous Interpretation, Translation Theory, and News Translation.</p>
                         </div>
 
-                        <!-- CityU Logo Stamp -->
-                        <img src="https://www.cityu.edu.mo/wp-content/uploads/2021/04/cityu_logo.png" alt="CityU Logo" class="stamp-logo stamp-cityu" onerror="this.style.display='none'">
+                        <!-- CityU Macau Seal Illustration Sticker -->
+                        <img src="https://www.cityu.edu.mo/wp-content/uploads/2021/04/cityu_logo.png" alt="CityU Seal" class="seal-logo seal-cityu" onerror="this.style.display='none'">
                     </div>
                 </div>
 
                 <!-- WORK PANEL -->
                 <div id="panel-work" class="panel">
                     <div class="page page-left">
-                        <div style="margin-bottom: 1.5rem;">
-                            <div class="company-title">Marketing Intern at Smith & Associates</div>
-                            <div class="date-gray">Jun. 2026 – Present | Hong Kong</div>
-                            <ul class="custom-bullets">
-                                <li>Translated and localized over 50 marketing assets, including brochures, newsletters, and presentations</li>
-                                <li>Maintained and updated <span class="highlight">company’s website</span>, translating 20+ English press releases and market insights to ensure precise and timely localized communications</li>
-                                <li>Assisted <span class="highlight">integrated marketing campaigns</span> across multi-digital channels, driving consistent brand messaging and audience reach</li>
-                            </ul>
+                        <div style="margin-bottom: 1.2rem;">
+                            <div class="bold-title">Marketing Intern at Smith & Associates</div>
+                            <div class="date-location">Jun. 2026-Present | Hong Kong</div>
+                            <span class="work-bullet">Translated and localized over 50 marketing assets, including brochures, newsletters, and presentations</span>
+                            <span class="work-bullet">Maintained and updated <span class="hl">company’s website</span>, translating 20+ English press releases and market insights to ensure precise and timely localized communications</span>
+                            <span class="work-bullet">Assisted <span class="hl">integrated marketing campaigns</span> across multi-digital channels, driving consistent brand messaging and audience reach</span>
                         </div>
 
                         <div>
-                            <div class="company-title">Translation Intern at MAIYA MEDIA</div>
-                            <div class="date-gray">Jan. 2025 – May 2025 | Hangzhou</div>
-                            <ul class="custom-bullets">
-                                <li>Completed translation for 50+ short dramas across modern, historical, and urban genres, delivering <span class="highlight">900+ episodes</span> with a peak monthly output of 280 episodes</li>
-                                <li>Proofread, polished, and reviewed dialogue translations and dubbing for <span class="highlight">360+ episodes</span>, ensuring localization and logical accuracy</li>
-                                <li>Managed multiple translation tasks simultaneously, including translation for log keepers and script proofreading, ensuring end-to-end quality and efficiency</li>
-                            </ul>
+                            <div class="bold-title">Translation Intern at MAIYA MEDIA</div>
+                            <div class="date-location">Jan. 2025-May, 2025 | Hangzhou</div>
+                            <span class="work-bullet">Completed translation for 50+ short dramas across modern, historical, and urban genres, delivering <span class="hl">900+ episodes</span> with a peak monthly output of 280 episodes</span>
+                            <span class="work-bullet">Proofread, polished, and reviewed dialogue translations and dubbing for <span class="hl">360+ episodes</span>, ensuring localization and logical accuracy</span>
+                            <span class="work-bullet">Managed multiple translation tasks simultaneously, including translation for log keepers and script proofreading, ensuring end-to-end quality and efficiency</span>
                         </div>
                     </div>
 
                     <div class="page page-right">
-                        <div style="margin-bottom: 1.2rem;">
-                            <div class="company-title">Student Ambassador (Copywriting) at Rector’s Office</div>
-                            <div class="date-gray">Nov. 2023 – Dec. 2024 | Macao</div>
-                            <ul class="custom-bullets">
-                                <li>Drafted and translated <span class="highlight">bilingual content</span> for the university website, including news articles and higher education documents</li>
-                                <li>Supported event coordination for orientations, lectures, and official ceremonies, ensuring smooth execution and effective communication with diverse stakeholders</li>
-                            </ul>
+                        <div style="margin-bottom: 1rem;">
+                            <div class="bold-title">Student Ambassador (Copywriting) at Rector’s Office</div>
+                            <div class="date-location">Nov. 2023-Dec. 2024 | Macao</div>
+                            <span class="work-bullet">Drafted and translated <span class="hl">bilingual content</span> for the university website, including news articles and higher education documents</span>
+                            <span class="work-bullet">Supported event coordination for orientations, lectures, and official ceremonies, ensuring smooth execution and effective communication with diverse stakeholders.</span>
                         </div>
 
-                        <div style="margin-bottom: 1.2rem;">
-                            <div class="company-title">Intern at Zhejiang Yinqingli Co., Ltd.</div>
-                            <div class="date-gray">Jun. 2024 – Aug. 2024 | Hangzhou</div>
-                            <ul class="custom-bullets">
-                                <li>Produced press releases and digital content for 10+ companies and maintained other English information, including English copy, images, and videos, to the backend</li>
-                                <li>Translated more than 30 Chinese manuscripts provided by customers and uploaded them to their official websites, which received <span class="highlight">unanimous praise</span> from customers</li>
-                            </ul>
+                        <div style="margin-bottom: 1rem;">
+                            <div class="bold-title">Intern at Zhejiang Yinqingli Co., Ltd.</div>
+                            <div class="date-location">Jun. 2024-Aug. 2024 | Hangzhou</div>
+                            <span class="work-bullet">Produced press releases and digital content for 10+ companies and maintained other English information, including English copy, images, and videos, to the backend</span>
+                            <span class="work-bullet">Translated more than 30 Chinese manuscripts provided by customers and uploaded them to their official websites, which received <span class="hl">unanimous praise</span> from customers</span>
                         </div>
 
                         <div>
-                            <div class="company-title">Intern at Hangzhou Connect Fun Technology Co., Ltd.</div>
-                            <div class="date-gray">Jun. 2023 – Jul. 2023 | Hangzhou</div>
-                            <ul class="custom-bullets">
-                                <li>Role as the <span class="highlight">leader of the internship team</span>, collected, compiled and reviewed more than 1,000 pieces of overseas user information and uploaded them to the platform</li>
-                                <li>Collaborated with UI and IT colleagues to modify the English copywriting of the APP and the website, which has been <span class="highlight">successfully launched</span> on Google Play and Apple store</li>
-                                <li>Gained practical experience in digital marketing and cross-cultural product localization</li>
-                            </ul>
+                            <div class="bold-title">Intern at Hangzhou Connect Fun Technology Co., Ltd.</div>
+                            <div class="date-location">Jun. 2023-Jul. 2023 | Hangzhou</div>
+                            <span class="work-bullet">Role as the <span class="hl">leader of the internship team</span>, collected, compiled and reviewed more than 1,000 pieces of overseas user information and uploaded them to the platform</span>
+                            <span class="work-bullet">Collaborated with UI and IT colleagues to modify the English copywriting of the APP and the website, which has been <span class="hl">successfully launched</span> on Google Play and Apple store</span>
+                            <span class="work-bullet">Gained practical experience in digital marketing and cross-cultural product localization</span>
                         </div>
                     </div>
                 </div>
@@ -590,21 +629,22 @@
                 <!-- ABOUT ME PANEL -->
                 <div id="panel-about" class="panel">
                     <div class="page page-left" style="display: flex; flex-direction: column; align-items: center;">
-                        <div class="polaroid">
-                            <div class="polaroid-img-placeholder">Photo Placeholder</div>
-                            <div style="font-size: 9pt; margin-top: 5px; color: #555;">Zoe Yang</div>
+                        <div class="polaroid-frame">
+                            <div class="polaroid-photo">Photo Placeholder</div>
+                            <div style="font-size: 8.5pt; margin-top: 4px; color: #444;">Zoe Yang</div>
                         </div>
-                        <p style="text-align: justify; margin-top: 0.5rem;">
-                            Hi, I'm Zoe Yang! I'm a fresh graduate from The University of Hong Kong, currently seeking full-time opportunities in Marketing, Communications, Public Relations, Advertising, and Translation.
+                        <p style="text-align: justify; margin-top: 0.2rem;">
+                            Hi, I'm Zoe Yang! I'm a fresh graduate from the University of Hong Kong, currently seeking full-time opportunities in Marketing, Communications, Public Relations, Advertising, and Translation.
                         </p>
                     </div>
 
                     <div class="page page-right">
+                        <!-- Upgraded & Enhanced English Text -->
                         <p style="margin-bottom: 1rem;">
-                            I am a native Mandarin speaker, born and raised in the beautiful southeastern city of Hangzhou. Fluent in English and specialized in translation, I truly enjoy uncovering the nuances of different cultures and histories through language. Beyond this, I am also enthusiastically learning Cantonese and hope to achieve full fluency in the near future.
+                            I am a native Mandarin speaker who was born and raised in the beautiful southeastern city of Hangzhou. I am fluent in English and specialize in translation, which enables me to enjoy the distinct charm of different cultures and histories. In addition, I am enthusiastically learning Cantonese and look forward to mastering it in the near future.
                         </p>
                         <p style="text-indent: 1em;">
-                            In my daily life, I love capturing moments through photography, writing down my thoughts, enjoying a good cup of coffee, and staying active playing squash. I am always excited to embrace new experiences and connect with new friends!
+                            In my daily life, I enjoy penning my thoughts, taking photographs, sipping coffee, and playing squash. I am always excited to embrace new experiences and connect with new friends.
                         </p>
                     </div>
                 </div>
@@ -612,39 +652,39 @@
                 <!-- THOUGHTS PANEL -->
                 <div id="panel-thoughts" class="panel">
                     <div class="page page-left">
-                        <div style="font-weight: bold; margin-bottom: 1rem; font-size: 14pt;">Journal Entries</div>
-                        <div class="blog-item" onclick="showFullThought()">
-                            <div style="font-weight: bold; font-size: 12pt;">Some thoughts 2026.3.28</div>
-                            <div class="date-gray" style="margin-top: 0.2rem;">Posted on March 28, 2026</div>
+                        <div style="font-weight: bold; font-size: 13pt; margin-bottom: 1rem;">Journal Entries</div>
+                        <div class="blog-card" onclick="openThoughtEntry()">
+                            <div style="font-weight: bold; font-size: 11pt;">Some thoughts 2026.3.28</div>
+                            <div class="date-location" style="margin-top: 0.2rem;">Date: 2026.03.28</div>
                         </div>
                     </div>
 
                     <div class="page page-right">
-                        <p style="color: #777; font-style: italic;">Select an entry on the left to read the full journal.</p>
+                        <p style="color: #666; font-style: italic; margin-top: 1rem;">Click on the title on the left page to read the full journal entry.</p>
                     </div>
 
-                    <!-- Full Blog Reader Layer -->
-                    <div id="thoughts-full-view" class="thoughts-full">
-                        <span class="back-btn" onclick="hideFullThought()">← Back to list</span>
-                        <div style="font-weight: bold; font-size: 15pt; margin-bottom: 0.5rem;">Some thoughts 2026.3.28</div>
-                        <div class="date-gray" style="margin-bottom: 1.5rem;">3.26</div>
+                    <!-- Full Journal Entry Layer -->
+                    <div id="thoughts-full-view" class="thoughts-full-overlay">
+                        <span class="back-link" onclick="closeThoughtEntry()">← Back to list</span>
+                        <div style="font-weight: bold; font-size: 14pt; margin-bottom: 0.3rem;">Some thoughts 2026.3.28</div>
+                        <div class="date-location" style="margin-bottom: 1.2rem;">3.26</div>
                         
-                        <p style="margin-bottom: 1rem; text-indent: 2em;">
+                        <p style="margin-bottom: 0.8rem; text-indent: 2em; line-height: 1.6;">
                             这段时间跑了不少面试，被问到最多、也最绕不开的一个问题，就是“talk about your career plan”。说实话，我不知道自己的职业规划是什么，甚至，我也不确定未来想走进哪个行业。嘴上总是故作轻松：“哎呀，我做什么都行，哪个公司愿意要我，我就去哪”。可每晚躺在床上复盘白天面试的时候，还是会反反复复地问自己，我到底想做什么。
                         </p>
-                        <p style="margin-bottom: 1rem; text-indent: 2em;">
+                        <p style="margin-bottom: 0.8rem; text-indent: 2em; line-height: 1.6;">
                             我们好像总在拼命寻找一个确定的状态：一份确定的offer，一段确定的关系，一个确定的未来。可二十多岁的年纪，注定裹挟着太多的稚嫩、迷茫、焦虑与不确定。又有多少人能在二十岁出头，就笃定地看清自己往后几十年的方向。
                         </p>
-                        <p style="margin-bottom: 1rem; text-indent: 2em;">
+                        <p style="margin-bottom: 0.8rem; text-indent: 2em; line-height: 1.6;">
                             虽然耳边总有人鼓励说“你可以去任何行业”，可真当自己鼓起勇气踏进新的领域、试着做出不同选择时，迎面而来的却是一次次不自信的低头，一次次在心底反复质疑自己，还有一次次被拒之门外，漫长的沉默。
                         </p>
-                        <p style="margin-bottom: 1rem; text-indent: 2em;">
+                        <p style="margin-bottom: 0.8rem; text-indent: 2em; line-height: 1.6;">
                             我喜欢写点东西，像是碎碎念，又更像是为这一团乱麻般的思绪理清头绪。也许，就在这些看似无厘头的记录里，我会慢慢找到未来的方向。大概是因为在这个空间里，我终于可以只做自己，没有考核，没有标准，也没有非此不可的答案。我只需要，把最真实的念头一字一句地写下来。
                         </p>
-                        <p style="margin-bottom: 1rem; text-indent: 2em;">
+                        <p style="margin-bottom: 0.8rem; text-indent: 2em; line-height: 1.6;">
                             说来也怪，明明在文字里可以坦然地面对一切不确定，可一旦回到现实里的人际关系，我就像换了个人。虽然平时总像个高能量的人，可总有某些时刻，我是真的怕那些复杂的人际关系。我讨厌矛盾，讨厌分歧，讨厌尴尬，更讨厌别人因为我而心里不痛快。所以总是不自觉地想做那个活跃气氛的人，拼命找话题，笑着热场子。可每次遇到那些拧巴又烦人的人际关系，我脑子里冒出来的第一个念头，不是面对，而是逃。只想缩回一个小小的角落，把自己藏起来，不去看，不去听，也不想再去解决什么。
                         </p>
-                        <p style="margin-bottom: 1rem; text-indent: 2em;">
+                        <p style="margin-bottom: 0.8rem; text-indent: 2em; line-height: 1.6;">
                             大概也是因为这个，我才那么需要那个可以只做自己的空间吧。在那里，不用讨好谁，不用热场子，也不用小心翼翼地照顾所有人的情绪。我只需要，安安静静地，做我自己。
                         </p>
                     </div>
@@ -653,27 +693,27 @@
                 <!-- CONTACT PANEL -->
                 <div id="panel-contact" class="panel">
                     <div class="page page-left">
-                        <p style="font-size: 13pt; margin-bottom: 0.8rem;">Thank you for visiting my little corner!</p>
-                        <p style="text-indent: 1em; font-size: 12pt; margin-bottom: 0.8rem;">Let's have some chats!</p>
-                        <p style="text-indent: 1em; font-size: 12pt;">Share with me anything in your mind!</p>
+                        <p style="font-size: 12pt; margin-bottom: 1rem;">Thank you for visiting my little corner!</p>
+                        <p style="text-indent: 1em; font-size: 11pt; margin-bottom: 1rem;">Let's have some chats!</p>
+                        <p style="text-indent: 1em; font-size: 11pt;">Share with me anything in your mind!</p>
                     </div>
 
                     <div class="page page-right">
-                        <form class="contact-form" action="https://formsubmit.co/zoeyeahoh@gmail.com" method="POST">
+                        <form action="https://formsubmit.co/zoeyeahoh@gmail.com" method="POST">
                             <input type="hidden" name="_captcha" value="false">
-                            <div class="form-group">
+                            <div class="contact-field">
                                 <label>Name:</label>
                                 <input type="text" name="name" required>
                             </div>
-                            <div class="form-group">
+                            <div class="contact-field">
                                 <label>Contact Info:</label>
                                 <input type="text" name="contact" required>
                             </div>
-                            <div class="form-group">
+                            <div class="contact-field">
                                 <label>Anything you want to share with me:</label>
                                 <textarea name="message" rows="4" required></textarea>
                             </div>
-                            <button type="submit" class="send-btn">Send!</button>
+                            <button type="submit" class="btn-send">Send!</button>
                         </form>
                     </div>
                 </div>
@@ -682,69 +722,71 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- JavaScript Logic -->
     <script>
-        // 1. Typing Animation for Screen 1
+        // 1. Typing Animation logic
         const line1 = "Hi, I'm Zoe.\n";
         const line2 = "Welcome to my little corner of interests!";
         const fullText = line1 + line2;
         const typedTextElem = document.getElementById('typed-text');
-        const clickHint = document.getElementById('click-hint');
         let index = 0;
 
-        function typeNextChar() {
+        function typeChar() {
             if (index < fullText.length) {
                 typedTextElem.textContent += fullText.charAt(index);
                 index++;
-                setTimeout(typeNextChar, 70);
-            } else {
-                clickHint.style.opacity = '1';
+                setTimeout(typeChar, 75);
             }
         }
 
-        window.addEventListener('DOMContentLoaded', typeNextChar);
+        window.addEventListener('DOMContentLoaded', typeChar);
 
-        // Enter Homepage from Typing Overlay
         function enterHomepage() {
             document.getElementById('typing-overlay').classList.add('hidden');
         }
 
-        // Toggle Open Cover Animation
-        function toggleNotebook() {
+        // 2. Notebook Open State
+        function openNotebook() {
             document.getElementById('notebook').classList.add('open');
         }
 
-        // Tab Navigation & Page Flip Effect
-        function navTo(panelName) {
+        // 3. Navigation with Page Flip Animation
+        function navTo(targetPanelName) {
             const notebook = document.getElementById('notebook');
             if (!notebook.classList.contains('open')) {
                 notebook.classList.add('open');
             }
 
-            // Hide full thought view if open
-            hideFullThought();
+            closeThoughtEntry();
 
-            // Switch Panels
-            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-            const targetPanel = document.getElementById('panel-' + panelName);
-            if (targetPanel) {
-                targetPanel.classList.add('active');
-            }
+            const flipper = document.getElementById('flipper');
+            flipper.classList.add('turning');
 
-            // Highlight Active Tab
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            const activeTab = document.querySelector(`.tab-${panelName}`);
-            if (activeTab) {
-                activeTab.classList.add('active');
-            }
+            setTimeout(() => {
+                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+                const nextPanel = document.getElementById('panel-' + targetPanelName);
+                if (nextPanel) {
+                    nextPanel.classList.add('active');
+                }
+
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                const activeTab = document.querySelector(`.tab-${targetPanelName}`);
+                if (activeTab) {
+                    activeTab.classList.add('active');
+                }
+            }, 300);
+
+            setTimeout(() => {
+                flipper.classList.remove('turning');
+            }, 600);
         }
 
-        // Show/Hide Full Thoughts Text
-        function showFullThought() {
+        // 4. Thoughts Full Text Handler
+        function openThoughtEntry() {
             document.getElementById('thoughts-full-view').classList.add('active');
         }
 
-        function hideFullThought() {
+        function closeThoughtEntry() {
             document.getElementById('thoughts-full-view').classList.remove('active');
         }
     </script>
