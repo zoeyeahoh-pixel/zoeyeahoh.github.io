@@ -6,73 +6,7 @@
     <title>The Story of Zoey</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
-/* --- 新增：动态流光背景 --- */
-.bg-container {
-  position: fixed; /* 固定定位铺满全屏 */
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background: linear-gradient(135deg, #ffe8f3, #d9f3ff);
-  z-index: -1; /* 确保背景在所有内容最底层 */
-}
 
-.bg-container::before,
-.bg-container::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 200%;
-  height: 200%;
-  background: conic-gradient(
-    from 0deg,
-    #ff9aa2, #ffb7b2, #ffdac1, #e2f0cb, #a2e4ff, #c9afff, #ffb7b2, #ff9aa2
-  );
-  transform: translate(-50%, -50%);
-  animation: rotate 8s linear infinite;
-  filter: blur(50px);
-  opacity: 0.7;
-}
-
-.bg-container::after {
-  width: 180%;
-  height: 180%;
-  animation: rotate-reverse 10s linear infinite;
-  opacity: 0.5;
-}
-
-@keyframes rotate {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes rotate-reverse {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(-360deg); }
-}
-
-/* --- 修改原有的 body --- */
-body {
-  background-color: transparent; /* 背景交给 bg-container */
-  font-family: 'Times New Roman', Times, serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  overflow: hidden;
-  margin: 0;
-}
-
-/* 确保笔记本在背景之上 */
-.stage {
-  z-index: 10;
-  perspective: 2500px;
-  width: 1000px;
-  height: 650px;
-  position: relative;
-}
         /* 全局及重置 */
         * {
             margin: 0;
@@ -414,6 +348,73 @@ body {
             box-shadow: 3px 3px 0 #1b4d2e; border-radius: 4px;
         }
     </style>
+/* --- 新增：动态流光背景 --- */
+.bg-container {
+  position: fixed; /* 固定定位铺满全屏 */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffe8f3, #d9f3ff);
+  z-index: -1; /* 确保背景在所有内容最底层 */
+}
+
+.bg-container::before,
+.bg-container::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    #ff9aa2, #ffb7b2, #ffdac1, #e2f0cb, #a2e4ff, #c9afff, #ffb7b2, #ff9aa2
+  );
+  transform: translate(-50%, -50%);
+  animation: rotate 8s linear infinite;
+  filter: blur(50px);
+  opacity: 0.7;
+}
+
+.bg-container::after {
+  width: 180%;
+  height: 180%;
+  animation: rotate-reverse 10s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes rotate {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes rotate-reverse {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+
+/* --- 修改原有的 body --- */
+body {
+  background-color: transparent; /* 背景交给 bg-container */
+  font-family: 'Times New Roman', Times, serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* 确保笔记本在背景之上 */
+.stage {
+  z-index: 10;
+  perspective: 2500px;
+  width: 1000px;
+  height: 650px;
+  position: relative;
+}
 </head>
 <body>
 
