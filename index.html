@@ -73,12 +73,13 @@
             margin: 0;
         }
 
-        /* ---------------- 第一屏：打字机特效 ---------------- */
+        /* ---------------- 第一屏：粒子文字特效界面 ---------------- */
         #intro-screen {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: #ffffff;
+            background-color: #09090f;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
@@ -89,21 +90,28 @@
             opacity: 0;
             visibility: hidden;
         }
-        .typing-text {
-            font-size: 14pt;
-            color: #000000;
-            text-align: center;
-            white-space: pre-wrap;
-            line-height: 1.8;
+
+        #particle-canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
         }
-        .cursor {
-            display: inline-block;
-            width: 2px; height: 1em;
-            background-color: #000;
-            vertical-align: text-bottom;
-            animation: blink 1s step-end infinite;
+
+        .intro-tip {
+            position: absolute;
+            bottom: 40px;
+            color: #f8fafc;
+            font-family: 'Times New Roman', serif;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            opacity: 0.6;
+            animation: pulse-tip 2s infinite ease-in-out;
+            pointer-events: none;
         }
-        @keyframes blink { 50% { opacity: 0; } }
+        @keyframes pulse-tip {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
 
         /* ---------------- 笔记本容器与3D舞台（完整居中） ---------------- */
         .stage {
@@ -126,16 +134,17 @@
             position: absolute;
             width: 50%; height: 100%;
             right: 0; top: 0;
-            background: linear-gradient(
-                145deg,
-                rgb(59, 43, 124),
-                rgb(106, 76, 169),
-                rgb(155, 108, 214)
-            ),
-            url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.15"/></svg>');
+            background: linear-gradient(to right, rgba(189, 138, 138, 0.1), transparent),
+                        linear-gradient(
+                            145deg,
+                            rgb(59, 43, 124),
+                            rgb(106, 76, 169),
+                            rgb(155, 108, 214)
+                        ),
+                        url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.15"/></svg>');
             background-blend-mode: overlay;
-            border-radius: 4px 15px 15px 4px;
-            box-shadow: inset -5px 0 15px rgba(0,0,0,0.3), -10px 10px 20px rgba(0,0,0,0.4);
+            border-radius: 3px 15px 15px 3px;
+            box-shadow: 10px 20px 50px rgba(0, 0, 0, 0.5), inset -5px 0 15px rgba(0,0,0,0.3);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -143,8 +152,33 @@
             z-index: 100;
             transform-origin: left center;
             transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-            border-left: 12px solid rgb(35, 25, 75);
+            border-left: none;
         }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 0;
+            height: 100%;
+            width: 1px;
+            background-color: rgba(245, 245, 245, 0.144);
+            box-shadow: -3px 0px 2px rgba(0, 0, 0, 0.671), 1px 0px 4px rgba(255, 255, 255, 0.671);
+            z-index: 2;
+        }
+
+        .cover::after {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(to right, #0000003d, #00000005);
+            box-shadow: -3px 0px 6px rgba(0, 0, 0, 0.671), 6px 0px 6px rgba(255, 255, 255, 0.048);
+            z-index: 2;
+        }
+
         .cover h1 {
             color: #D4AF37;
             font-size: 32pt;
@@ -153,6 +187,7 @@
             padding: 20px 40px;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
             text-align: center;
+            z-index: 3;
         }
         .book.open .cover {
             transform: rotateY(-180deg);
@@ -187,10 +222,10 @@
             transform: translateX(-50%);
         }
 
-        /* ---------------- 改良版：卡在书本右侧边缘的书签样式 ---------------- */
+        /* ---------------- 书签样式 ---------------- */
         .container-items {
             position: absolute;
-            right: -25px; /* 让书签左侧边缘扎根/卡在书本右边缘边缘处 */
+            right: -25px;
             top: 50px;
             display: flex;
             flex-direction: column;
@@ -203,14 +238,14 @@
         .item-color {
             position: relative;
             flex-shrink: 0;
-            width: 50px;  /* 书签露在书外的宽度 */
+            width: 50px;
             height: 36px;
             border: none;
             outline: none;
             background: transparent;
             transition: 500ms cubic-bezier(0.175, 0.885, 0.32, 1.1);
             cursor: pointer;
-            transform-origin: left center; /* 以左侧边缘为轴心伸缩，呈现卡在书缝里的错觉 */
+            transform-origin: left center;
         }
 
         .item-color::after {
@@ -218,7 +253,7 @@
             content: "";
             inset: 0;
             background-color: var(--color);
-            border-radius: 0 8px 8px 0; /* 右侧圆角，左侧直角贴书 */
+            border-radius: 0 8px 8px 0;
             transform: scale(1);
             pointer-events: none;
             transition: 500ms cubic-bezier(0.175, 0.885, 0.32, 1.1);
@@ -245,33 +280,8 @@
         }
 
         .item-color:hover {
-            transform: scale(1.25) translateX(6px); /* 悬停时整体往外轻微抽出一截并放大 */
+            transform: scale(1.25) translateX(6px);
             z-index: 99999;
-        }
-
-        .item-color:active::after {
-            transform: scale(0.95);
-        }
-
-        /* 链式动态邻近放大效果（Mac Dock栏同款平滑联动） */
-        .item-color:hover + * {
-            transform: scale(1.15) translateX(3px);
-            z-index: 9999;
-        }
-
-        .item-color:hover + * + * {
-            transform: scale(1.05);
-            z-index: 999;
-        }
-
-        .item-color:has(+ *:hover) {
-            transform: scale(1.15) translateX(3px);
-            z-index: 9999;
-        }
-
-        .item-color:has(+ * + *:hover) {
-            transform: scale(1.05);
-            z-index: 999;
         }
 
         /* ---------------- 内页基础与复古网格质感 ---------------- */
@@ -487,6 +497,107 @@
             background: #fff; border: 2px solid #000; cursor: pointer; 
             box-shadow: 3px 3px 0 #6a4cc9; border-radius: 4px;
         }
+
+        /* --- 地铁卡样式 --- */
+        .metro-card-wrapper {
+            position: absolute;
+            top: 16%;             
+            left: 50%;
+            transform: translateX(-50%) scale(0.9); 
+            transform-origin: top center;
+            z-index: 10;
+        }
+
+        .metro-line-card {
+            width: 17em;
+            height: 11em;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            position: relative;
+            z-index: 0;
+            box-shadow: inset 0em -1.2em #0077ff;
+        }
+        .metro-line-point {
+            background-color: white;
+            width: 1.6em;
+            height: 1.6em;
+            border-radius: 50%;
+            border: solid 0.25em black;
+            position: relative;
+            z-index: 0;
+            transition: all 0.25s ease-in-out;
+        }
+        .metro-line-point:hover {
+            border: solid 0.5em black;
+        }
+        .metro-line-point p {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-weight: bold;
+            transform: rotate(-45deg) translate(40%, -180%);
+            z-index: 0;
+            opacity: 100%;
+            transition: all 0.25s ease-in-out;
+            white-space: nowrap;
+            font-size: 11pt; 
+            font-family: 'Times New Roman', serif;
+        }
+        .metro-line-point:hover p {
+            opacity: 0%;
+        }
+        .metro-line-point div {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1.6em;
+            height: 2.2em;
+            background-color: #0077ff; 
+            transform: translate(-50%, -150%);
+            border-radius: 50%;
+            z-index: 0;
+            opacity: 0%;
+            transition: all 0.25s ease-in-out;
+        }
+        .metro-line-point:hover div {
+            opacity: 100%;
+            transform: translate(-50%, -175%);
+        }
+        .metro-line-information {
+            width: 100%;
+            height: 7.5em;
+            background-color: #0077ff; 
+            position: absolute;
+            z-index: 1;
+            top: 10%;
+            border-radius: 1em;
+            opacity: 0%;
+            transition: all 0.25s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-weight: bold;
+        }
+        .metro-line-information div {
+            background-color: white;
+            width: 85%;
+            height: 4.5em;
+            border: solid 0.25em black;
+            border-radius: 1em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 10pt; 
+            text-align: center;
+            padding: 0 6px;
+        }
+        .metro-line-point:hover ~ .metro-line-information {
+            opacity: 100%;
+            top: 0%;
+        }
     </style>
 </head>
 <body>
@@ -494,9 +605,10 @@
     <!-- 动态流光背景 -->
     <div class="bg-container"></div>
 
-    <!-- 第一屏：打字机 -->
+    <!-- 第一屏：粒子文字特效界面 -->
     <div id="intro-screen" onclick="openHomepage()">
-        <div class="typing-text"><span id="typed"></span><span class="cursor"></span></div>
+        <canvas id="particle-canvas"></canvas>
+        <div class="intro-tip">Click anywhere to enter</div>
     </div>
 
     <!-- 主体：笔记本舞台（绝对居中） -->
@@ -517,7 +629,7 @@
                 <div class="ring"></div>
             </div>
 
-            <!-- 卡在书页边缘的彩色书签 -->
+            <!-- 书签 -->
             <div class="container-items" style="display:none;" id="side-tabs">
                 <button class="item-color" style="--color: #ffb3ba;" aria-color="Education" onclick="turnToSection('edu')"></button>
                 <button class="item-color" style="--color: #bae1ff;" aria-color="Work" onclick="turnToSection('work')"></button>
@@ -542,7 +654,7 @@
             <div class="spread active" id="spread-index">
                 <div class="page page-left" onclick="prevPage()">
                     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
-                        <div style="font-family: 'Caveat', cursive; font-size: 28pt; transform: rotate(-10deg); color: #555;">Welcome! ✨</div>
+                        <div style="font-family: 'Caveat', cursive; font-size: 28pt; transform: rotate(-10deg); color: #555;">Hi, this is Zoe! ✨</div>
                     </div>
                 </div>
                 <div class="page page-right" onclick="nextPage()">
@@ -654,8 +766,28 @@
                     </div>
                 </div>
                 <div class="page page-right" onclick="nextPage()">
-                    <div class="about-center-container">
-                        <div class="sticker" style="top: 10px; right: 20px; transform: rotate(10deg); color: #6a4cc9;">Hangzhou ➔ HK</div>
+                    <!-- 地铁卡组件 -->
+                    <div class="metro-card-wrapper" onclick="event.stopPropagation()">
+                        <div class="metro-line-card">
+                            <div class="metro-line-point">
+                                <p>Hangzhou, Zhejiang</p>
+                                <div></div>
+                            </div>
+                            <div class="metro-line-point">
+                                <p>Macao</p>
+                                <div></div>
+                            </div>
+                            <div class="metro-line-point">
+                                <p>Hong Kong</p>
+                                <div></div>
+                            </div>
+                            <div class="metro-line-information">
+                                <div>Journey: Hangzhou, Zhejiang ➔ Macao ➔ Hong Kong</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-center-container" style="margin-top: 105px;">
                         <div class="about-text-large">
                             Native Mandarin speaker from Hangzhou, fluent in English, and passionately mastering Cantonese.
                         </div>
@@ -678,7 +810,7 @@
                     <div id="dynamic-articles-list"></div>
                     <div class="full-article" id="thoughts-article">
                         <div class="grey-date" style="text-align: right; border-bottom: 1px solid #ccc; margin-bottom: 10px;">3.26</div>
-                        <div class="article-p">这段时间跑了不少面试，被问到最多、也最绕不开的一个问题，就是“talk about your career plan”。说实话，我不知道自己的职业规划是什么，甚至，我也不确定未来想走进哪个行业。嘴上总是故作轻松：“哎呀，我做什么都行，哪个公司愿意要我，我就去哪”。可每晚躺在床上复盘白天面试的时候，还是会反反复复地问自己，我到底想做什么。</div>
+                        <div class="article-p">这段时间跑了不少面试，被问到最多、也最绕不开的一个问题，就是“talk about your career plan”。说实话，我不知道自己的职业规划是什么，甚至，我也不确定未来想走进哪个行业。嘴上总是故作轻松：“哎呀，我做什么都行，哪个公司愿意要我，我就去哪”。可每晚躺在床上复盘白天面试的时候，还是会反反覆覆地问自己，我到底想做什么。</div>
                         <div class="article-p">我们好像总在拼命寻找一个确定的状态：一份确定的offer，一段确定的关系，一个确定的未来。可二十多岁的年纪，注定裹挟着太多的稚嫩、迷茫、焦虑与不确定。</div>
                     </div>
                 </div>
@@ -732,21 +864,135 @@
     </div>
 
     <script>
-        // 打字机逻辑
-        const textToType = "Hi, I'm Zoe.\nWelcome to my little corner of interests!";
-        let charIndex = 0;
-        function typeWriter() {
-            if (charIndex < textToType.length) {
-                document.getElementById("typed").textContent += textToType.charAt(charIndex);
-                charIndex++;
-                setTimeout(typeWriter, 60);
+        // --- 粒子文字特效脚本 ---
+        const canvas = document.getElementById("particle-canvas");
+        const ctx = canvas.getContext("2d");
+
+        let particles = [];
+        let animationId;
+        const mouse = { x: null, y: null, radius: 120 };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        }
+
+        class Particle {
+            constructor(x, y) {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.originX = x;
+                this.originY = y;
+                this.size = 2.2;
+                this.vx = 0;
+                this.vy = 0;
+                this.ease = 0.08;
+                this.friction = 0.85;
+                this.dx = 0;
+                this.dy = 0;
+                this.distance = 0;
+                this.force = 0;
+                this.angle = 0;
+            }
+
+            draw() {
+                ctx.fillStyle = this.isHighlight ? "#8b5cf6" : "#f8fafc";
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            update() {
+                // 鼠标交互排斥 (pointerRepel)
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                let force = -mouse.radius / distance;
+                if (distance < mouse.radius) {
+                    let angle = Math.atan2(dy, dx);
+                    this.vx += force * Math.cos(angle) * 2;
+                    this.vy += force * Math.sin(angle) * 2;
+                }
+
+                // 归位弹性
+                let ox = this.originX - this.x;
+                let oy = this.originY - this.y;
+                this.vx += ox * 0.05;
+                this.vy += oy * 0.05;
+
+                this.vx *= 0.8;
+                this.vy *= 0.8;
+
+                this.x += this.vx;
+                this.y += this.vy;
             }
         }
-        window.onload = typeWriter;
 
-        // 关闭打字屏
+        function initParticles() {
+            particles = [];
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 绘制居中多行文字以提取像素
+            ctx.font = "bold 6vw 'Times New Roman', sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+
+            const lines = ["Hi, I'm Zoe!", "Welcome to my world!"];
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const lineHeight = canvas.height * 0.1;
+
+            ctx.fillStyle = "white";
+            lines.forEach((line, index) => {
+                const yOffset = (index - (lines.length - 1) / 2) * lineHeight;
+                ctx.fillText(line, centerX, centerY + yOffset);
+            });
+
+            const textData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = textData.data;
+            const density = 4; // 采样密度
+
+            for (let y = 0; y < canvas.height; y += density) {
+                for (let x = 0; x < canvas.width; x += density) {
+                    const index = (y * canvas.width + x) * 4;
+                    if (data[index + 3] > 128) {
+                        let p = new Particle(x, y);
+                        // 部分粒子赋予高亮颜色
+                        p.isHighlight = Math.random() < 0.2;
+                        particles.push(p);
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.fillStyle = "#09090f";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            animationId = requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        window.addEventListener("mousemove", (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        // 初始化粒子画布
+        window.addEventListener("load", () => {
+            resizeCanvas();
+            animateParticles();
+        });
+
+        // 关闭打字屏/粒子屏并转入书本场景
         function openHomepage() {
             document.getElementById("intro-screen").classList.add("hidden");
+            cancelAnimationFrame(animationId);
         }
 
         // 打开笔记本
