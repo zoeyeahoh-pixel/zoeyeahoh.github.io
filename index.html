@@ -121,7 +121,7 @@
             transform-style: preserve-3d;
         }
 
-        /* ---------------- 封面 (原色、不透明、带颗粒质感) ---------------- */
+        /* ---------------- 封面 ---------------- */
         .cover {
             position: absolute;
             width: 50%; height: 100%;
@@ -170,7 +170,7 @@
             flex-direction: column;
             justify-content: space-evenly;
             align-items: center;
-            pointer-events: none; /* 让点击穿透，不阻挡翻页 */
+            pointer-events: none;
         }
         .ring {
             width: 45px;
@@ -185,6 +185,93 @@
             width: 4px; height: 12px;
             background: #222; left: 50%;
             transform: translateX(-50%);
+        }
+
+        /* ---------------- 改良版：卡在书本右侧边缘的书签样式 ---------------- */
+        .container-items {
+            position: absolute;
+            right: -25px; /* 让书签左侧边缘扎根/卡在书本右边缘边缘处 */
+            top: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            z-index: 20;
+        }
+
+        .item-color {
+            position: relative;
+            flex-shrink: 0;
+            width: 50px;  /* 书签露在书外的宽度 */
+            height: 36px;
+            border: none;
+            outline: none;
+            background: transparent;
+            transition: 500ms cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            cursor: pointer;
+            transform-origin: left center; /* 以左侧边缘为轴心伸缩，呈现卡在书缝里的错觉 */
+        }
+
+        .item-color::after {
+            position: absolute;
+            content: "";
+            inset: 0;
+            background-color: var(--color);
+            border-radius: 0 8px 8px 0; /* 右侧圆角，左侧直角贴书 */
+            transform: scale(1);
+            pointer-events: none;
+            transition: 500ms cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            box-shadow: 2px 3px 6px rgba(0,0,0,0.25);
+            border: 1px solid rgba(0,0,0,0.1);
+            border-left: none;
+        }
+
+        .item-color::before {
+            position: absolute;
+            content: attr(aria-color);
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11pt;
+            font-family: 'Caveat', cursive, sans-serif;
+            font-weight: bold;
+            color: #2c2c2c;
+            z-index: 2;
+            pointer-events: none;
+            white-space: nowrap;
+            padding: 0 6px;
+        }
+
+        .item-color:hover {
+            transform: scale(1.25) translateX(6px); /* 悬停时整体往外轻微抽出一截并放大 */
+            z-index: 99999;
+        }
+
+        .item-color:active::after {
+            transform: scale(0.95);
+        }
+
+        /* 链式动态邻近放大效果（Mac Dock栏同款平滑联动） */
+        .item-color:hover + * {
+            transform: scale(1.15) translateX(3px);
+            z-index: 9999;
+        }
+
+        .item-color:hover + * + * {
+            transform: scale(1.05);
+            z-index: 999;
+        }
+
+        .item-color:has(+ *:hover) {
+            transform: scale(1.15) translateX(3px);
+            z-index: 9999;
+        }
+
+        .item-color:has(+ * + *:hover) {
+            transform: scale(1.05);
+            z-index: 999;
         }
 
         /* ---------------- 内页基础与复古网格质感 ---------------- */
@@ -213,7 +300,7 @@
             overflow-y: auto;
             line-height: 1.6;
             color: #2c2c2c;
-            cursor: pointer; /* 提示可点击翻页 */
+            cursor: pointer;
         }
         .page-left {
             border-right: 1px solid rgba(0,0,0,0.1);
@@ -288,36 +375,6 @@
             border-radius: 8px 0 0 8px;
         }
 
-        /* ---------------- 便签纸 (Tabs) ---------------- */
-        .tabs {
-            position: absolute;
-            right: -45px; top: 40px;
-            display: flex; flex-direction: column; gap: 12px;
-            z-index: 20;
-        }
-        .tab {
-            width: 45px; height: 75px;
-            writing-mode: vertical-rl;
-            text-align: center;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 11pt; font-weight: bold;
-            border-radius: 0 8px 8px 0;
-            cursor: pointer;
-            box-shadow: 4px 4px 8px rgba(0,0,0,0.2);
-            transition: transform 0.2s, background-color 0.3s;
-            user-select: none;
-            font-family: 'Caveat', cursive, sans-serif;
-            letter-spacing: 1px;
-            border: 1px solid rgba(0,0,0,0.1);
-            border-left: none;
-        }
-        .tab:hover { transform: translateX(5px); }
-        .tab-edu { background-color: #ffb3ba; color: #000; }
-        .tab-work { background-color: #bae1ff; color: #000; }
-        .tab-about { background-color: #baffc9; color: #000; }
-        .tab-thoughts { background-color: #e8dff5; color: #000; }
-        .tab-contact { background-color: #6a4cc9; color: #fff; }
-
         /* ---------------- 拼贴风格元素 ---------------- */
         .washi-tape {
             position: absolute;
@@ -374,7 +431,7 @@
         .grey-date { font-family: 'Caveat', cursive; color: #666; font-size: 13pt; margin-bottom: 8px; }
         .edu-item { text-align: center; display: flex; flex-direction: column; align-items: center; margin-bottom: 25px; }
 
-        /* Work (Bullet Points) */
+        /* Work */
         .work-hl { background-color: rgba(186, 225, 255, 0.7); padding: 0 4px; border-radius: 2px; }
         .work-block { margin-bottom: 18px; font-size: 10pt; text-align: left; }
         .work-list { padding-left: 18px; margin-top: 5px; line-height: 1.5; }
@@ -445,7 +502,7 @@
     <!-- 主体：笔记本舞台（绝对居中） -->
     <div class="stage" id="main-stage">
         <div class="book" id="my-book">
-            <!-- 封面 (原色、不透明、带颗粒质感) -->
+            <!-- 封面 -->
             <div class="cover" onclick="openBook()">
                 <h1>The Story of Zoey</h1>
             </div>
@@ -460,13 +517,13 @@
                 <div class="ring"></div>
             </div>
 
-            <!-- 便签 -->
-            <div class="tabs" style="display:none;" id="side-tabs">
-                <div class="tab tab-edu" onclick="turnToSection('edu')">Education</div>
-                <div class="tab tab-work" onclick="turnToSection('work')">Work</div>
-                <div class="tab tab-about" onclick="turnToSection('about')">About Me</div>
-                <div class="tab tab-thoughts" onclick="turnToSection('thoughts')">Thoughts</div>
-                <div class="tab tab-contact" onclick="turnToSection('contact')">Contact</div>
+            <!-- 卡在书页边缘的彩色书签 -->
+            <div class="container-items" style="display:none;" id="side-tabs">
+                <button class="item-color" style="--color: #ffb3ba;" aria-color="Education" onclick="turnToSection('edu')"></button>
+                <button class="item-color" style="--color: #bae1ff;" aria-color="Work" onclick="turnToSection('work')"></button>
+                <button class="item-color" style="--color: #baffc9;" aria-color="About" onclick="turnToSection('about')"></button>
+                <button class="item-color" style="--color: #e8dff5;" aria-color="Thoughts" onclick="turnToSection('thoughts')"></button>
+                <button class="item-color" style="--color: #d4af37;" aria-color="Contact" onclick="turnToSection('contact')"></button>
             </div>
 
             <!-- 动态翻页层（向后翻） -->
@@ -709,7 +766,7 @@
         let currentSection = 'index';
         let isFlipping = false;
 
-        // 指定跳转到某一节（通过便签或目录点击）
+        // 指定跳转到某一节
         function turnToSection(targetSection) {
             if (currentSection === targetSection || isFlipping || !bookOpen) return;
             
@@ -717,10 +774,8 @@
             const targetIndex = sections.indexOf(targetSection);
             
             if (targetIndex > currentIndex) {
-                // 向后翻页：使用正向翻页层，从当前页连续过渡到目标页
                 executeFlip(currentIndex, targetIndex, 'next');
             } else {
-                // 向前翻页：使用反向翻页层
                 executeFlip(currentIndex, targetIndex, 'prev');
             }
         }
