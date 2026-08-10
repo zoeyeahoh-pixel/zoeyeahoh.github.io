@@ -3,18 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Story of Zoey</title>
+    <title>The Story of Zoe</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap');
 
-        /* 全局及重置 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* --- 动态流光背景 --- */
+        body {
+            background-color: #F7F5F0;
+            color: #2C2A29;
+            font-family: 'Lora', serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- 背景渐变光晕 --- */
         .bg-container {
             position: fixed;
             top: 0;
@@ -22,62 +29,32 @@
             width: 100vw;
             height: 100vh;
             overflow: hidden;
-            background: linear-gradient(135deg, #ffe8f3, #d9f3ff);
+            background: linear-gradient(135deg, #F7F5F0, #EFECE6);
             z-index: -1;
         }
 
-        .bg-container::before,
-        .bg-container::after {
+        .bg-container::before {
             content: "";
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(
-                from 0deg,
-                #ff9aa2, #ffb7b2, #ffdac1, #e2f0cb, #a2e4ff, #c9afff, #ffb7b2, #ff9aa2
-            );
-            transform: translate(-50%, -50%);
-            animation: rotate 8s linear infinite;
-            filter: blur(50px);
-            opacity: 0.7;
-        }
-
-        .bg-container::after {
             width: 180%;
             height: 180%;
-            animation: rotate-reverse 10s linear infinite;
-            opacity: 0.5;
+            background: radial-gradient(circle, rgba(215, 205, 190, 0.3) 0%, rgba(247, 245, 240, 0.9) 70%);
+            transform: translate(-50%, -50%);
+            animation: pulse-bg 10s ease-in-out infinite alternate;
         }
 
-        @keyframes rotate {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        @keyframes pulse-bg {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            100% { transform: translate(-50%, -50%) scale(1.15); }
         }
 
-        @keyframes rotate-reverse {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(-360deg); }
-        }
-
-        /* --- 页面居中与主体框架 --- */
-        body {
-            background-color: transparent;
-            font-family: 'Times New Roman', Times, serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            margin: 0;
-        }
-
-        /* ---------------- 第一屏：粒子文字特效界面 ---------------- */
+        /* --- 第一屏：粒子文字特效界面 --- */
         #intro-screen {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: #09090f;
+            background-color: #1A1918;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -89,6 +66,7 @@
         #intro-screen.hidden {
             opacity: 0;
             visibility: hidden;
+            pointer-events: none;
         }
 
         #particle-canvas {
@@ -100,771 +78,693 @@
         .intro-tip {
             position: absolute;
             bottom: 40px;
-            color: #f8fafc;
-            font-family: 'Times New Roman', serif;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            opacity: 0.6;
+            color: #D3C5B4;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.7;
             animation: pulse-tip 2s infinite ease-in-out;
             pointer-events: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
         @keyframes pulse-tip {
             0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.8; }
+            50% { opacity: 0.9; }
         }
 
-        /* ---------------- 笔记本容器与3D舞台（完整居中） ---------------- */
-        .stage {
-            perspective: 2500px;
-            width: 1000px;
-            height: 650px;
+        /* --- 主界面整体布局 --- */
+        #main-app {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease, visibility 1s ease;
             position: relative;
             z-index: 10;
-            flex-shrink: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        .book {
+        #main-app.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 顶部导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-        }
-
-        /* ---------------- 封面 ---------------- */
-        .cover {
-            position: absolute;
-            width: 50%; height: 100%;
-            right: 0; top: 0;
-            background: linear-gradient(to right, rgba(189, 138, 138, 0.1), transparent),
-                        linear-gradient(
-                            145deg,
-                            rgb(59, 43, 124),
-                            rgb(106, 76, 169),
-                            rgb(155, 108, 214)
-                        ),
-                        url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.15"/></svg>');
-            background-blend-mode: overlay;
-            border-radius: 3px 15px 15px 3px;
-            box-shadow: 10px 20px 50px rgba(0, 0, 0, 0.5), inset -5px 0 15px rgba(0,0,0,0.3);
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
+            padding: 25px 60px;
+            background: rgba(247, 245, 240, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(44, 42, 41, 0.08);
+        }
+        .nav-logo {
+            font-family: 'Lora', serif;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            color: #1A1918;
             cursor: pointer;
-            z-index: 100;
-            transform-origin: left center;
-            transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-            border-left: none;
+            transition: opacity 0.3s ease;
         }
-
-        .cover::before {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 0;
-            height: 100%;
-            width: 1px;
-            background-color: rgba(245, 245, 245, 0.144);
-            box-shadow: -3px 0px 2px rgba(0, 0, 0, 0.671), 1px 0px 4px rgba(255, 255, 255, 0.671);
-            z-index: 2;
+        .nav-logo:hover {
+            opacity: 0.7;
         }
-
-        .cover::after {
-            content: '';
-            position: absolute;
-            left: 12px;
-            top: 0;
-            height: 100%;
-            width: 3px;
-            background: linear-gradient(to right, #0000003d, #00000005);
-            box-shadow: -3px 0px 6px rgba(0, 0, 0, 0.671), 6px 0px 6px rgba(255, 255, 255, 0.048);
-            z-index: 2;
-        }
-
-        .cover h1 {
-            color: #D4AF37;
-            font-size: 32pt;
-            font-weight: bold;
-            border: 3px double #D4AF37;
-            padding: 20px 40px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-            text-align: center;
-            z-index: 3;
-        }
-        .book.open .cover {
-            transform: rotateY(-180deg);
-            z-index: 1; 
-        }
-
-        /* ---------------- 活页金属环装饰 ---------------- */
-        .binder-spine {
-            position: absolute;
-            left: 50%; top: 0; bottom: 0;
-            width: 30px;
-            transform: translateX(-50%);
-            z-index: 50;
-            display: none;
-            flex-direction: column;
-            justify-content: space-evenly;
-            align-items: center;
-            pointer-events: none;
-        }
-        .ring {
-            width: 45px;
-            height: 12px;
-            background: linear-gradient(to bottom, #dcdcdc 0%, #777 40%, #e0e0e0 60%, #555 100%);
-            border-radius: 6px;
-            box-shadow: 2px 5px 5px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.8);
-            position: relative;
-        }
-        .ring::after {
-            content: ''; position: absolute;
-            width: 4px; height: 12px;
-            background: #222; left: 50%;
-            transform: translateX(-50%);
-        }
-
-        /* ---------------- 书签样式 ---------------- */
-        .container-items {
-            position: absolute;
-            right: -25px;
-            top: 50px;
+        .nav-links {
             display: flex;
-            flex-direction: column;
-            gap: 16px;
-            transform-style: preserve-3d;
-            transform: perspective(1000px);
-            z-index: 20;
+            gap: 40px;
+            list-style: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
-
-        .item-color {
-            position: relative;
-            flex-shrink: 0;
-            width: 50px;
-            height: 36px;
-            border: none;
-            outline: none;
-            background: transparent;
-            transition: 500ms cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            cursor: pointer;
-            transform-origin: left center;
-        }
-
-        .item-color::after {
-            position: absolute;
-            content: "";
-            inset: 0;
-            background-color: var(--color);
-            border-radius: 0 8px 8px 0;
-            transform: scale(1);
-            pointer-events: none;
-            transition: 500ms cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            box-shadow: 2px 3px 6px rgba(0,0,0,0.25);
-            border: 1px solid rgba(0,0,0,0.1);
-            border-left: none;
-        }
-
-        .item-color::before {
-            position: absolute;
-            content: attr(aria-color);
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11pt;
-            font-family: 'Caveat', cursive, sans-serif;
-            font-weight: bold;
-            color: #2c2c2c;
-            z-index: 2;
-            pointer-events: none;
-            white-space: nowrap;
-            padding: 0 6px;
-        }
-
-        .item-color:hover {
-            transform: scale(1.25) translateX(6px);
-            z-index: 99999;
-        }
-
-        /* ---------------- 内页基础与复古网格质感 ---------------- */
-        .spread {
-            position: absolute;
-            width: 100%; height: 100%;
-            top: 0; left: 0;
-            display: none;
-            background-color: #f4ebd8;
-            background-image: 
-                linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-                url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.1"/></svg>');
-            background-size: 20px 20px, 20px 20px, 100% 100%;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            z-index: 10;
-        }
-        .spread.active {
-            display: flex;
-        }
-        .page {
-            width: 50%; height: 100%;
-            padding: 35px 45px;
-            position: relative;
-            overflow-y: auto;
-            line-height: 1.6;
-            color: #2c2c2c;
-            cursor: pointer;
-        }
-        .page-left {
-            border-right: 1px solid rgba(0,0,0,0.1);
-            box-shadow: inset -20px 0 30px -20px rgba(0,0,0,0.3);
-            border-radius: 8px 0 0 8px;
-        }
-        .page-right {
-            border-left: 1px solid rgba(0,0,0,0.1);
-            box-shadow: inset 20px 0 30px -20px rgba(0,0,0,0.3);
-            border-radius: 0 8px 8px 0;
-        }
-
-        /* ---------------- 动态翻页层（向后翻） ---------------- */
-        .flip-layer {
-            position: absolute;
-            top: 0; right: 0;
-            width: 50%; height: 100%;
-            transform-origin: left center;
-            transform-style: preserve-3d;
-            z-index: 60;
-            display: none;
-            pointer-events: none;
-        }
-        .flip-layer.is-flipping {
-            display: block;
-            animation: flipPage 0.8s ease-in-out forwards;
-        }
-        @keyframes flipPage {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(-180deg); }
-        }
-
-        /* ---------------- 动态翻页层（向前翻） ---------------- */
-        .flip-layer-rev {
-            position: absolute;
-            top: 0; left: 0;
-            width: 50%; height: 100%;
-            transform-origin: right center;
-            transform-style: preserve-3d;
-            z-index: 60;
-            display: none;
-            pointer-events: none;
-        }
-        .flip-layer-rev.is-flipping {
-            display: block;
-            animation: flipPageRev 0.8s ease-in-out forwards;
-        }
-        @keyframes flipPageRev {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(180deg); }
-        }
-
-        .flip-face {
-            position: absolute;
-            width: 100%; height: 100%;
-            backface-visibility: hidden;
-            background-color: #f4ebd8;
-            background-image: 
-                linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-                url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.1"/></svg>');
-            background-size: 20px 20px, 20px 20px, 100% 100%;
-            overflow: hidden;
-        }
-        .flip-front {
-            box-shadow: inset 20px 0 30px -20px rgba(0,0,0,0.3);
-            border-radius: 0 8px 8px 0;
-        }
-        .flip-back {
-            transform: rotateY(180deg);
-            box-shadow: inset -20px 0 30px -20px rgba(0,0,0,0.3);
-            border-radius: 8px 0 0 8px;
-        }
-
-        /* ---------------- 拼贴风格元素 ---------------- */
-        .washi-tape {
-            position: absolute;
-            background-color: rgba(235, 215, 185, 0.7);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            width: 80px; height: 25px;
-            z-index: 5;
-            border-left: 2px dashed rgba(0,0,0,0.1);
-            border-right: 2px dashed rgba(0,0,0,0.1);
-        }
-        .tape-1 { top: -10px; left: -20px; transform: rotate(-15deg); background-color: rgba(255, 182, 193, 0.6); }
-        .tape-2 { bottom: -10px; right: -20px; transform: rotate(10deg); background-color: rgba(173, 216, 230, 0.6); }
-        
-        .sticker {
-            position: absolute;
-            background: #fff;
-            padding: 4px 8px;
-            border-radius: 4px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-            font-family: 'Caveat', cursive;
-            font-size: 14pt;
-            transform: rotate(-5deg);
-            z-index: 6;
-            color: #d32f2f;
-            border: 1px solid #eee;
-        }
-        .doodle-arrow {
-            position: absolute;
-            font-family: 'Caveat', cursive;
-            color: #d32f2f;
-            font-size: 24pt;
-            transform: rotate(15deg);
-            user-select: none;
-        }
-
-        /* ---------------- 页面内容排版 ---------------- */
-        .index-title {
-            font-family: 'Caveat', cursive;
-            font-size: 24pt;
-            text-align: center;
-            margin: 12px 0;
-            cursor: pointer;
-            display: block;
-            color: #333;
+        .nav-links a {
+            color: #6E6863;
             text-decoration: none;
-            transition: color 0.3s;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: color 0.3s ease;
         }
-        .index-title:hover { color: #d32f2f; transform: scale(1.05); }
-        .index-header { font-family: 'Times New Roman', serif; font-size: 16pt; font-weight: bold; margin-bottom: 25px; text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; }
+        .nav-links a:hover, .nav-links a.active {
+            color: #1A1918;
+        }
 
-        /* Education */
-        .edu-logo { width: 60px; height: 60px; object-fit: contain; margin-bottom: 10px; }
-        .bold-black { font-weight: bold; color: #000; font-size: 13pt; margin-bottom: 2px; }
-        .grey-date { font-family: 'Caveat', cursive; color: #666; font-size: 13pt; margin-bottom: 8px; }
-        .edu-item { text-align: center; display: flex; flex-direction: column; align-items: center; margin-bottom: 25px; }
-
-        /* Work */
-        .work-hl { background-color: rgba(186, 225, 255, 0.7); padding: 0 4px; border-radius: 2px; }
-        .work-block { margin-bottom: 18px; font-size: 10pt; text-align: left; }
-        .work-list { padding-left: 18px; margin-top: 5px; line-height: 1.5; }
-        .work-list li { margin-bottom: 4px; }
-
-        /* About Me */
-        .about-center-container {
+        /* 页面视图切换控制 */
+        .page-view {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            padding-top: 120px;
+            flex: 1;
+        }
+        .page-view.active-view {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            opacity: 1;
+        }
+
+        /* Hero 沉浸式首屏 */
+        .hero-section {
+            height: calc(100vh - 100px);
+            display: flex;
+            flex-direction: column;
             justify-content: center;
-            height: 100%;
+            align-items: center;
             text-align: center;
+            padding: 0 40px;
+            max-width: 950px;
+            margin: 0 auto;
         }
-        .polaroid-container { position: relative; margin: 10px auto; width: 180px; }
-        .polaroid {
+        .hero-tag {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #8C7B6B;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        .hero-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(3.5rem, 6.5vw, 5.5rem);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            color: #8B4513;
+            letter-spacing: 0.5px;
+        }
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: #4A4541;
+            line-height: 1.8;
+            font-weight: 400;
+            margin-bottom: 30px;
+            max-width: 820px;
+        }
+        .hero-footer-text {
+            font-style: italic;
+            font-size: 1.15rem;
+            color: #6E6863;
+            letter-spacing: 0.5px;
+        }
+
+        /* 黑底白字 Highlight 样式 */
+        .highlight {
+            background-color: #1A1918;
+            color: #F7F5F0;
+            padding: 0.1em 0.4em;
+            border-radius: 3px;
+            font-weight: 400;
+        }
+
+        /* 通用区块容器 */
+        .content-section {
+            padding: 60px 80px 100px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
             width: 100%;
-            background: #fff; padding: 10px 10px 30px 10px;
-            box-shadow: 3px 5px 12px rgba(0,0,0,0.3);
-            transform: rotate(-2deg);
-            border: 1px solid #ddd;
-        }
-        .polaroid-img { width: 100%; height: 160px; background: #e0e0e0; overflow: hidden; }
-        .polaroid-img img { width: 100%; height: 100%; object-fit: cover; }
-        .polaroid-caption { text-align: center; font-family: 'Caveat', cursive; margin-top: 8px; font-size: 15pt; color: #333; }
-        .about-text-large { text-align: center; margin-top: 15px; line-height: 1.6; font-size: 13pt; font-family: 'Times New Roman', serif; }
-
-        /* Thoughts */
-        .blog-list-item {
-            font-size: 16pt; font-weight: bold; cursor: pointer; color: #6a4cc9; font-family: 'Caveat', cursive; text-decoration: none; border-bottom: 2px dashed #6a4cc9; display: inline-block; margin-bottom: 10px;
-        }
-        .add-article-btn {
-            background: #6a4cc9; color: #fff; border: none; padding: 5px 12px; font-family: 'Caveat', cursive; font-size: 13pt; border-radius: 4px; cursor: pointer; margin-bottom: 15px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-        }
-        .add-article-btn:hover { background: #3b2b7c; }
-        .full-article { display: none; margin-top: 10px; }
-        .full-article.show { display: block; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .article-p { text-indent: 2em; margin-bottom: 12px; text-align: justify; line-height: 1.6; font-size: 11pt; }
-
-        /* Contact */
-        .contact-header { font-family: 'Caveat', cursive; font-size: 22pt; margin-bottom: 15px; color: #6a4cc9; text-align: center; }
-        .form-group { margin-bottom: 12px; position: relative; }
-        .form-group label { display: block; font-weight: bold; margin-bottom: 4px; font-family: 'Times New Roman', serif; font-size: 10pt; }
-        .form-input { 
-            width: 100%; padding: 8px; font-family: 'Times New Roman', serif; 
-            background: transparent; border: none; border-bottom: 2px solid #555; 
-            outline: none; font-size: 10pt; transition: border-color 0.3s;
-        }
-        .form-input:focus { border-bottom-color: #6a4cc9; }
-        .btn-send { 
-            font-family: 'Caveat', cursive; font-size: 16pt; padding: 4px 20px; 
-            background: #fff; border: 2px solid #000; cursor: pointer; 
-            box-shadow: 3px 3px 0 #6a4cc9; border-radius: 4px;
         }
 
-        /* --- 地铁卡样式 --- */
-        .metro-card-wrapper {
-            position: absolute;
-            top: 16%;             
-            left: 50%;
-            transform: translateX(-50%) scale(0.9); 
-            transform-origin: top center;
-            z-index: 10;
+        /* About Me 内部子模块通用标题 */
+        .about-sub-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.8rem;
+            font-weight: 400;
+            color: #2C2A29;
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(44, 42, 41, 0.1);
+            padding-bottom: 15px;
         }
 
-        .metro-line-card {
-            width: 17em;
-            height: 11em;
+        .about-block {
+            margin-bottom: 70px;
+        }
+
+        /* 简历时间轴卡片样式 */
+        .resume-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .resume-card {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(44, 42, 41, 0.08);
+            border-radius: 6px;
+            padding: 30px;
+            backdrop-filter: blur(6px);
+            transition: all 0.3s ease;
+        }
+
+        .resume-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(44, 42, 41, 0.2);
+        }
+
+        .resume-time {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #8B4513;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .resume-card h4 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.8rem;
+            color: #1A1918;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .resume-card p {
+            color: #6E6863;
+            font-size: 0.95rem;
+        }
+
+        /* FAQ 专用样式 */
+        .faq-main-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.8rem;
+            font-weight: 400;
+            color: #2C2A29;
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(44, 42, 41, 0.1);
+            padding-bottom: 15px;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .faq-item {
+            border-bottom: 1px dashed rgba(44, 42, 41, 0.3);
+            padding: 24px 0;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .faq-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .faq-question-wrapper {
+            display: flex;
+            align-items: baseline;
+            gap: 30px;
+        }
+
+        .faq-number {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.1rem;
+            color: #8B4513;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .faq-question {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.7rem;
+            color: #2C2A29;
+            font-weight: 400;
+        }
+
+        .faq-btn {
+            width: 36px;
+            height: 36px;
+            border: 1px dashed rgba(44, 42, 41, 0.4);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            color: #2C2A29;
+            transition: transform 0.3s ease, background 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .faq-item.active .faq-btn {
+            transform: rotate(180deg);
+            background: rgba(44, 42, 41, 0.05);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.4s ease;
+            font-family: 'Lora', serif;
+            color: #6E6863;
+            font-size: 1.02rem;
+            line-height: 1.8;
+            padding-left: 58px;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding-top: 15px;
+            padding-bottom: 10px;
+        }
+
+        /* 杂志风网格卡片 */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+        .editorial-card {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(44, 42, 41, 0.08);
+            border-radius: 6px;
+            padding: 50px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(8px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+        }
+        .editorial-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(44, 42, 41, 0.25);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+        }
+        .card-category {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #8C7B6B;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .editorial-card h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #1A1918;
+            font-weight: 400;
+        }
+        .editorial-card p {
+            color: #6E6863;
+            line-height: 1.7;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .section-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            position: relative;
-            z-index: 0;
-            box-shadow: inset 0em -1.2em #0077ff;
+            margin-bottom: 60px;
+            border-bottom: 1px solid rgba(44, 42, 41, 0.1);
+            padding-bottom: 20px;
         }
-        .metro-line-point {
-            background-color: white;
-            width: 1.6em;
-            height: 1.6em;
-            border-radius: 50%;
-            border: solid 0.25em black;
-            position: relative;
-            z-index: 0;
-            transition: all 0.25s ease-in-out;
+        .section-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 3.2rem;
+            font-weight: 400;
+            color: #1A1918;
         }
-        .metro-line-point:hover {
-            border: solid 0.5em black;
+        .section-desc {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #6E6863;
+            font-size: 0.95rem;
+            max-width: 400px;
+            line-height: 1.6;
         }
-        .metro-line-point p {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            font-weight: bold;
-            transform: rotate(-45deg) translate(40%, -180%);
-            z-index: 0;
-            opacity: 100%;
-            transition: all 0.25s ease-in-out;
-            white-space: nowrap;
-            font-size: 11pt; 
-            font-family: 'Times New Roman', serif;
-        }
-        .metro-line-point:hover p {
-            opacity: 0%;
-        }
-        .metro-line-point div {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 1.6em;
-            height: 2.2em;
-            background-color: #0077ff; 
-            transform: translate(-50%, -150%);
-            border-radius: 50%;
-            z-index: 0;
-            opacity: 0%;
-            transition: all 0.25s ease-in-out;
-        }
-        .metro-line-point:hover div {
-            opacity: 100%;
-            transform: translate(-50%, -175%);
-        }
-        .metro-line-information {
-            width: 100%;
-            height: 7.5em;
-            background-color: #0077ff; 
-            position: absolute;
-            z-index: 1;
-            top: 10%;
-            border-radius: 1em;
-            opacity: 0%;
-            transition: all 0.25s ease-in-out;
+
+        /* Contact 表单专用样式 */
+        .contact-form {
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-direction: column;
-            font-weight: bold;
+            gap: 24px;
+            margin-top: 15px;
         }
-        .metro-line-information div {
-            background-color: white;
-            width: 85%;
-            height: 4.5em;
-            border: solid 0.25em black;
-            border-radius: 1em;
+        .form-group {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 10pt; 
-            text-align: center;
-            padding: 0 6px;
+            flex-direction: column;
+            gap: 8px;
         }
-        .metro-line-point:hover ~ .metro-line-information {
-            opacity: 100%;
-            top: 0%;
+        .form-group label {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #8C7B6B;
+            font-weight: 600;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(44, 42, 41, 0.15);
+            border-radius: 4px;
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            color: #2C2A29;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            background: rgba(255, 255, 255, 1);
+            border-color: #8B4513;
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.08);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .send-btn {
+            align-self: flex-start;
+            background-color: #1A1918;
+            color: #F7F5F0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 14px 36px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .send-btn:hover {
+            background-color: #8B4513;
+            transform: translateY(-2px);
+        }
+
+        /* 底部版权 */
+        footer {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid rgba(44, 42, 41, 0.08);
+            color: #6E6863;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-top: auto;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 900px) {
+            .grid-cards, .resume-grid { grid-template-columns: 1fr; }
+            .content-section { padding: 40px 20px; }
+            nav { padding: 20px 30px; }
+            .faq-question-wrapper { gap: 15px; }
+            .faq-answer { padding-left: 0; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 15px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 动态流光背景 -->
     <div class="bg-container"></div>
 
     <!-- 第一屏：粒子文字特效界面 -->
-    <div id="intro-screen" onclick="openHomepage()">
+    <div id="intro-screen" onclick="enterMainApp()">
         <canvas id="particle-canvas"></canvas>
-        <div class="intro-tip">Click anywhere to enter</div>
+        <div class="intro-tip">Click anywhere to explore</div>
     </div>
 
-    <!-- 主体：笔记本舞台（绝对居中） -->
-    <div class="stage" id="main-stage">
-        <div class="book" id="my-book">
-            <!-- 封面 -->
-            <div class="cover" onclick="openBook()">
-                <h1>The Story of Zoey</h1>
-            </div>
+    <!-- 第二阶段：高定米白杂志风主界面 -->
+    <div id="main-app">
+        <nav>
+            <div class="nav-logo" onclick="switchView('hero', event)">Zoeyeahoh.</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="switchView('hero', event)" id="nav-hero" class="active">Home</a></li>
+                <li><a href="#" onclick="switchView('about', event)" id="nav-about">About Me</a></li>
+                <li><a href="#" onclick="switchView('projects', event)" id="nav-projects">Project</a></li>
+                <li><a href="#" onclick="switchView('contact', event)" id="nav-contact">Contact</a></li>
+            </ul>
+        </nav>
 
-            <!-- 活页金属环 -->
-            <div class="binder-spine" id="binder-spine">
-                <div class="ring"></div>
-                <div class="ring"></div>
-                <div class="ring"></div>
-                <div class="ring"></div>
-                <div class="ring"></div>
-                <div class="ring"></div>
-            </div>
-
-            <!-- 书签 -->
-            <div class="container-items" style="display:none;" id="side-tabs">
-                <button class="item-color" style="--color: #ffb3ba;" aria-color="Education" onclick="turnToSection('edu')"></button>
-                <button class="item-color" style="--color: #bae1ff;" aria-color="Work" onclick="turnToSection('work')"></button>
-                <button class="item-color" style="--color: #baffc9;" aria-color="About" onclick="turnToSection('about')"></button>
-                <button class="item-color" style="--color: #e8dff5;" aria-color="Thoughts" onclick="turnToSection('thoughts')"></button>
-                <button class="item-color" style="--color: #d4af37;" aria-color="Contact" onclick="turnToSection('contact')"></button>
-            </div>
-
-            <!-- 动态翻页层（向后翻） -->
-            <div class="flip-layer" id="flip-layer">
-                <div class="flip-face flip-front" id="flip-front-content"></div>
-                <div class="flip-face flip-back" id="flip-back-content"></div>
-            </div>
-
-            <!-- 动态翻页层（向前翻） -->
-            <div class="flip-layer-rev" id="flip-layer-rev">
-                <div class="flip-face flip-front" id="flip-rev-front"></div>
-                <div class="flip-face flip-back" id="flip-rev-back"></div>
-            </div>
-
-            <!-- 内页1：Index -->
-            <div class="spread active" id="spread-index">
-                <div class="page page-left" onclick="prevPage()">
-                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
-                        <div style="font-family: 'Caveat', cursive; font-size: 28pt; transform: rotate(-10deg); color: #555;">Hi, this is Zoe! ✨</div>
-                    </div>
+        <!-- 1. 首页视图 -->
+        <div id="view-hero" class="page-view active-view">
+            <section class="hero-section">
+                <div class="hero-tag">Portfolio & Editorial Showcase</div>
+                <h1 class="hero-title">Hi, I am Zoe Yang.</h1>
+                <p class="hero-subtitle">
+                    A fresh graduate from the University of Hong Kong, and a <span class="highlight">shape-shifter</span> in the creative world. Whether you are looking for a <span class="highlight">translator</span> to bridge languages, an <span class="highlight">interpreter</span> to connect voices, a <span class="highlight">content creator</span> to tell your story, or a <span class="highlight">photographer</span> to capture moments, I adapt to whatever your project demands. I am whatever you need me to be.
+                </p>
+                <div class="hero-footer-text">
+                    Use the menu above to explore my worlds.
                 </div>
-                <div class="page page-right" onclick="nextPage()">
-                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; position: relative;">
-                        <div class="washi-tape tape-1"></div>
-                        <div class="index-header">TABLE OF CONTENTS</div>
-                        <a class="index-title" onclick="event.stopPropagation(); turnToSection('edu')">📍 Education</a>
-                        <a class="index-title" onclick="event.stopPropagation(); turnToSection('work')">💼 Work Experience</a>
-                        <a class="index-title" onclick="event.stopPropagation(); turnToSection('about')">🙋🏻‍♀️ About Me</a>
-                        <a class="index-title" onclick="event.stopPropagation(); turnToSection('thoughts')">💭 Thoughts</a>
-                        <a class="index-title" onclick="event.stopPropagation(); turnToSection('contact')">📮 Contact</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 内页2：Education -->
-            <div class="spread" id="spread-edu">
-                <div class="page page-left" onclick="prevPage()">
-                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
-                        <div class="edu-item">
-                            <img src="image_5bff5b.png" class="edu-logo" alt="HKU Logo">
-                            <div class="bold-black">The University of Hong Kong</div>
-                            <div class="grey-date">2025 – 2026</div>
-                            <div style="font-weight: bold; margin-bottom: 3px; font-size: 11pt;">MA in Translation</div>
-                            <p style="text-align: center; font-size: 10pt; max-width: 300px;">Coursework covers Financial Translation, Mass Media Translation, Interpreting, Government & Commercial Texts, and Legal Translation.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="page page-right" onclick="nextPage()">
-                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
-                        <div class="edu-item">
-                            <img src="image_5bff5b.png" class="edu-logo" alt="CityU Logo">
-                            <div class="bold-black">City University of Macau</div>
-                            <div class="grey-date">2021 – 2025</div>
-                            <div style="font-weight: bold; margin-bottom: 3px; font-size: 11pt;">Bachelor of Arts in English</div>
-                            <p style="text-align: center; font-size: 10pt; max-width: 300px;">Coursework includes Consecutive & Simultaneous Interpretation, Translation Theory, and News Translation.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 内页3：Work -->
-            <div class="spread" id="spread-work">
-                <div class="page page-left" onclick="prevPage()">
-                    <div class="work-block">
-                        <div class="bold-black">Marketing Intern at Smith & Associates</div>
-                        <div class="grey-date">Jun. 2026-Present | Hong Kong</div>
-                        <ul class="work-list">
-                            <li>Translated and localized over 50 marketing assets, including brochures, newsletters, and presentations.</li>
-                            <li>Maintained and updated the <span class="work-hl">company’s website</span>, translating 20+ English press releases and market insights.</li>
-                            <li>Assisted in <span class="work-hl">integrated marketing campaigns</span> across multi-digital channels, driving consistent brand messaging.</li>
-                        </ul>
-                    </div>
-                    <div class="work-block">
-                        <div class="bold-black">Translation Intern at MAIYA MEDIA</div>
-                        <div class="grey-date">Jan. 2025-May, 2025 | Hangzhou</div>
-                        <ul class="work-list">
-                            <li>Completed translation for 50+ short dramas across modern, historical, and urban genres, delivering <span class="work-hl">900+ episodes</span>.</li>
-                            <li>Proofread and reviewed dialogue translations and dubbing for <span class="work-hl">360+ episodes</span> for logical accuracy.</li>
-                            <li>Managed multiple translation tasks simultaneously, ensuring end-to-end quality and efficiency.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="page page-right" onclick="nextPage()">
-                    <div class="work-block">
-                        <div class="bold-black">Student Ambassador at Rector’s Office</div>
-                        <div class="grey-date">Nov. 2023-Dec. 2024 | Macao</div>
-                        <ul class="work-list">
-                            <li>Drafted and translated <span class="work-hl">bilingual content</span> for the university website, including news and documents.</li>
-                            <li>Supported event coordination for official ceremonies and lectures with effective stakeholder communication.</li>
-                        </ul>
-                    </div>
-                    <div class="work-block">
-                        <div class="bold-black">Intern at Zhejiang Yinqingli Co., Ltd.</div>
-                        <div class="grey-date">Jun. 2024-Aug. 2024 | Hangzhou</div>
-                        <ul class="work-list">
-                            <li>Produced press releases and digital content for 10+ companies while maintaining English backend info.</li>
-                            <li>Translated 30+ Chinese manuscripts uploaded to official websites with <span class="work-hl">unanimous praise</span>.</li>
-                        </ul>
-                    </div>
-                    <div class="work-block">
-                        <div class="bold-black">Intern at Hangzhou Connect Fun Tech.</div>
-                        <div class="grey-date">Jun. 2023-Jul. 2023 | Hangzhou</div>
-                        <ul class="work-list">
-                            <li>Compiled and reviewed over 1,000 pieces of overseas user information as <span class="work-hl">team leader</span>.</li>
-                            <li>Modified English copywriting for apps <span class="work-hl">successfully launched</span> on Google Play and Apple Store.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 内页4：About Me -->
-            <div class="spread" id="spread-about">
-                <div class="page page-left" onclick="prevPage()">
-                    <div class="about-center-container">
-                        <div class="polaroid-container">
-                            <div class="washi-tape tape-1" style="top: -15px; left: 40px;"></div>
-                            <div class="polaroid">
-                                <div class="polaroid-img">
-                                    <img src="9873586069deb0c5761d25bbfe944001.jpg" alt="Zoe's Photo">
-                                </div>
-                                <div class="polaroid-caption">Hello World!</div>
-                            </div>
-                        </div>
-                        <div class="about-text-large" style="margin-top: 15px;">
-                            <b>Hi, I'm Zoe Yang!</b><br>
-                            A fresh graduate from HKU, seeking opportunities in Marketing, PR, and Translation.
-                        </div>
-                    </div>
-                </div>
-                <div class="page page-right" onclick="nextPage()">
-                    <!-- 地铁卡组件 -->
-                    <div class="metro-card-wrapper" onclick="event.stopPropagation()">
-                        <div class="metro-line-card">
-                            <div class="metro-line-point">
-                                <p>Hangzhou, Zhejiang</p>
-                                <div></div>
-                            </div>
-                            <div class="metro-line-point">
-                                <p>Macao</p>
-                                <div></div>
-                            </div>
-                            <div class="metro-line-point">
-                                <p>Hong Kong</p>
-                                <div></div>
-                            </div>
-                            <div class="metro-line-information">
-                                <div>Journey: Hangzhou, Zhejiang ➔ Macao ➔ Hong Kong</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="about-center-container" style="margin-top: 105px;">
-                        <div class="about-text-large">
-                            Native Mandarin speaker from Hangzhou, fluent in English, and passionately mastering Cantonese.
-                        </div>
-                        <div class="about-text-large" style="margin-top: 20px;">
-                            I love writing, photography, coffee, and squash. Always excited to try new things and meet new friends!
-                        </div>
-                        <div class="washi-tape tape-2" style="bottom: 20px; left: 30px;"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 内页5：Thoughts -->
-            <div class="spread" id="spread-thoughts">
-                <div class="page page-left" onclick="prevPage()">
-                    <div style="margin-bottom: 15px; text-align: center;">
-                        <button class="add-article-btn" onclick="event.stopPropagation(); addNewArticle()">+ Add New Article</button>
-                        <br>
-                        <span class="blog-list-item" onclick="event.stopPropagation(); toggleArticle()">📌 Some thoughts 2026.3.28</span>
-                    </div>
-                    <div id="dynamic-articles-list"></div>
-                    <div class="full-article" id="thoughts-article">
-                        <div class="grey-date" style="text-align: right; border-bottom: 1px solid #ccc; margin-bottom: 10px;">3.26</div>
-                        <div class="article-p">这段时间跑了不少面试，被问到最多、也最绕不开的一个问题，就是“talk about your career plan”。说实话，我不知道自己的职业规划是什么，甚至，我也不确定未来想走进哪个行业。嘴上总是故作轻松：“哎呀，我做什么都行，哪个公司愿意要我，我就去哪”。可每晚躺在床上复盘白天面试的时候，还是会反反覆覆地问自己，我到底想做什么。</div>
-                        <div class="article-p">我们好像总在拼命寻找一个确定的状态：一份确定的offer，一段确定的关系，一个确定的未来。可二十多岁的年纪，注定裹挟着太多的稚嫩、迷茫、焦虑与不确定。</div>
-                    </div>
-                </div>
-                <div class="page page-right" onclick="nextPage()">
-                    <div class="full-article" id="thoughts-article-p2" style="display:block;">
-                        <div class="article-p">虽然耳边总有人鼓励说“你可以去任何行业”，可真当自己鼓起勇气踏进新的领域、试着做出不同选择时，迎面而来的却是一次次不自信的低头，还有一次次被拒之门外的沉默。</div>
-                        <div class="article-p">我喜欢写点东西，像是碎碎念，又更像是为这一团乱麻般的思绪理清头绪。也许，就在这些看似无厘头的记录里，我会慢慢找到未来的方向。</div>
-                        <div class="article-p">大概是因为在这个空间里，我终于可以只做自己，没有考核，没有标准，也没有非此不可的答案。我只需要，把最真实的念头一字一句地写下来。</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 内页6：Contact -->
-            <div class="spread" id="spread-contact">
-                <div class="page page-left" onclick="prevPage()">
-                    <div style="display: flex; flex-direction: column; justify-content: center; height: 100%; position: relative;">
-                        <div class="contact-header">Thank you for visiting my little corner!</div>
-                        <div class="doodle-arrow" style="top: 30%; right: 20px; transform: rotate(100deg);">➔</div>
-                        <div style="font-size: 13pt; margin-bottom: 10px; font-style: italic; text-align: center;">Let's have some chats!</div>
-                        <div style="font-size: 13pt; font-style: italic; text-align: center;">Share with me anything in your mind!</div>
-                        <div class="washi-tape tape-1" style="bottom: 50px; left: 30px;"></div>
-                    </div>
-                </div>
-                <div class="page page-right" onclick="nextPage()">
-                    <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
-                        <div style="background: rgba(255,255,255,0.6); padding: 20px; border-radius: 8px; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); border: 1px dashed #ccc;" onclick="event.stopPropagation()">
-                            <form action="https://formsubmit.co/zoeyeahoh@gmail.com" method="POST">
-                                <input type="hidden" name="_captcha" value="false">
-                                <div class="form-group">
-                                    <label>Name:</label>
-                                    <input type="text" name="name" class="form-input" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Contact Info:</label>
-                                    <input type="text" name="contact" class="form-input" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Message:</label>
-                                    <textarea name="message" class="form-input" rows="3" style="resize: none;" required></textarea>
-                                </div>
-                                <div style="text-align: right;">
-                                    <button type="submit" class="btn-send">Send!</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            </section>
         </div>
+
+        <!-- 2. About Me 视图 (包含 Education、Work、FAQ) -->
+        <div id="view-about" class="page-view">
+            <div class="content-section">
+                
+                <!-- Education 模块 -->
+                <div class="about-block">
+                    <h2 class="about-sub-title">Education</h2>
+                    <div class="resume-grid">
+                        <div class="resume-card">
+                            <div class="resume-time">2025 – 2026</div>
+                            <h4>MA in Translation</h4>
+                            <p>The University of Hong Kong</p>
+                        </div>
+                        <div class="resume-card">
+                            <div class="resume-time">2021 – 2025</div>
+                            <h4>Bachelor of Arts in English</h4>
+                            <p>City University of Macau</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Work 模块 -->
+                <div class="about-block">
+                    <h2 class="about-sub-title">Work Experience</h2>
+                    <div class="resume-grid">
+                        <div class="resume-card">
+                            <div class="resume-time">Jun. 2026 - Aug. 2026 | Hong Kong</div>
+                            <h4>Marketing Intern</h4>
+                            <p>Smith & Associates</p>
+                        </div>
+                        <div class="resume-card">
+                            <div class="resume-time">Jan. 2025 - May, 2025 | Hangzhou</div>
+                            <h4>Translation Intern</h4>
+                            <p>MAIYA MEDIA</p>
+                        </div>
+                        <div class="resume-card">
+                            <div class="resume-time">Nov. 2023 - Dec. 2024 | Macao</div>
+                            <h4>Student Ambassador</h4>
+                            <p>Rector’s Office, City University of Macao</p>
+                        </div>
+                        <div class="resume-card">
+                            <div class="resume-time">Jun. 2024 - Aug. 2024 | Hangzhou</div>
+                            <h4>Intern</h4>
+                            <p>Zhejiang Yinqingli Co., Ltd.</p>
+                        </div>
+                        <div class="resume-card" style="grid-column: span 2;">
+                            <div class="resume-time">Jun. 2023 - Jul. 2023 | Hangzhou</div>
+                            <h4>Intern</h4>
+                            <p>Hangzhou Connect Fun Tech.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Frequently Asked Questions 模块 -->
+                <div class="about-block">
+                    <h2 class="faq-main-title">Frequently Asked Questions</h2>
+                    <div class="faq-list">
+                        <!-- FAQ 01 -->
+                        <div class="faq-item" onclick="toggleFaq(this)">
+                            <div class="faq-header">
+                                <div class="faq-question-wrapper">
+                                    <span class="faq-number">01</span>
+                                    <span class="faq-question">In this AI world, why you study translation?</span>
+                                </div>
+                                <div class="faq-btn">↓</div>
+                            </div>
+                            <div class="faq-answer">
+                                AI can translate language, but it cannot replace human understanding. The essence of translation is the reconstruction of meaning, involving cultural dynamics, emotional tension, and the resonance of values. "Where language exists, we exist; where translation exists, we can exist better."
+                            </div>
+                        </div>
+
+                        <!-- FAQ 02 -->
+                        <div class="faq-item" onclick="toggleFaq(this)">
+                            <div class="faq-header">
+                                <div class="faq-question-wrapper">
+                                    <span class="faq-number">02</span>
+                                    <span class="faq-question">What is your career plan?</span>
+                                </div>
+                                <div class="faq-btn">↓</div>
+                            </div>
+                            <div class="faq-answer">
+                                I am a person who loves expressing my own ideas and creating my own works, and I have been actively seeking opportunities in advertising, public relations, communications, translation, and creative writing and expression. I hope to help and inspire others through my outputs and creations.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 3. Projects 视图 -->
+        <div id="view-projects" class="page-view">
+            <div class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">Project</h2>
+                    <p class="section-desc">A curated selection of localized media assets, digital campaigns, and linguistic achievements.</p>
+                </div>
+                <div class="grid-cards">
+                    <div class="editorial-card">
+                        <div class="card-category">Localization & Media</div>
+                        <h3>Digital Media Localization</h3>
+                        <p>Successfully localized and quality-assured over 900+ episodes of cross-border visual media, ensuring strict semantic accuracy and contextual flow.</p>
+                    </div>
+                    <div class="editorial-card">
+                        <div class="card-category">Marketing & PR</div>
+                        <h3>Global Brand Campaigns</h3>
+                        <p>Authored and localized multi-channel press releases, bilingual digital copywriting, and web architectures for leading international technology firms.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Contact 视图 -->
+        <div id="view-contact" class="page-view">
+            <div class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">Contact</h2>
+                    <p class="section-desc">
+                        <strong style="display: block; font-family: 'Instrument Serif', serif; font-size: 1.5rem; font-weight: 400; color: #1A1918; margin-bottom: 4px;">Let's chat!</strong>
+                        Share anything in your mind with me!
+                    </p>
+                </div>
+                <div class="editorial-card" style="max-width: 100%;">
+                    <div class="card-category">Get in Touch</div>
+                    <h3>Start a Conversation</h3>
+                    <form class="contact-form" onsubmit="sendEmail(event)">
+                        <div class="form-group">
+                            <label for="name-input">Name:</label>
+                            <input type="text" id="name-input" required placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-input">Contact info:</label>
+                            <input type="text" id="contact-input" required placeholder="Your email or phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="thoughts-input">Your thoughts:</label>
+                            <textarea id="thoughts-input" required placeholder="Share anything in your mind with me..."></textarea>
+                        </div>
+                        <button type="submit" class="send-btn">SEND!</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Zoeyeahoh. All Rights Reserved.</p>
+        </footer>
     </div>
 
     <script>
-        // --- 粒子文字特效脚本 ---
+        /* --- 视图切换逻辑 --- */
+        function switchView(viewName, event) {
+            if (event) event.preventDefault();
+
+            // 隐藏所有视图
+            document.querySelectorAll('.page-view').forEach(view => {
+                view.classList.remove('active-view');
+            });
+
+            // 激活目标视图
+            const targetView = document.getElementById('view-' + viewName);
+            if (targetView) {
+                targetView.classList.add('active-view');
+            }
+
+            // 更新导航栏激活状态
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            const activeNav = document.getElementById('nav-' + viewName);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+
+            // 滚动回顶部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* --- FAQ 展开/收起交互逻辑 --- */
+        function toggleFaq(item) {
+            item.classList.toggle('active');
+        }
+
+        /* --- 邮件发送逻辑 --- */
+        function sendEmail(event) {
+            event.preventDefault();
+            const name = document.getElementById('name-input').value;
+            const contact = document.getElementById('contact-input').value;
+            const thoughts = document.getElementById('thoughts-input').value;
+
+            const subject = encodeURIComponent(`New message from ${name} via Portfolio`);
+            const body = encodeURIComponent(`Name: ${name}\nContact info: ${contact}\n\nYour thoughts:\n${thoughts}`);
+
+            window.location.href = `mailto:zoeyeahoh@gmail.com?subject=${subject}&body=${body}`;
+        }
+
+        /* --- 粒子文字特效脚本 --- */
         const canvas = document.getElementById("particle-canvas");
         const ctx = canvas.getContext("2d");
 
@@ -887,17 +787,10 @@
                 this.size = 2.2;
                 this.vx = 0;
                 this.vy = 0;
-                this.ease = 0.08;
-                this.friction = 0.85;
-                this.dx = 0;
-                this.dy = 0;
-                this.distance = 0;
-                this.force = 0;
-                this.angle = 0;
             }
 
             draw() {
-                ctx.fillStyle = this.isHighlight ? "#8b5cf6" : "#f8fafc";
+                ctx.fillStyle = this.isHighlight ? "#FFFFFF" : "#D3C5B4";
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.closePath();
@@ -905,7 +798,6 @@
             }
 
             update() {
-                // 鼠标交互排斥 (pointerRepel)
                 let dx = mouse.x - this.x;
                 let dy = mouse.y - this.y;
                 let distance = Math.sqrt(dx * dx + dy * dy);
@@ -916,7 +808,6 @@
                     this.vy += force * Math.sin(angle) * 2;
                 }
 
-                // 归位弹性
                 let ox = this.originX - this.x;
                 let oy = this.originY - this.y;
                 this.vx += ox * 0.05;
@@ -934,15 +825,14 @@
             particles = [];
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // 绘制居中多行文字以提取像素
-            ctx.font = "bold 6vw 'Times New Roman', sans-serif";
+            ctx.font = "bold 6vw 'Instrument Serif', serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
 
-            const lines = ["Hi, I'm Zoe!", "Welcome to my world!"];
+            const lines = ["Hi, I'm Zoeyeahoh!", "Welcome to my world!"];
             const centerX = canvas.width / 2;
             const centerY = canvas.height / 2;
-            const lineHeight = canvas.height * 0.1;
+            const lineHeight = canvas.height * 0.12;
 
             ctx.fillStyle = "white";
             lines.forEach((line, index) => {
@@ -952,15 +842,14 @@
 
             const textData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const data = textData.data;
-            const density = 4; // 采样密度
+            const density = 4;
 
             for (let y = 0; y < canvas.height; y += density) {
                 for (let x = 0; x < canvas.width; x += density) {
                     const index = (y * canvas.width + x) * 4;
                     if (data[index + 3] > 128) {
                         let p = new Particle(x, y);
-                        // 部分粒子赋予高亮颜色
-                        p.isHighlight = Math.random() < 0.2;
+                        p.isHighlight = Math.random() < 0.25;
                         particles.push(p);
                     }
                 }
@@ -968,7 +857,7 @@
         }
 
         function animateParticles() {
-            ctx.fillStyle = "#09090f";
+            ctx.fillStyle = "#1A1918";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
@@ -983,144 +872,15 @@
             mouse.y = e.clientY;
         });
 
-        // 初始化粒子画布
         window.addEventListener("load", () => {
             resizeCanvas();
             animateParticles();
         });
 
-        // 关闭打字屏/粒子屏并转入书本场景
-        function openHomepage() {
+        function enterMainApp() {
             document.getElementById("intro-screen").classList.add("hidden");
             cancelAnimationFrame(animationId);
-        }
-
-        // 打开笔记本
-        let bookOpen = false;
-        function openBook() {
-            if(bookOpen) return;
-            document.getElementById("my-book").classList.add("open");
-            setTimeout(() => {
-                document.getElementById("binder-spine").style.display = "flex";
-                document.getElementById("side-tabs").style.display = "flex";
-            }, 500);
-            bookOpen = true;
-        }
-
-        // 页面顺序数组
-        const sections = ['index', 'edu', 'work', 'about', 'thoughts', 'contact'];
-        let currentSection = 'index';
-        let isFlipping = false;
-
-        // 指定跳转到某一节
-        function turnToSection(targetSection) {
-            if (currentSection === targetSection || isFlipping || !bookOpen) return;
-            
-            const currentIndex = sections.indexOf(currentSection);
-            const targetIndex = sections.indexOf(targetSection);
-            
-            if (targetIndex > currentIndex) {
-                executeFlip(currentIndex, targetIndex, 'next');
-            } else {
-                executeFlip(currentIndex, targetIndex, 'prev');
-            }
-        }
-
-        // 点击右侧页：下一页
-        function nextPage() {
-            if (!bookOpen || isFlipping) return;
-            const currentIndex = sections.indexOf(currentSection);
-            if (currentIndex < sections.length - 1) {
-                executeFlip(currentIndex, currentIndex + 1, 'next');
-            }
-        }
-
-        // 点击左侧页：上一页
-        function prevPage() {
-            if (!bookOpen || isFlipping) return;
-            const currentIndex = sections.indexOf(currentSection);
-            if (currentIndex > 0) {
-                executeFlip(currentIndex, currentIndex - 1, 'prev');
-            }
-        }
-
-        // 通用翻页动画执行函数
-        function executeFlip(fromIdx, toIdx, direction) {
-            isFlipping = true;
-            const fromSec = sections[fromIdx];
-            const toSec = sections[toIdx];
-
-            const currentSpread = document.getElementById(`spread-${fromSec}`);
-            const targetSpread = document.getElementById(`spread-${toSec}`);
-
-            if (direction === 'next') {
-                const flipLayer = document.getElementById('flip-layer');
-                const flipFront = document.getElementById('flip-front-content');
-                const flipBack = document.getElementById('flip-back-content');
-
-                flipFront.innerHTML = currentSpread.querySelector('.page-right').innerHTML;
-                flipBack.innerHTML = targetSpread.querySelector('.page-left').innerHTML;
-                
-                flipFront.style.cssText = `padding: 35px 45px; color: #2c2c2c; display: flex; flex-direction: column; justify-content: ${currentSpread.querySelector('.page-right').style.justifyContent || 'flex-start'};`;
-                flipBack.style.cssText = `padding: 35px 45px; color: #2c2c2c; display: flex; flex-direction: column; justify-content: ${targetSpread.querySelector('.page-left').style.justifyContent || 'flex-start'}; transform: rotateY(180deg);`;
-
-                flipLayer.classList.add('is-flipping');
-                
-                setTimeout(() => {
-                    currentSpread.classList.remove('active');
-                    targetSpread.classList.add('active');
-                }, 400);
-
-                setTimeout(() => {
-                    flipLayer.classList.remove('is-flipping');
-                    currentSection = toSec;
-                    isFlipping = false;
-                }, 800);
-
-            } else {
-                const flipRev = document.getElementById('flip-layer-rev');
-                const revFront = document.getElementById('flip-rev-front');
-                const revBack = document.getElementById('flip-rev-back');
-
-                revFront.innerHTML = currentSpread.querySelector('.page-left').innerHTML;
-                revBack.innerHTML = targetSpread.querySelector('.page-right').innerHTML;
-
-                revFront.style.cssText = `padding: 35px 45px; color: #2c2c2c; display: flex; flex-direction: column; justify-content: ${currentSpread.querySelector('.page-left').style.justifyContent || 'flex-start'};`;
-                revBack.style.cssText = `padding: 35px 45px; color: #2c2c2c; display: flex; flex-direction: column; justify-content: ${targetSpread.querySelector('.page-right').style.justifyContent || 'flex-start'}; transform: rotateY(180deg);`;
-
-                flipRev.classList.add('is-flipping');
-
-                setTimeout(() => {
-                    currentSpread.classList.remove('active');
-                    targetSpread.classList.add('active');
-                }, 400);
-
-                setTimeout(() => {
-                    flipRev.classList.remove('is-flipping');
-                    currentSection = toSec;
-                    isFlipping = false;
-                }, 800);
-            }
-        }
-
-        // 展开 Thoughts 全文
-        function toggleArticle() {
-            document.getElementById("thoughts-article").classList.add("show");
-            document.getElementById("thoughts-article-p2").classList.add("show");
-        }
-
-        // 动态添加新文章功能
-        function addNewArticle() {
-            let title = prompt("Enter new article title:");
-            if (!title) return;
-            let content = prompt("Enter article content:");
-            if (!content) return;
-
-            let listContainer = document.getElementById("dynamic-articles-list");
-            let newItem = document.createElement("div");
-            newItem.style.marginBottom = "10px";
-            newItem.innerHTML = `<span class="blog-list-item" style="font-size:14pt;">📝 ${title}</span><p class="article-p" style="font-size:10pt;">${content}</p>`;
-            listContainer.appendChild(newItem);
+            document.getElementById("main-app").classList.add("show");
         }
     </script>
 </body>
