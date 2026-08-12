@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Story of Zoe</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;600&display=swap');
 
         * {
             margin: 0;
@@ -136,14 +136,14 @@
         }
         .nav-links {
             display: flex;
-            gap: 40px;
+            gap: 35px;
             list-style: none;
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
         .nav-links a {
             color: #6E6863;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -213,7 +213,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* 黑底白字 Highlight 样式 */
         .highlight {
             background-color: #1A1918;
             color: #F7F5F0;
@@ -230,7 +229,87 @@
             width: 100%;
         }
 
-        /* About Me 内部子模块通用标题 */
+        /* --- 杂志拼贴风自我介绍样式 --- */
+        .collage-bio-container {
+            position: relative;
+            margin-bottom: 90px;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .collage-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            width: 100%;
+            z-index: 2;
+        }
+
+        .collage-card {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(44, 42, 41, 0.12);
+            padding: 35px 30px;
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.03);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+            position: relative;
+        }
+
+        .collage-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.06);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .collage-card:nth-child(1) { transform: rotate(-1.5deg); }
+        .collage-card:nth-child(2) { transform: rotate(1deg); background: rgba(243, 239, 231, 0.8); }
+        .collage-card:nth-child(3) { transform: rotate(-0.8deg); }
+
+        .collage-card p {
+            font-size: 1.05rem;
+            line-height: 1.85;
+            color: #3A3532;
+        }
+
+        .collage-badge {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2rem;
+            color: #8B4513;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .collage-photo-frame {
+            position: absolute;
+            background: #fff;
+            padding: 10px 10px 30px 10px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border: 1px solid rgba(44,42,41,0.08);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .collage-photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(15%);
+            transition: filter 0.3s ease;
+        }
+        .collage-photo-frame:hover img { filter: grayscale(0%); }
+
+        .photo-1 { width: 160px; height: 200px; top: -20px; left: -40px; transform: rotate(-7deg); }
+        .photo-2 { width: 180px; height: 140px; bottom: -30px; right: -25px; transform: rotate(6deg); }
+        .photo-3 { width: 130px; height: 130px; top: 20%; right: -50px; transform: rotate(12deg); border-radius: 50%; padding: 8px; }
+        .photo-3 img { border-radius: 50%; }
+
         .about-sub-title {
             font-family: 'Instrument Serif', serif;
             font-size: 2.8rem;
@@ -242,11 +321,8 @@
             padding-bottom: 15px;
         }
 
-        .about-block {
-            margin-bottom: 70px;
-        }
+        .about-block { margin-bottom: 70px; }
 
-        /* 简历时间轴卡片样式 */
         .resume-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -291,7 +367,6 @@
             font-size: 0.95rem;
         }
 
-        /* FAQ 专用样式 */
         .faq-main-title {
             font-family: 'Instrument Serif', serif;
             font-size: 2.8rem;
@@ -303,10 +378,7 @@
             padding-bottom: 15px;
         }
 
-        .faq-list {
-            display: flex;
-            flex-direction: column;
-        }
+        .faq-list { display: flex; flex-direction: column; }
 
         .faq-item {
             border-bottom: 1px dashed rgba(44, 42, 41, 0.3);
@@ -315,51 +387,22 @@
             transition: background 0.3s ease;
         }
 
-        .faq-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .faq-question-wrapper {
-            display: flex;
-            align-items: baseline;
-            gap: 30px;
-        }
-
-        .faq-number {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.1rem;
-            color: #8B4513;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        .faq-question {
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.7rem;
-            color: #2C2A29;
-            font-weight: 400;
-        }
+        .faq-header { display: flex; align-items: center; justify-content: space-between; }
+        .faq-question-wrapper { display: flex; align-items: baseline; gap: 30px; }
+        .faq-number { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.1rem; color: #8B4513; font-weight: 600; letter-spacing: 1px; }
+        .faq-question { font-family: 'Instrument Serif', serif; font-size: 1.7rem; color: #2C2A29; font-weight: 400; }
 
         .faq-btn {
-            width: 36px;
-            height: 36px;
+            width: 36px; height: 36px;
             border: 1px dashed rgba(44, 42, 41, 0.4);
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            color: #2C2A29;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 14px; color: #2C2A29;
             transition: transform 0.3s ease, background 0.3s ease;
             flex-shrink: 0;
         }
 
-        .faq-item.active .faq-btn {
-            transform: rotate(180deg);
-            background: rgba(44, 42, 41, 0.05);
-        }
+        .faq-item.active .faq-btn { transform: rotate(180deg); background: rgba(44, 42, 41, 0.05); }
 
         .faq-answer {
             max-height: 0;
@@ -372,55 +415,84 @@
             padding-left: 58px;
         }
 
-        .faq-item.active .faq-answer {
-            max-height: 300px;
-            padding-top: 15px;
-            padding-bottom: 10px;
-        }
+        .faq-item.active .faq-answer { max-height: 300px; padding-top: 15px; padding-bottom: 10px; }
 
-        /* 杂志风网格卡片 */
-        .grid-cards {
+        /* --- 极具创意的全新 Projects 图片排版样式 --- */
+        .creative-project-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
+            gap: 30px;
         }
-        .editorial-card {
-            background: rgba(255, 255, 255, 0.6);
+
+        .creative-proj-card {
+            background: rgba(255, 255, 255, 0.7);
             border: 1px solid rgba(44, 42, 41, 0.08);
             border-radius: 6px;
-            padding: 50px;
+            overflow: hidden;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             backdrop-filter: blur(8px);
-            position: relative;
-            overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
         }
-        .editorial-card:hover {
+
+        .creative-proj-card:hover {
             transform: translateY(-8px);
             border-color: rgba(44, 42, 41, 0.25);
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.06);
         }
+
+        .creative-proj-card.proj-photo {
+            grid-column: span 2;
+        }
+
+        .proj-img-wrap {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .proj-photo .proj-img-wrap {
+            height: 360px;
+        }
+
+        .proj-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: grayscale(10%);
+        }
+
+        .creative-proj-card:hover .proj-img-wrap img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        .proj-content {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
         .card-category {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             color: #8C7B6B;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
             font-weight: 600;
         }
-        .editorial-card h3 {
+
+        .creative-proj-card h3 {
             font-family: 'Instrument Serif', serif;
             font-size: 2.2rem;
-            margin-bottom: 20px;
             color: #1A1918;
-            font-weight: 400;
-        }
-        .editorial-card p {
-            color: #6E6863;
-            line-height: 1.7;
-            font-size: 1rem;
             font-weight: 400;
         }
 
@@ -428,7 +500,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
             border-bottom: 1px solid rgba(44, 42, 41, 0.1);
             padding-bottom: 20px;
         }
@@ -438,97 +510,158 @@
             font-weight: 400;
             color: #1A1918;
         }
-        .section-desc {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            color: #6E6863;
-            font-size: 0.95rem;
-            max-width: 400px;
-            line-height: 1.6;
-        }
 
-        /* Contact 表单专用样式 */
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            margin-top: 15px;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
+        /* 返回 Project 的便捷按钮样式 */
+        .back-project-btn {
+            display: inline-flex;
+            align-items: center;
             gap: 8px;
-        }
-        .form-group label {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            color: #8C7B6B;
+            color: #8B4513;
+            text-decoration: none;
+            margin-bottom: 25px;
             font-weight: 600;
+            transition: opacity 0.3s ease;
         }
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(44, 42, 41, 0.15);
-            border-radius: 4px;
-            font-family: 'Lora', serif;
-            font-size: 1rem;
-            color: #2C2A29;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-        .form-group input:focus,
-        .form-group textarea:focus {
-            background: rgba(255, 255, 255, 1);
-            border-color: #8B4513;
-            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.08);
-        }
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-        .send-btn {
-            align-self: flex-start;
-            background-color: #1A1918;
-            color: #F7F5F0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            padding: 14px 36px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        .send-btn:hover {
-            background-color: #8B4513;
-            transform: translateY(-2px);
+        .back-project-btn:hover {
+            opacity: 0.7;
         }
 
-        /* 底部版权 */
+        /* 嵌入的 Translation 模块精美容器样式 */
+        .sub-page-wrapper {
+            background: #f5f2eb;
+            border-radius: 8px;
+            border: 1px solid #e8e2d5;
+            padding: 40px;
+            color: #2c221e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            margin-top: 10px;
+        }
+        .sub-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e8e2d5;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .sub-header h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #b8860b;
+        }
+        .control-btns { display: flex; gap: 12px; }
+        .control-btn {
+            background: #e8e2d5;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            color: #2c221e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .control-btn:hover { background: #d4cbbe; }
+        .story-block {
+            background: #fcfbfa;
+            border: 1px solid #e8e2d5;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.01);
+        }
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        @media(max-width: 768px) { .story-grid { grid-template-columns: 1fr; } }
+        .cn-title { font-size: 0.75rem; font-weight: 600; color: #b8860b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: block; }
+        .en-title { font-size: 0.75rem; font-weight: 600; color: #7d6f65; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: block; }
+        .cn-text { font-family: 'Noto Serif SC', serif; font-size: 1.1rem; line-height: 1.8; color: #2c221e; white-space: pre-line; }
+        .en-text { font-family: 'Times New Roman', Times, serif; font-size: 1.05rem; line-height: 1.8; color: #000000; white-space: pre-line; }
+
+        /* Photograph 摄影画廊风网格 */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .photo-card {
+            background: #fff;
+            padding: 12px 12px 35px 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid rgba(44,42,41,0.1);
+            transition: transform 0.3s ease;
+        }
+        .photo-card:hover { transform: translateY(-5px); }
+        .photo-card img { width: 100%; height: 260px; object-fit: cover; display: block; filter: grayscale(10%); }
+        .photo-caption {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.3rem;
+            text-align: center;
+            margin-top: 15px;
+            color: #2C2A29;
+        }
+
+        /* Contact 表单专用样式 */
+        .contact-form { display: flex; flex-direction: column; gap: 24px; margin-top: 15px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .form-group label {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.85rem; text-transform: uppercase;
+            letter-spacing: 1.5px; color: #8C7B6B; font-weight: 600;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(44, 42, 41, 0.15);
+            border-radius: 4px; font-family: 'Lora', serif;
+            font-size: 1rem; color: #2C2A29; outline: none; transition: all 0.3s ease;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            background: rgba(255, 255, 255, 1);
+            border-color: #8B4513; box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.08);
+        }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .send-btn {
+            align-self: flex-start; background-color: #1A1918; color: #F7F5F0;
+            font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem;
+            font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+            padding: 14px 36px; border: none; border-radius: 4px; cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .send-btn:hover { background-color: #8B4513; transform: translateY(-2px); }
+
         footer {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            text-align: center;
-            padding: 40px;
+            text-align: center; padding: 40px;
             border-top: 1px solid rgba(44, 42, 41, 0.08);
-            color: #6E6863;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            color: #6E6863; font-size: 0.9rem; letter-spacing: 1px;
             margin-top: auto;
         }
 
-        /* 响应式调整 */
         @media (max-width: 900px) {
-            .grid-cards, .resume-grid { grid-template-columns: 1fr; }
+            .creative-project-grid, .resume-grid, .collage-grid, .photo-gallery { grid-template-columns: 1fr; }
+            .creative-proj-card.proj-photo { grid-column: span 1; }
             .content-section { padding: 40px 20px; }
             nav { padding: 20px 30px; }
             .faq-question-wrapper { gap: 15px; }
             .faq-answer { padding-left: 0; }
             .section-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .collage-photo-frame { display: none; }
         }
     </style>
 </head>
@@ -542,7 +675,7 @@
         <div class="intro-tip">Click anywhere to explore</div>
     </div>
 
-    <!-- 第二阶段：高定米白杂志风主界面 -->
+    <!-- 主界面 -->
     <div id="main-app">
         <nav>
             <div class="nav-logo" onclick="switchView('hero', event)">Zoeyeahoh.</div>
@@ -554,7 +687,7 @@
             </ul>
         </nav>
 
-        <!-- 1. 首页视图 -->
+        <!-- 1. Home 视图 -->
         <div id="view-hero" class="page-view active-view">
             <section class="hero-section">
                 <div class="hero-tag">Portfolio & Editorial Showcase</div>
@@ -562,17 +695,40 @@
                 <p class="hero-subtitle">
                     A fresh graduate from the University of Hong Kong, and a <span class="highlight">shape-shifter</span> in the creative world. Whether you are looking for a <span class="highlight">translator</span> to bridge languages, an <span class="highlight">interpreter</span> to connect voices, a <span class="highlight">content creator</span> to tell your story, or a <span class="highlight">photographer</span> to capture moments, I adapt to whatever your project demands. I am whatever you need me to be.
                 </p>
-                <div class="hero-footer-text">
-                    Use the menu above to explore my worlds.
-                </div>
+                <div class="hero-footer-text">Use the menu above to explore my worlds.</div>
             </section>
         </div>
 
-        <!-- 2. About Me 视图 (包含 Education、Work、FAQ) -->
+        <!-- 2. About Me 视图 -->
         <div id="view-about" class="page-view">
             <div class="content-section">
-                
-                <!-- Education 模块 -->
+                <div class="collage-bio-container">
+                    <div class="collage-photo-frame photo-1">
+                        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80" alt="Zoe Hangzhou">
+                    </div>
+                    <div class="collage-photo-frame photo-2">
+                        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=400&q=80" alt="Zoe Macao">
+                    </div>
+                    <div class="collage-photo-frame photo-3">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Zoe Hong Kong">
+                    </div>
+
+                    <div class="collage-grid">
+                        <div class="collage-card">
+                            <div class="collage-badge">Hangzhou</div>
+                            <p>I was born and raised in the tender warmth and the all-pervading fragrance of osmanthus blossoms in Hangzhou, a city that imbued my character with a sunny, cheerful, and romantic essence.</p>
+                        </div>
+                        <div class="collage-card">
+                            <div class="collage-badge">Macao</div>
+                            <p>At eighteen, I journeyed to Macao on my own; the unhurried pace of life, the blend of Chinese and Portuguese cultures, and the unique urban ambiance taught me how to enjoy life while embracing cultural diversity, infusing my bones with a bolder, more daring spirit.</p>
+                        </div>
+                        <div class="collage-card">
+                            <div class="collage-badge">Hong Kong</div>
+                            <p>At twenty-three, I stepped into Hong Kong, a fast-paced global metropolis, where I grew rapidly amidst the tides of the era, and those once slightly naive and immature dreams finally took root here, transforming into down-to-earth reality.</p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="about-block">
                     <h2 class="about-sub-title">Education</h2>
                     <div class="resume-grid">
@@ -589,7 +745,6 @@
                     </div>
                 </div>
 
-                <!-- Work 模块 -->
                 <div class="about-block">
                     <h2 class="about-sub-title">Work Experience</h2>
                     <div class="resume-grid">
@@ -606,7 +761,7 @@
                         <div class="resume-card">
                             <div class="resume-time">Nov. 2023 - Dec. 2024 | Macao</div>
                             <h4>Student Ambassador</h4>
-                            <p>Rector’s Office, City University of Macao</p>
+                            <p>Rector’s Office</p>
                         </div>
                         <div class="resume-card">
                             <div class="resume-time">Jun. 2024 - Aug. 2024 | Hangzhou</div>
@@ -621,11 +776,9 @@
                     </div>
                 </div>
 
-                <!-- Frequently Asked Questions 模块 -->
                 <div class="about-block">
                     <h2 class="faq-main-title">Frequently Asked Questions</h2>
                     <div class="faq-list">
-                        <!-- FAQ 01 -->
                         <div class="faq-item" onclick="toggleFaq(this)">
                             <div class="faq-header">
                                 <div class="faq-question-wrapper">
@@ -638,8 +791,6 @@
                                 AI can translate language, but it cannot replace human understanding. The essence of translation is the reconstruction of meaning, involving cultural dynamics, emotional tension, and the resonance of values. "Where language exists, we exist; where translation exists, we can exist better."
                             </div>
                         </div>
-
-                        <!-- FAQ 02 -->
                         <div class="faq-item" onclick="toggleFaq(this)">
                             <div class="faq-header">
                                 <div class="faq-question-wrapper">
@@ -654,45 +805,143 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
-        <!-- 3. Projects 视图 -->
+        <!-- 3. Projects 视图 (创意图片排版且无文字解释) -->
         <div id="view-projects" class="page-view">
             <div class="content-section">
                 <div class="section-header">
-                    <h2 class="section-title">Project</h2>
-                    <p class="section-desc">A curated selection of localized media assets, digital campaigns, and linguistic achievements.</p>
+                    <h2 class="section-title">Projects</h2>
                 </div>
-                <div class="grid-cards">
-                    <div class="editorial-card">
-                        <div class="card-category">Localization & Media</div>
-                        <h3>Digital Media Localization</h3>
-                        <p>Successfully localized and quality-assured over 900+ episodes of cross-border visual media, ensuring strict semantic accuracy and contextual flow.</p>
+                <div class="creative-project-grid">
+                    <a href="#" onclick="switchView('translation', event)" class="creative-proj-card">
+                        <div class="proj-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80" alt="Translation Showcase">
+                        </div>
+                        <div class="proj-content">
+                            <div class="card-category">Linguistic Arts</div>
+                            <h3>Translation Showcase</h3>
+                        </div>
+                    </a>
+                    <a href="#" onclick="switchView('social', event)" class="creative-proj-card">
+                        <div class="proj-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80" alt="Social Media & PR">
+                        </div>
+                        <div class="proj-content">
+                            <div class="card-category">Digital Content</div>
+                            <h3>Social Media & PR</h3>
+                        </div>
+                    </a>
+                    <a href="#" onclick="switchView('photo', event)" class="creative-proj-card proj-photo">
+                        <div class="proj-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=1200&q=80" alt="Photography Gallery">
+                        </div>
+                        <div class="proj-content">
+                            <div class="card-category">Visual Arts</div>
+                            <h3>Photography Gallery</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Translation 视图 (隶属于 Project 下) -->
+        <div id="view-translation" class="page-view">
+            <div class="content-section">
+                <a href="#" onclick="switchView('projects', event)" class="back-project-btn">&larr; Back to Projects</a>
+                <div class="section-header" style="margin-top: 10px;">
+                    <h2 class="section-title">Translation Showcase</h2>
+                </div>
+                <div class="sub-page-wrapper">
+                    <div class="sub-header">
+                        <div>
+                            <h3 style="font-family: 'Noto Serif SC', serif; font-size: 1.8rem; font-weight: bold; color: #b8860b;">黑楼往事</h3>
+                            <p style="font-size: 0.95rem; color: #7d6f65; font-style: italic;">Living in the Shadows</p>
+                        </div>
+                        <div class="control-btns">
+                            <button id="modeToggle" onclick="toggleMode()" class="control-btn">
+                                <span id="modeIcon">🌐</span>
+                                <span id="modeText">双语对照</span>
+                            </button>
+                            <button onclick="toggleAudio()" id="audioBtn" class="control-btn">
+                                <span>🎵</span>
+                                <span id="audioText">BGM</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="editorial-card">
-                        <div class="card-category">Marketing & PR</div>
-                        <h3>Global Brand Campaigns</h3>
-                        <p>Authored and localized multi-channel press releases, bilingual digital copywriting, and web architectures for leading international technology firms.</p>
+                    <div id="storyContainer" style="display: flex; flex-direction: column; gap: 24px;"></div>
+                    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e8e2d5; text-align: center; color: #7d6f65; font-size: 0.9rem;">
+                        <p style="font-family: 'Noto Serif SC', serif; font-style: italic;">“我确信我错了。可我无能为力，只能一错再错。”</p>
+                        <p style="margin-top: 8px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;">— End of Chapter —</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 4. Contact 视图 -->
+        <!-- 5. Social Media 视图 (隶属于 Project 下) -->
+        <div id="view-social" class="page-view">
+            <div class="content-section">
+                <a href="#" onclick="switchView('projects', event)" class="back-project-btn">&larr; Back to Projects</a>
+                <div class="section-header" style="margin-top: 10px;">
+                    <h2 class="section-title">Social Media & Content</h2>
+                </div>
+                <div class="creative-project-grid">
+                    <div class="creative-proj-card" style="cursor: default;">
+                        <div class="proj-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80" alt="Campaign Strategy">
+                        </div>
+                        <div class="proj-content">
+                            <div class="card-category">Campaign Strategy</div>
+                            <h3>Cross-Cultural Branding</h3>
+                        </div>
+                    </div>
+                    <div class="creative-proj-card" style="cursor: default;">
+                        <div class="proj-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80" alt="Narrative Copywriting">
+                        </div>
+                        <div class="proj-content">
+                            <div class="card-category">Digital Storytelling</div>
+                            <h3>Narrative Copywriting</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Photograph 视图 (隶属于 Project 下) -->
+        <div id="view-photo" class="page-view">
+            <div class="content-section">
+                <a href="#" onclick="switchView('projects', event)" class="back-project-btn">&larr; Back to Projects</a>
+                <div class="section-header" style="margin-top: 10px;">
+                    <h2 class="section-title">Photograph Portfolio</h2>
+                </div>
+                <div class="photo-gallery">
+                    <div class="photo-card">
+                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Hangzhou Impression">
+                        <div class="photo-caption">Hangzhou Mornings</div>
+                    </div>
+                    <div class="photo-card">
+                        <img src="https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?auto=format&fit=crop&w=600&q=80" alt="Macao Vibe">
+                        <div class="photo-caption">Macao Streetlights</div>
+                    </div>
+                    <div class="photo-card">
+                        <img src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=600&q=80" alt="Hong Kong Tides">
+                        <div class="photo-caption">HK Neon Tides</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. Contact 视图 -->
         <div id="view-contact" class="page-view">
             <div class="content-section">
                 <div class="section-header">
                     <h2 class="section-title">Contact</h2>
-                    <p class="section-desc">
-                        <strong style="display: block; font-family: 'Instrument Serif', serif; font-size: 1.5rem; font-weight: 400; color: #1A1918; margin-bottom: 4px;">Let's chat!</strong>
-                        Share anything in your mind with me!
-                    </p>
                 </div>
-                <div class="editorial-card" style="max-width: 100%;">
+                <div class="creative-proj-card" style="max-width: 100%; cursor: default; padding: 40px;">
                     <div class="card-category">Get in Touch</div>
-                    <h3>Start a Conversation</h3>
+                    <h3 style="margin-bottom: 20px;">Start a Conversation</h3>
                     <form class="contact-form" onsubmit="sendEmail(event)">
                         <div class="form-group">
                             <label for="name-input">Name:</label>
@@ -722,31 +971,32 @@
         function switchView(viewName, event) {
             if (event) event.preventDefault();
 
-            // 隐藏所有视图
             document.querySelectorAll('.page-view').forEach(view => {
                 view.classList.remove('active-view');
             });
 
-            // 激活目标视图
             const targetView = document.getElementById('view-' + viewName);
             if (targetView) {
                 targetView.classList.add('active-view');
             }
 
-            // 更新导航栏激活状态
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.classList.remove('active');
             });
-            const activeNav = document.getElementById('nav-' + viewName);
+            
+            let navTarget = viewName;
+            if (['translation', 'social', 'photo'].includes(viewName)) {
+                navTarget = 'projects';
+            }
+            const activeNav = document.getElementById('nav-' + navTarget);
             if (activeNav) {
                 activeNav.classList.add('active');
             }
 
-            // 滚动回顶部
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        /* --- FAQ 展开/收起交互逻辑 --- */
+        /* --- FAQ 交互逻辑 --- */
         function toggleFaq(item) {
             item.classList.toggle('active');
         }
@@ -762,6 +1012,173 @@
             const body = encodeURIComponent(`Name: ${name}\nContact info: ${contact}\n\nYour thoughts:\n${thoughts}`);
 
             window.location.href = `mailto:zoeyeahoh@gmail.com?subject=${subject}&body=${body}`;
+        }
+
+        /* --- Translation 板块脚本数据与逻辑 --- */
+        const storyData = [
+            {
+                id: "intro",
+                cn: "从零几年开始，国内扫黑除恶的力度逐渐增大。\n黑恶势力的保护伞接连落马，不时有人被捕入狱。\n大量涉黑集团为了生存，开始改变运营方式。",
+                en: "Starting from the early 2000s, there was a marked increase in national efforts to crack down on gang crimes.\nThe “protective umbrellas” that shelter gang crimes were removed from their positions one after another, leading to the arrest and imprisonment of many individuals involved.\nTo adapt and survive, numerous criminal gangs were forced to alter their methods of operation."
+            },
+            {
+                chapter: "1",
+                cn: "他们通过从事违法犯罪活动完成了原始资本积累，然后用这笔钱向着传统行业蔓延。\n酒店、餐饮、建材、二手车，这些行业都有他们的身影。\n其中地产行业那几年发展最快，参与者也最多。",
+                en: "They gathered their initial capital by participating in illegal and criminal activities and then utilized this money to expand their presence in various traditional industries, such as hotels, restaurants, construction materials, and second-hand cars.\nAmong these, the real estate industry experienced the most rapid growth during those years, attracting the highest number of participants."
+            },
+            {
+                cn: "我所在的鑫成集团，就是这样一家转型成功的房地产公司。\n自05年开始，我就给黄鑫成当司机兼保镖，替他做了不少事。",
+                en: "Sunrise Group, the successfully transformed real estate company I work for, is one of them.\nSince 2005, I have served as a driver and bodyguard for Huang Xincheng, assisting him in a wide range of illegal or unethical activities."
+            },
+            {
+                cn: "后来，他成了优秀企业家，我也得到了丰厚的回报。\n夜深时，我回想起这些年的过往。\n一桩桩一件件，历历在目。\n我确信我错了。\n可我无能为力，只能一错再错。\n……",
+                en: "Later, he achieved great success as a businessman, while I also reaped generous rewards.\nEach night, I find myself unable to escape the memories of the past years, replaying each moment in vivid detail.\nI am forced to acknowledge my mistakes but feel powerless to do anything but continue making them.\n…"
+            },
+            {
+                chapter: "2",
+                cn: "黄鑫成是市里的涉黑头目，巅峰时期掌握了当时市内五分之一的灰产。\n要不是他起步比别人晚，这个比例可能会更大。\n……",
+                en: "Huang Xincheng, once the notorious head of criminal gangs in the city, had controlled an impressive one-fifth of the grey industry at his peak.\nHad he begun earlier, this percentage could have been even greater.\n…"
+            },
+            {
+                cn: "07 年的时候，市内风头变紧，很多人被雷霆手段送进监狱。\n就是这一年，黄鑫成下定决心洗白自己。",
+                en: "However, in 2007, as tensions in the city rose, many people were incarcerated by “thunderous methods”, which refers to the method to fight corruption in a rapid and resolute manner.\nIt was in that year that Huang Xincheng made the decision to whitewash himself."
+            },
+            {
+                cn: "他变卖灰产，整合资金，在当时最野蛮生长的房地产行业成立了一家公司。\n这家公司就是后来的鑫成集团。",
+                en: "He divested his illegal holdings, pooled his wealth, and ventured into the savagely booming real estate sector, establishing what would become known as the Sunrise Group."
+            },
+            {
+                cn: "他靠着特殊的手段和人脉，短短六年，就将鑫成集团发展成了市内地产行业的翘楚。\n又靠着不断拿地，反复杠杆，在极短时间内抢占了大部分蛋糕。",
+                en: "Through his unique tactics and influential connections, Huang Xincheng transformed the Sunrise Group into a dominant player in the city's real estate market within just six years.\nBy shrewdly acquiring lands and leveraging his assets, he quickly grabbed a large share of the market."
+            },
+            {
+                cn: "因为扩张速度太快，手段太过野蛮，触碰到了别人的利益，引起了其他地产同行的不满。\n为了搞垮鑫成集团，那些同行彼此联系，抗濯一气，做出了后来那些事。",
+                en: "Because of the rapid expansion and aggressive methods, he moved other people’s cheese, causing dissatisfaction among his competitors.\nRival real estate peers contacted each other and ganged up against Huang, and later executed a series of actions to undermine the Sunrise Group."
+            }
+        ];
+
+        let currentMode = 'dual';
+
+        function renderStory() {
+            const container = document.getElementById('storyContainer');
+            if(!container) return;
+            container.innerHTML = '';
+
+            storyData.forEach((item) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = "story-block";
+
+                if (item.chapter) {
+                    const badge = document.createElement('div');
+                    badge.style.cssText = "position: absolute; top: 15px; right: 20px; font-size: 2.5rem; font-family: serif; font-weight: bold; color: rgba(184,134,11,0.15); pointer-events: none;";
+                    badge.innerText = `0${item.chapter}`;
+                    wrapper.appendChild(badge);
+                }
+
+                if (currentMode === 'dual') {
+                    wrapper.innerHTML += `
+                        <div class="story-grid">
+                            <div>
+                                <span class="cn-title">中文原版</span>
+                                <p class="cn-text">${item.cn}</p>
+                            </div>
+                            <div>
+                                <span class="en-title">English Translation</span>
+                                <p class="en-text">${item.en}</p>
+                            </div>
+                        </div>
+                    `;
+                } else if (currentMode === 'cn') {
+                    wrapper.innerHTML += `
+                        <div style="max-width: 800px; margin: 0 auto;">
+                            <span class="cn-title">中文正文</span>
+                            <p class="cn-text" style="font-size: 1.2rem;">${item.cn}</p>
+                        </div>
+                    `;
+                } else {
+                    wrapper.innerHTML += `
+                        <div style="max-width: 800px; margin: 0 auto;">
+                            <span class="en-title">English Text</span>
+                            <p class="en-text" style="font-size: 1.15rem;">${item.en}</p>
+                        </div>
+                    `;
+                }
+                container.appendChild(wrapper);
+            });
+        }
+
+        function toggleMode() {
+            const modeText = document.getElementById('modeText');
+            const modeIcon = document.getElementById('modeIcon');
+
+            if (currentMode === 'dual') {
+                currentMode = 'cn';
+                modeText.innerText = '仅中文';
+                modeIcon.innerText = '🇨🇳';
+            } else if (currentMode === 'cn') {
+                currentMode = 'en';
+                modeText.innerText = 'Only English';
+                modeIcon.innerText = '🇺🇸';
+            } else {
+                currentMode = 'dual';
+                modeText.innerText = '双语对照';
+                modeIcon.innerText = '🌐';
+            }
+            renderStory();
+        }
+
+        let audioCtx = null;
+        let isAudioPlaying = false;
+        let noiseNode = null;
+
+        function toggleAudio() {
+            const audioBtn = document.getElementById('audioBtn');
+            const audioText = document.getElementById('audioText');
+
+            if (!isAudioPlaying) {
+                try {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    const bufferSize = 2 * audioCtx.sampleRate;
+                    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                    const output = noiseBuffer.getChannelData(0);
+                    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+                    
+                    for (let i = 0; i < bufferSize; i++) {
+                        const white = Math.random() * 2 - 1;
+                        b0 = 0.99886 * b0 + white * 0.0555179;
+                        b1 = 0.99332 * b1 + white * 0.0750759;
+                        b2 = 0.96900 * b2 + white * 0.1538520;
+                        b3 = 0.86650 * b3 + white * 0.3104856;
+                        b4 = 0.55000 * b4 + white * 0.5329522;
+                        b5 = -0.7616 * b5 - white * 0.0168980;
+                        output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+                        output[i] *= 0.02;
+                        b6 = white * 0.115926;
+                    }
+
+                    noiseNode = audioCtx.createBufferSource();
+                    noiseNode.buffer = noiseBuffer;
+                    noiseNode.loop = true;
+
+                    const filter = audioCtx.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.value = 350;
+
+                    noiseNode.connect(filter);
+                    filter.connect(audioCtx.destination);
+                    noiseNode.start();
+
+                    isAudioPlaying = true;
+                    audioText.innerText = 'BGM (On)';
+                } catch (e) {
+                    console.error("Audio error:", e);
+                }
+            } else {
+                if (noiseNode) { noiseNode.stop(); noiseNode.disconnect(); }
+                if (audioCtx) { audioCtx.close(); }
+                isAudioPlaying = false;
+                audioText.innerText = 'BGM';
+            }
         }
 
         /* --- 粒子文字特效脚本 --- */
@@ -875,6 +1292,7 @@
         window.addEventListener("load", () => {
             resizeCanvas();
             animateParticles();
+            renderStory();
         });
 
         function enterMainApp() {
