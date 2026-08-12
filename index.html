@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zoeyeahoh's Portfolio | Editorial Aesthetics</title>
+    <title>The Story of Zoe</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;600&display=swap');
 
@@ -233,7 +233,7 @@
         .collage-bio-container {
             position: relative;
             margin-bottom: 90px;
-            padding: 50px 40px; /* 增加内边距，给外侧错开的照片留出空间 */
+            padding: 50px 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -245,7 +245,7 @@
             gap: 35px;
             width: 100%;
             position: relative;
-            z-index: 1; /* 文字卡片在底层 */
+            z-index: 1;
         }
 
         .collage-card {
@@ -294,7 +294,7 @@
             padding: 10px 10px 30px 10px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.12);
             border: 1px solid rgba(44,42,41,0.08);
-            z-index: 10; /* 悬浮在文字上方 */
+            z-index: 10;
             pointer-events: auto;
         }
         .collage-photo-frame img {
@@ -307,7 +307,6 @@
         }
         .collage-photo-frame:hover img { filter: grayscale(0%); }
 
-        /* 向外挪动坐标，完全避开文字卡片区域，避免重叠遮挡 */
         .photo-1 { width: 150px; height: 190px; top: -35px; left: -75px; transform: rotate(-7deg); }
         .photo-2 { width: 170px; height: 130px; bottom: -45px; right: -75px; transform: rotate(6deg); }
         .photo-3 { width: 120px; height: 120px; top: 15%; right: -95px; transform: rotate(12deg); border-radius: 50%; padding: 8px; }
@@ -657,7 +656,6 @@
         }
 
         @media (max-width: 1150px) {
-            /* 在屏幕较小时自动隐藏绝对定位的外延照片，防止溢出屏幕 */
             .collage-photo-frame { display: none; }
             .collage-bio-container { padding: 20px; }
         }
@@ -711,15 +709,12 @@
         <div id="view-about" class="page-view">
             <div class="content-section">
                 <div class="collage-bio-container">
-                    <!-- 照片1向左外移，绝对不遮挡左侧文字卡片 -->
                     <div class="collage-photo-frame photo-1">
                         <img src="https://raw.githubusercontent.com/zoeyeahoh-pixel/zoeyeahoh.github.io/d6a7facc00479a180d235a148c53fee5f67cadfb/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260809171915_440_27.jpg" alt="Zoe Hangzhou">
                     </div>
-                    <!-- 照片2向右下方外移，绝对不遮挡底部文字 -->
                     <div class="collage-photo-frame photo-2">
                         <img src="https://raw.githubusercontent.com/zoeyeahoh-pixel/zoeyeahoh.github.io/d6a7facc00479a180d235a148c53fee5f67cadfb/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260809171912_437_27.jpg" alt="Zoe Macao">
                     </div>
-                    <!-- 照片3向右侧外移，绝对不遮挡右侧文字卡片 -->
                     <div class="collage-photo-frame photo-3">
                         <img src="https://raw.githubusercontent.com/zoeyeahoh-pixel/zoeyeahoh.github.io/d6a7facc00479a180d235a148c53fee5f67cadfb/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260809171914_439_27.jpg" alt="Zoe Hong Kong">
                     </div>
@@ -828,7 +823,8 @@
                 <div class="creative-project-grid">
                     <a href="#" onclick="switchView('translation', event)" class="creative-proj-card">
                         <div class="proj-img-wrap">
-                            <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80" alt="Translation Showcase">
+                            <!-- 已替换为指定的 GitHub 图片地址 -->
+                            <img src="https://raw.githubusercontent.com/zoeyeahoh-pixel/zoeyeahoh.github.io/e24b10b472df8f08b7fc4c3eb54b2ac55c06a846/images.jpg" alt="Translation Showcase">
                         </div>
                         <div class="proj-content">
                             <div class="card-category">Linguistic Arts</div>
@@ -837,11 +833,12 @@
                     </a>
                     <a href="#" onclick="switchView('social', event)" class="creative-proj-card">
                         <div class="proj-img-wrap">
-                            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80" alt="Social Media & PR">
+                            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80" alt="Social Media & Content">
                         </div>
                         <div class="proj-content">
+                            <!-- 已将文字修改为 Social Media & Content -->
                             <div class="card-category">Digital Content</div>
-                            <h3>Social Media & PR</h3>
+                            <h3>Social Media & Content</h3>
                         </div>
                     </a>
                     <a href="#" onclick="switchView('photo', event)" class="creative-proj-card proj-photo">
