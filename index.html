@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Story of Zoe</title>
+    <title>Zoeyeahoh's Portfolio | Editorial Aesthetics</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;600&display=swap');
 
@@ -233,7 +233,7 @@
         .collage-bio-container {
             position: relative;
             margin-bottom: 90px;
-            padding: 40px 20px;
+            padding: 50px 40px; /* 增加内边距，给外侧错开的照片留出空间 */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -244,7 +244,8 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 35px;
             width: 100%;
-            z-index: 2;
+            position: relative;
+            z-index: 1; /* 文字卡片在底层 */
         }
 
         .collage-card {
@@ -286,14 +287,15 @@
             letter-spacing: 1px;
         }
 
+        /* --- 调整照片位置：外移防遮挡，保留上层显示 --- */
         .collage-photo-frame {
             position: absolute;
             background: #fff;
             padding: 10px 10px 30px 10px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
             border: 1px solid rgba(44,42,41,0.08);
-            z-index: 1;
-            pointer-events: none;
+            z-index: 10; /* 悬浮在文字上方 */
+            pointer-events: auto;
         }
         .collage-photo-frame img {
             width: 100%;
@@ -305,9 +307,10 @@
         }
         .collage-photo-frame:hover img { filter: grayscale(0%); }
 
-        .photo-1 { width: 160px; height: 200px; top: -20px; left: -40px; transform: rotate(-7deg); }
-        .photo-2 { width: 180px; height: 140px; bottom: -30px; right: -25px; transform: rotate(6deg); }
-        .photo-3 { width: 130px; height: 130px; top: 20%; right: -50px; transform: rotate(12deg); border-radius: 50%; padding: 8px; }
+        /* 向外挪动坐标，完全避开文字卡片区域，避免重叠遮挡 */
+        .photo-1 { width: 150px; height: 190px; top: -35px; left: -75px; transform: rotate(-7deg); }
+        .photo-2 { width: 170px; height: 130px; bottom: -45px; right: -75px; transform: rotate(6deg); }
+        .photo-3 { width: 120px; height: 120px; top: 15%; right: -95px; transform: rotate(12deg); border-radius: 50%; padding: 8px; }
         .photo-3 img { border-radius: 50%; }
 
         .about-sub-title {
@@ -653,6 +656,12 @@
             margin-top: auto;
         }
 
+        @media (max-width: 1150px) {
+            /* 在屏幕较小时自动隐藏绝对定位的外延照片，防止溢出屏幕 */
+            .collage-photo-frame { display: none; }
+            .collage-bio-container { padding: 20px; }
+        }
+
         @media (max-width: 900px) {
             .creative-project-grid, .resume-grid, .collage-grid, .photo-gallery { grid-template-columns: 1fr; }
             .creative-proj-card.proj-photo { grid-column: span 1; }
@@ -661,7 +670,6 @@
             .faq-question-wrapper { gap: 15px; }
             .faq-answer { padding-left: 0; }
             .section-header { flex-direction: column; align-items: flex-start; gap: 15px; }
-            .collage-photo-frame { display: none; }
         }
     </style>
 </head>
@@ -703,14 +711,17 @@
         <div id="view-about" class="page-view">
             <div class="content-section">
                 <div class="collage-bio-container">
+                    <!-- 照片1向左外移，绝对不遮挡左侧文字卡片 -->
                     <div class="collage-photo-frame photo-1">
-                        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80" alt="Zoe Hangzhou">
+                        <img src="https://raw.githubusercontent.com/zoeyeahoh-pixel/zoeyeahoh.github.io/d6a7facc00479a180d235a148c53fee5f67cadfb/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260809171915_440_27.jpg" alt="Zoe Hangzhou">
                     </div>
+                    <!-- 照片2向右下方外移，绝对不遮挡底部文字 -->
                     <div class="collage-photo-frame photo-2">
-                        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=400&q=80" alt="Zoe Macao">
+                        <img src="https://raw.githubusercontent.com/zoeyeahoh-pixel/zoeyeahoh.github.io/d6a7facc00479a180d235a148c53fee5f67cadfb/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260809171912_437_27.jpg" alt="Zoe Macao">
                     </div>
+                    <!-- 照片3向右侧外移，绝对不遮挡右侧文字卡片 -->
                     <div class="collage-photo-frame photo-3">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Zoe Hong Kong">
+                        <img src="https://raw.githubusercontent.com/zoeyeahoh-pixel/zoeyeahoh.github.io/d6a7facc00479a180d235a148c53fee5f67cadfb/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260809171914_439_27.jpg" alt="Zoe Hong Kong">
                     </div>
 
                     <div class="collage-grid">
@@ -808,7 +819,7 @@
             </div>
         </div>
 
-        <!-- 3. Projects 视图 (创意图片排版且无文字解释) -->
+        <!-- 3. Projects 视图 -->
         <div id="view-projects" class="page-view">
             <div class="content-section">
                 <div class="section-header">
@@ -846,7 +857,7 @@
             </div>
         </div>
 
-        <!-- 4. Translation 视图 (隶属于 Project 下) -->
+        <!-- 4. Translation 视图 -->
         <div id="view-translation" class="page-view">
             <div class="content-section">
                 <a href="#" onclick="switchView('projects', event)" class="back-project-btn">&larr; Back to Projects</a>
@@ -879,7 +890,7 @@
             </div>
         </div>
 
-        <!-- 5. Social Media 视图 (隶属于 Project 下) -->
+        <!-- 5. Social Media 视图 -->
         <div id="view-social" class="page-view">
             <div class="content-section">
                 <a href="#" onclick="switchView('projects', event)" class="back-project-btn">&larr; Back to Projects</a>
@@ -909,7 +920,7 @@
             </div>
         </div>
 
-        <!-- 6. Photograph 视图 (隶属于 Project 下) -->
+        <!-- 6. Photograph 视图 -->
         <div id="view-photo" class="page-view">
             <div class="content-section">
                 <a href="#" onclick="switchView('projects', event)" class="back-project-btn">&larr; Back to Projects</a>
