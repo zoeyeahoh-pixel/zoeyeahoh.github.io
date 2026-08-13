@@ -725,15 +725,23 @@
         }
 
         @media (max-width: 900px) {
+            nav { padding: 15px 20px; }
+            .nav-links { gap: 15px; }
+            .nav-links a { font-size: 0.75rem; }
+            
             .creative-project-grid, .resume-grid, .collage-grid { grid-template-columns: 1fr; }
-            .polaroid-container { min-height: auto; flex-direction: column; gap: 30px; }
-            .polaroid-card { position: relative !important; transform: none !important; width: 100%; max-width: 320px; }
+            
+            .polaroid-container { min-height: auto; flex-direction: column; gap: 20px; padding: 20px 0; }
+            .polaroid-card { position: relative !important; transform: none !important; width: 100%; max-width: 280px; margin: 0 auto; }
+            .polaroid-container.scattered .polaroid-card { transform: none !important; }
+            
             .creative-proj-card.proj-photo { grid-column: span 1; }
-            .content-section { padding: 40px 20px; }
-            nav { padding: 20px 30px; }
+            .content-section { padding: 30px 15px; }
             .faq-question-wrapper { gap: 15px; }
             .faq-answer { padding-left: 0; }
             .section-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .sub-page-wrapper { padding: 20px; }
+            .sub-header { flex-direction: column; align-items: flex-start; gap: 15px; }
         }
     </style>
 </head>
