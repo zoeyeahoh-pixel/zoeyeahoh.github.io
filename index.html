@@ -565,7 +565,6 @@
             user-select: none;
         }
 
-        /* 横版拍立得卡片适配样式 */
         .polaroid-card.horizontal {
             width: 330px;
             padding: 12px 12px 16px 12px;
@@ -593,7 +592,6 @@
             filter: grayscale(0%);
         }
 
-        /* 堆叠状态 */
         .polaroid-container.stacked .p-1  { transform: translate(0, 0) rotate(-3deg); z-index: 13; }
         .polaroid-container.stacked .p-2  { transform: translate(6px, -4px) rotate(2deg); z-index: 12; }
         .polaroid-container.stacked .p-3  { transform: translate(-8px, 4px) rotate(-4deg); z-index: 11; }
@@ -608,7 +606,6 @@
         .polaroid-container.stacked .p-12 { transform: translate(7px, 10px) rotate(6deg); z-index: 2; }
         .polaroid-container.stacked .p-13 { transform: translate(-2px, -12px) rotate(-3deg); z-index: 1; }
 
-        /* 散开状态 */
         .polaroid-container.scattered .p-1  { transform: translate(-380px, -210px) rotate(-9deg); z-index: 20; }
         .polaroid-container.scattered .p-2  { transform: translate(-190px, -230px) rotate(4deg); z-index: 20; }
         .polaroid-container.scattered .p-3  { transform: translate(0px, -220px) rotate(-3deg); z-index: 20; }
@@ -757,7 +754,7 @@
             <ul class="nav-links">
                 <li><a href="#" onclick="switchView('hero', event)" id="nav-hero" class="active">Home</a></li>
                 <li><a href="#" onclick="switchView('about', event)" id="nav-about">About Me</a></li>
-                <li><a href="#" onclick="switchView('projects', event)" id="nav-projects">Project</a></li>
+                <li><a href="#" onclick="switchView('projects', event)" id="nav-projects">Projects</a></li>
                 <li><a href="#" onclick="switchView('contact', event)" id="nav-contact">Contact</a></li>
             </ul>
         </nav>
@@ -901,14 +898,13 @@
                     </a>
                     <a href="#" onclick="switchView('social', event)" class="creative-proj-card">
                         <div class="proj-img-wrap">
-                            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80" alt="Social Media & Content">
+                            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80" alt="What's in My Mind...?">
                         </div>
                         <div class="proj-content">
                             <div class="card-category">Digital Content</div>
-                            <h3>Social Media & Content</h3>
+                            <h3>What's in My Mind...?</h3>
                         </div>
                     </a>
-                    <!-- 已将封面更换为指定的图片链接 -->
                     <a href="#" onclick="switchView('photo', event)" class="creative-proj-card proj-photo">
                         <div class="proj-img-wrap">
                             <img src="https://raw.githubusercontent.com/zoeyeahoh-pixel/zoeyeahoh.github.io/290d5340dabc458aeeed572bae800397d28b5c2b/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260812233956_461_27.jpg" alt="Photography Gallery">
@@ -955,23 +951,24 @@
             </div>
         </div>
 
-        <!-- 5. Social Media 视图 -->
+        <!-- 5. Social Media 视图 (What's in My Mind...?) -->
         <div id="view-social" class="page-view">
             <div class="content-section">
                 <a href="#" onclick="switchView('projects', event)" class="back-project-btn">&larr; Back to Projects</a>
                 <div class="section-header" style="margin-top: 10px;">
-                    <h2 class="section-title">Social Media & Content</h2>
+                    <h2 class="section-title">What's in My Mind...?</h2>
                 </div>
                 <div class="creative-project-grid">
-                    <div class="creative-proj-card" style="cursor: default;">
+                    <!-- 卡片封面已更新为指定的新图片链接 -->
+                    <a href="#" onclick="switchView('mind-post', event)" class="creative-proj-card">
                         <div class="proj-img-wrap">
-                            <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80" alt="Campaign Strategy">
+                            <img src="https://raw.githubusercontent.com/zoeyeahoh-pixel/zoeyeahoh.github.io/c59bbe30c1f2ea9a468355bce41a411945535d5c/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260813225325_465_27.jpg" alt="How Can This be Translated?">
                         </div>
                         <div class="proj-content">
-                            <div class="card-category">Campaign Strategy</div>
-                            <h3>Cross-Cultural Branding</h3>
+                            <div class="card-category">March 28, 2026</div>
+                            <h3>How Can This be Translated?</h3>
                         </div>
-                    </div>
+                    </a>
                     <div class="creative-proj-card" style="cursor: default;">
                         <div class="proj-img-wrap">
                             <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80" alt="Narrative Copywriting">
@@ -980,6 +977,41 @@
                             <div class="card-category">Digital Storytelling</div>
                             <h3>Narrative Copywriting</h3>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5.1 帖子正文子页面 (view-mind-post) -->
+        <div id="view-mind-post" class="page-view">
+            <div class="content-section">
+                <a href="#" onclick="switchView('social', event)" class="back-project-btn">&larr; Back to What's in My Mind...?</a>
+                <div class="section-header" style="margin-top: 10px;">
+                    <h2 class="section-title">How Can This be Translated?</h2>
+                </div>
+                <div class="sub-page-wrapper">
+                    <!-- 顶栏及配图也同步更新为新链接 -->
+                    <div style="margin-bottom: 30px; text-align: center;">
+                        <img src="https://raw.githubusercontent.com/zoeyeahoh-pixel/zoeyeahoh.github.io/c59bbe30c1f2ea9a468355bce41a411945535d5c/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260813225325_465_27.jpg" alt="Post Cover" style="width: 100%; max-height: 450px; object-fit: cover; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 20px;">
+                        <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: #8C7B6B; font-weight: 600;">March 28, 2026</div>
+                    </div>
+                    <!-- 正文内容区 -->
+                    <div style="max-width: 850px; margin: 0 auto; font-family: 'Lora', serif; font-size: 1.1rem; line-height: 1.9; color: #2C2A29; white-space: pre-line;">
+这段时间跑了不少面试，被问到最多、也最绕不开的一个问题，就是“talk about your career plan”。说实话，我不知道自己的职业规划是什么，甚至，我也不确定未来想走进哪个行业。嘴上总是故作轻松：“哎呀，我做什么都行，哪个公司愿意要我，我就去哪”。可每晚躺在床上复盘白天面试的时候，还是会反反覆覆地问自己，我到底想做什么。
+
+我们好像总在拼命寻找一个确定的状态：一份确定的offer，一段确定的关系，一个确定的未来。可二十多岁的年纪，注定裹挟着太多的稚嫩、迷茫、焦虑与不确定。又有多少人能在二十岁出头，就笃定地看清自己往后几十年的方向。
+
+虽然耳边总有人鼓励说“你可以去任何行业”，可真当自己鼓起勇气踏进新的领域、试着做出不同选择时，迎面而来的却是一次次不自信的低头，一次次在心底反复质疑自己，还有一次次被拒之门外，漫长的沉默。
+
+我喜欢写点东西，像是碎碎念，又更像是为这一团乱麻般的思绪理清头绪。也许，就在这些看似无厘头的记录里，我会慢慢找到未来的方向。大概是因为在这个空间里，我终于可以只做自己，没有考核，没有标准，也没有非此不可的答案。我只需要，把最真实的念头一字一句地写下来。
+
+说来也怪，明明在文字里可以坦然地面对一切不确定，可一旦回到现实里的人际关系，我就像换了个人。虽然平时总像个高能量的人，可总有某些时刻，我是真的怕那些复杂的人际关系。我讨厌矛盾，讨厌分歧，讨厌尴尬，更讨厌别人因为我而心里不痛快。所以总是不自觉地想做那个活跃气氛的人，拼命找话题，笑着热场子。可每次遇到那些拧巴又烦人的人际关系，我脑子里冒出来的第一个念头，不是面对，而是逃。只想缩回一个小小的角落，把自己藏起来，不去看，不去听，也不想再去解决什么。
+
+大概也是因为这个，我才那么需要那个可以只做自己的空间吧。在那里，不用讨好谁，不用热场子，也不用小心翼翼地照顾所有人的情绪。我只需要，安安静静地，做我自己。
+                    </div>
+                    <div style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #e8e2d5; text-align: center; color: #7d6f65; font-size: 0.9rem;">
+                        <p style="font-family: 'Noto Serif SC', serif; font-style: italic;">“我只需要，安安静静地，做我自己。”</p>
+                        <p style="margin-top: 8px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;">— What's in My Mind...? —</p>
                     </div>
                 </div>
             </div>
@@ -996,7 +1028,6 @@
                 <div class="polaroid-interaction-hint" id="polaroidHint">Click the photo stack to spread / gather</div>
 
                 <div class="polaroid-container stacked" id="polaroidStack" onclick="togglePolaroidStack()">
-                    <!-- 原有 6 张照片 -->
                     <div class="polaroid-card p-1">
                         <img src="https://raw.githubusercontent.com/zoeyeahoh-pixel/zoeyeahoh.github.io/f55d6ec7445db70dc807ad0f3702fffeec2ec608/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260809171916_441_27.jpg" alt="Photo 1">
                     </div>
@@ -1015,7 +1046,6 @@
                     <div class="polaroid-card p-6">
                         <img src="https://raw.githubusercontent.com/zoeyeahoh-pixel/zoeyeahoh.github.io/f55d6ec7445db70dc807ad0f3702fffeec2ec608/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260812233605_454_27.jpg" alt="Photo 6">
                     </div>
-                    <!-- 新增的 7 张照片 -->
                     <div class="polaroid-card p-7">
                         <img src="https://raw.githubusercontent.com/zoeyeahoh-pixel/zoeyeahoh.github.io/3d7e03d57ac5bbe6f530da48ec47d7f4e559654e/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260812233608_455_27.jpg" alt="Photo 7">
                     </div>
@@ -1093,7 +1123,7 @@
             });
             
             let navTarget = viewName;
-            if (['translation', 'social', 'photo'].includes(viewName)) {
+            if (['translation', 'social', 'mind-post', 'photo'].includes(viewName)) {
                 navTarget = 'projects';
             }
             const activeNav = document.getElementById('nav-' + navTarget);
