@@ -1138,23 +1138,14 @@ main,.footer{position:relative;z-index:2}
       if (!bgmAudio.paused){ bgmAudio.pause(); return; }
       if (bgmAudio.error || bgmAudio.networkState === 3){ bgmShowTip(); bgmSync(); return; }
 
-      var started = false;
-      function onPlaying(){ started = true; bgmSync(); bgmAudio.removeEventListener("playing", onPlaying); }
-      bgmAudio.addEventListener("playing", onPlaying);
-
       var p = bgmAudio.play();
       if (p && typeof p.catch === "function"){
         p.catch(function(){ bgmAudio.pause(); bgmSync(); bgmShowTip(); });
       }
-      setTimeout(function(){
-        if (!started){
-          bgmAudio.removeEventListener("playing", onPlaying);
-          bgmAudio.pause(); bgmSync(); bgmShowTip();
-        }
-      }, 1000);
     });
 
     var bgmPeek = null;
+    bgmAudio.addEventListener("playing", bgmSync);
     bgmAudio.addEventListener("play", function(){
       bgmSync();
       bgmWrap.classList.add("peek");
@@ -1163,7 +1154,7 @@ main,.footer{position:relative;z-index:2}
     });
     bgmAudio.addEventListener("pause", bgmSync);
     bgmAudio.addEventListener("ended", bgmSync);
-    bgmAudio.addEventListener("error", function(){ bgmSync(); });
+    bgmAudio.addEventListener("error", function(){ bgmSync(); bgmShowTip(); });
   }
 
   /* ================= four seasons of falling things =================
