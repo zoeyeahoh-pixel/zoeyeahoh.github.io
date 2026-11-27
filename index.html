@@ -514,13 +514,13 @@ form .btn{align-self:flex-start}
 .reveal.in{opacity:1;transform:none}
 
 
-/* ---------- about: centred text, one photo after every two paragraphs ---------- */
-#about .prose{text-align:center}
+/* ---------- about: left title, justified body, one photo every two paragraphs ---------- */
+#about .prose{text-align:justify}
 #about .prose p{
-  max-width:680px;margin-left:auto;margin-right:auto;
-  text-align:center;text-wrap:pretty;
+  max-width:760px;margin-left:0;margin-right:auto;
+  text-align:justify;text-justify:inter-word;text-wrap:pretty;
 }
-#about .prose p:first-child::before{left:50%;transform:translateX(-50%)}
+#about .prose p:first-child::before{left:0;transform:none}
 .about-photo{max-width:420px;margin:clamp(30px,4.2vw,48px) auto;text-align:center}
 .about-photo img{
   display:block;width:100%;aspect-ratio:1/1;object-fit:cover;
@@ -691,11 +691,6 @@ main,.footer{position:relative;z-index:2}
 .bgm.is-playing .vinyl{animation:vinylSpin 9s linear infinite}
 @keyframes vinylSpin{to{transform:rotate(360deg)}}
 
-/* ---------- about header centered ---------- */
-#about .sec-head{text-align:center}
-#about .tagline{justify-content:center}
-#about .tagline .rule{display:none}
-#about .sec-title{margin-left:auto;margin-right:auto;text-align:center}
 
 </style>
 <noscript><style>
@@ -724,11 +719,6 @@ main,.footer{position:relative;z-index:2}
 .bgm.is-playing .vinyl{animation:vinylSpin 9s linear infinite}
 @keyframes vinylSpin{to{transform:rotate(360deg)}}
 
-/* ---------- about header centered ---------- */
-#about .sec-head{text-align:center}
-#about .tagline{justify-content:center}
-#about .tagline .rule{display:none}
-#about .sec-title{margin-left:auto;margin-right:auto;text-align:center}
 
 </style></noscript>
 </head>
@@ -855,7 +845,7 @@ main,.footer{position:relative;z-index:2}
           </p>
 
           <figure class="about-photo">
-            <img src="assets/hangzhou.webp" width="420" height="420" alt="Hangzhou — osmanthus and an old lane" loading="lazy" decoding="async">
+            <img src="assets/hangzhou.jpg" width="420" height="420" fetchpriority="low" alt="Hangzhou — osmanthus and an old lane" decoding="async">
             <figcaption>Hangzhou</figcaption>
           </figure>
 
@@ -867,7 +857,7 @@ main,.footer{position:relative;z-index:2}
           </p>
 
           <figure class="about-photo">
-            <img src="assets/macao.webp" width="420" height="420" alt="Macao — a Portuguese old street" loading="lazy" decoding="async">
+            <img src="assets/macao.jpg" width="420" height="420" fetchpriority="low" alt="Macao — a Portuguese old street" decoding="async">
             <figcaption>Macao</figcaption>
           </figure>
 
@@ -879,7 +869,7 @@ main,.footer{position:relative;z-index:2}
           </p>
 
           <figure class="about-photo">
-            <img src="assets/hongkong.webp" width="420" height="420" alt="Hong Kong — dense blocks and the sea" loading="lazy" decoding="async">
+            <img src="assets/hongkong.jpg" width="420" height="420" fetchpriority="low" alt="Hong Kong — dense blocks and the sea" decoding="async">
             <figcaption>Hong Kong</figcaption>
           </figure>
         </div>
