@@ -1,18 +1,29 @@
-# Zoe Yang — small worlds
+# Zoe Yang — Welcome to my world
 
-A one-page personal site: translator, writer, photographer, game maker.
-Built with plain HTML, CSS and JavaScript — no framework, no build step.
+A one-page personal site built from the latest `zoe-portfolio` HTML: the
+click-to-enter floating island, the oversized “Welcome to my world!” watermark,
+three hotspots on the island, garden-plot project cards, and a small seasonal
+fall layer that changes with the month.
 
 ## Files
 
 - `index.html` — the whole site (styles and scripts inline)
-- `assets/` — images, fonts, social preview
+- `assets/` — images, self-hosted fonts, social preview
 - `.nojekyll` — tells GitHub Pages to serve files as-is
 
-## Deploy
+## Seasons
 
-The site is published from the `main` branch, root folder, at
-<https://zoeyeahoh-pixel.github.io/zoeyeahoh.github.io/>.
+The falling layer follows the local month:
+
+| Months | Falling |
+| --- | --- |
+| Jan–Mar | green leaves |
+| Apr–Jun | petals |
+| Jul–Sep | yellow ginkgo leaves |
+| Oct–Dec | snow |
+
+Preview any season with `?season=spring`, `?season=summer`, `?season=autumn`
+or `?season=winter`; language with `?lang=zh` or `?lang=en`.
 
 ## Local preview
 
