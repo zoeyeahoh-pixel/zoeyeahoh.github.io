@@ -8,14 +8,13 @@
 <meta name="theme-color" content="#EDF3E1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Zoe Yang — Welcome to my world">
-<meta property="og:description" content="A floating island of small games by Zoe Yang. 小世界，做出来就是为了玩。">
+<meta property="og:description" content="A floating island of small games by Zoe Yang. Small worlds, made to be played.">
 <meta property="og:url" content="https://zoeyeahoh-pixel.github.io/zoeyeahoh.github.io/">
 <meta property="og:image" content="https://zoeyeahoh-pixel.github.io/zoeyeahoh.github.io/assets/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Zoe Yang — Welcome to my world">
 <meta property="og:locale" content="en_US">
-<meta property="og:locale:alternate" content="zh_CN">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="author" content="Zoe Yang">
 <link rel="canonical" href="https://zoeyeahoh-pixel.github.io/zoeyeahoh.github.io/">
@@ -400,6 +399,7 @@ h1 .accent{color:#82B158;display:inline}
   .signs li img{aspect-ratio:16/10}
 }
 .signs h4{font-family:var(--display);font-weight:700;font-size:clamp(19px,1.9vw,24px);color:var(--ink);margin-bottom:4px}
+.prose .signs{margin:clamp(28px,4vw,46px) 0}
 .signs p{font-size:15px;line-height:1.72;color:var(--muted);margin:0}
 
 .cv{display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,4vw,56px);margin-top:clamp(28px,3.6vw,42px);padding-top:clamp(26px,3.4vw,38px);border-top:1px dashed var(--line)}
@@ -513,18 +513,6 @@ form .btn{align-self:flex-start}
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s ease,transform .9s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s)}
 .reveal.in{opacity:1;transform:none}
 
-/* ---------- 中文排版 ---------- */
-body.is-zh h1{font-weight:500;letter-spacing:.01em;line-height:1.16;font-size:clamp(26px,10.4vw,152px)}
-body.is-zh .sec-title{font-weight:500;letter-spacing:.02em;line-height:1.25;font-size:clamp(27px,3.8vw,50px)}
-body.is-zh .prose p{line-height:2.05}
-body.is-zh .signs h4{font-weight:700}
-body.is-zh .plot-body h3{font-weight:700;font-size:clamp(21px,2.4vw,27px);letter-spacing:.01em}
-body.is-zh .ghost{text-transform:none;letter-spacing:.06em}
-body.is-zh .lede{line-height:1.9;max-width:580px;text-wrap:pretty}
-body.is-zh .meadow-text{line-height:2.1}
-body.is-zh .skin-tag{letter-spacing:.12em}
-body.is-zh .open-sign em{letter-spacing:.06em}
-
 /* ---------- 响应式 ---------- */
 /* ---------- 大屏：右上竖排导航 ---------- */
 @media (max-width:980px){
@@ -539,7 +527,6 @@ body.is-zh .open-sign em{letter-spacing:.06em}
 }
 @media (max-width:640px){
   h1{font-size:clamp(38px,11vw,54px);letter-spacing:-.028em}
-  body.is-zh h1{font-size:clamp(26px,10.4vw,44px)}
   .eyebrow{font-size:8.5px;letter-spacing:.1em;padding:6px 11px}
   .lede{font-size:15.5px}
   .plots{grid-template-columns:1fr;gap:26px}
@@ -582,11 +569,13 @@ body.is-zh .open-sign em{letter-spacing:.06em}
 @keyframes ringPulse{0%{opacity:.55;transform:scale(1)}70%{opacity:0;transform:scale(1.55)}100%{opacity:0;transform:scale(1.55)}}
 .bgm-card{
   position:absolute;right:calc(100% + 12px);top:50%;transform:translateY(-50%) translateX(6px);
-  display:flex;flex-direction:column;gap:2px;white-space:nowrap;
-  padding:9px 15px;border-radius:14px;border:1px solid var(--line-soft);
+  display:flex;flex-direction:row;align-items:center;gap:10px;white-space:nowrap;
+  padding:8px 13px 8px 8px;border-radius:14px;border:1px solid var(--line-soft);
   background:rgba(253,250,240,.96);box-shadow:0 12px 26px -16px rgba(38,64,31,.55);
   opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;
 }
+.bgm-cover{width:42px;height:42px;flex:none;border-radius:9px;object-fit:cover;box-shadow:0 4px 10px -6px rgba(0,0,0,.6)}
+.bgm-meta{display:flex;flex-direction:column;gap:2px;min-width:0}
 .bgm:hover .bgm-card,.bgm.peek .bgm-card{opacity:1;transform:translateY(-50%)}
 .bgm.show-tip .bgm-card{opacity:0}
 .bgm-kicker{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
@@ -629,31 +618,12 @@ h1 .accent{color:var(--heading)}
 .plot-body h3,.signs h4,.num,.plot-no,.meadow-note,.open-sign em{font-weight:600}
 .hero-watermark{font-size:clamp(84px,16.4vw,240px);font-weight:600;opacity:.6;letter-spacing:0}
 .lede{font-size:18.5px;line-height:1.88;color:var(--ink-2)}
-body.is-zh h1{font-size:clamp(34px,5.1vw,74px);line-height:1.26;letter-spacing:.01em;font-weight:600}
-body.is-zh .sec-title{font-weight:600;letter-spacing:.01em}
-body.is-zh .lede{line-height:1.95;font-size:16.5px}
-body.is-zh .plot-body p,body.is-zh .signs p{line-height:1.8}
 .plot-tag,.ghost,.field label,.tiny-mail{font-family:var(--text)}
 .plot-body p,.signs p{color:var(--muted)}
 
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--heading);outline-offset:3px}
 
 /* language switch — a small floating utility, not a nav */
-.lang-chip{
-  position:fixed;top:clamp(12px,1.8vw,20px);right:clamp(12px,1.8vw,20px);z-index:75;
-  display:flex;align-items:center;gap:2px;padding:3px;
-  border:1px solid rgba(181,131,78,.42);border-radius:100px;
-  background:rgba(253,250,240,.88);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
-  box-shadow:0 10px 22px -16px rgba(38,64,31,.55);
-}
-.lang-chip button{
-  border:0;background:none;cursor:pointer;border-radius:100px;
-  font-family:var(--text);font-size:9.5px;font-weight:600;letter-spacing:.12em;
-  color:var(--muted);padding:6px 10px;transition:background .25s,color .25s;
-}
-.lang-chip button[aria-pressed="true"]{background:var(--ink);color:#FBF5E6}
-@media (max-width:640px){.lang-chip{top:10px;right:10px}.lang-chip button{padding:6px 8px;font-size:9px}}
 
 .intro-hint{
   position:absolute;bottom:clamp(20px,4vh,44px);
@@ -693,10 +663,6 @@ main,.footer{position:relative;z-index:2}
 
 <div class="progress" id="progress" aria-hidden="true"></div>
 <div class="season-field" id="seasonField" aria-hidden="true"></div>
-<div class="lang-chip" role="group" aria-label="Language / 语言">
-  <button type="button" data-lang="en" aria-pressed="true">EN</button>
-  <button type="button" data-lang="zh" aria-pressed="false">中文</button>
-</div>
 
 <!-- ================= 导航 ================= -->
 <main id="top">
@@ -716,16 +682,14 @@ main,.footer{position:relative;z-index:2}
       <div class="hero-art">
         <span class="art-shadow" aria-hidden="true"></span>
         <img class="island" role="img" aria-label="A floating island with a Japanese wooden house, a snow mountain, tulips, a red mailbox and a corgi holding a letter" src="assets/island.webp" width="900" height="864" fetchpriority="high" decoding="async">
-        <a class="hot hot-house" href="#about" aria-label="Go to About me"><span class="hot-lbl" data-en="About" data-zh="关于">About</span></a>
-        <a class="hot hot-flowers" href="#works" aria-label="Go to Works"><span class="hot-lbl" data-en="Works" data-zh="作品">Works</span></a>
-        <a class="hot hot-mail" href="#contact" aria-label="Go to Contact"><span class="hot-lbl" data-en="Contact" data-zh="联系">Contact</span></a>
+        <a class="hot hot-house" href="#about" aria-label="Go to About me"><span class="hot-lbl">About</span></a>
+        <a class="hot hot-flowers" href="#works" aria-label="Go to Works"><span class="hot-lbl">Works</span></a>
+        <a class="hot hot-mail" href="#contact" aria-label="Go to Contact"><span class="hot-lbl">Contact</span></a>
       </div>
 
       <div class="hero-copy">
-<h1 data-en-html="Hi, I’m <span class='accent'>Zoe.</span>" data-zh-html="你好，我是<span class='accent'>Zoe</span>。">Hi, I’m <span class="accent">Zoe.</span></h1>
-<p class="lede"
-           data-en="I translate, I write, I take pictures, and lately I build little games. Different tools, same wish — to make something that lands. This island is where I keep the things I’ve made."
-           data-zh="我翻译、写字、拍照，最近在做自己的小游戏。工具一直换，想做的事却没变——做出能落到别人心里的东西。这座小岛，就是我放作品的地方。">
+<h1>Hi, I’m <span class="accent">Zoe.</span></h1>
+<p class="lede">
           I translate, I write, I take pictures, and lately I build little games. Different tools, same wish — to make something that lands. This island is where I keep the things I’ve made.
         </p>
       </div>
@@ -733,7 +697,7 @@ main,.footer{position:relative;z-index:2}
     </div>
   </div>
 
-  <span class="intro-hint" id="introHint" data-en="Tap anywhere to start" data-zh="点击任意处开始">Tap anywhere to start</span>
+  <span class="intro-hint" id="introHint">Tap anywhere to start</span>
 
   <svg class="horizon" viewBox="0 0 1440 140" preserveAspectRatio="none" aria-hidden="true">
     <path d="M0,140 C150,74 300,62 460,88 C610,112 760,52 940,66 C1110,80 1270,120 1440,86 L1440,140 Z" fill="#CFE1B0" opacity=".75"/>
@@ -743,18 +707,14 @@ main,.footer{position:relative;z-index:2}
 </section>
 
 <!-- ================= 01 作品 ================= -->
-<!-- 三块地块是占位。把每块的标题 / 一句话简介 / 试玩链接换成你的游戏即可，
-     文案就写在对应标签的 data-en / data-zh 属性里。 -->
 <section class="sec" id="works">
   <div class="sec-inner">
 
     <div class="sec-head reveal">
-      <div class="tagline"><span class="num">01</span><span class="lbl" data-en="Projects" data-zh="项目">Projects</span><span class="rule"></span></div>
-      <h2 class="sec-title" data-en="Two small worlds" data-zh="两个小世界">Two small worlds</h2>
-      <p class="sec-sub"
-         data-en="Both were built from scratch — concept, art direction, story, code. One is already out in the world; the other is on its way. Go and wander, and tell me where you got stuck or what made you laugh."
-         data-zh="两个都是从零到一，一点点做出来的：概念、画面、故事、代码。一个已经上线，另一个也快了。去逛逛吧，也欢迎回来告诉我你在哪里卡住，或者在哪里笑了。">
-        Both were built from scratch — concept, art direction, story, code. One is already out in the world; the other is on its way. Go and wander, and tell me where you got stuck or what made you laugh.
+      <div class="tagline"><span class="num">01</span><span class="lbl">Projects</span><span class="rule"></span></div>
+      <h2 class="sec-title">Two small worlds</h2>
+      <p class="sec-sub">
+        Both were built from scratch — concept, art direction, story, code. Both are out in the world now. Go and wander, and tell me where you got stuck or what made you laugh.
       </p>
     </div>
 
@@ -766,16 +726,15 @@ main,.footer{position:relative;z-index:2}
         </div>
         <div class="plot-body">
           <div class="plot-head">
-            <h3 data-en="Grandma’s Garden" data-zh="外婆的小院子">Grandma’s Garden</h3>
-            <span class="plot-tag live" data-en="Playable" data-zh="可玩">Playable</span>
+            <h3>Grandma’s Garden</h3>
+            <span class="plot-tag live">Playable</span>
           </div>
-          <p data-en="A garden behind Grandma’s house. Plant, water, wait, and let the seasons do the rest."
-             data-zh="外婆家屋后的一方小院。种花、浇水、等一等，剩下的交给四季。">
+          <p>
             A garden behind Grandma’s house. Plant, water, wait, and let the seasons do the rest.
           </p>
           <div class="plot-links">
-            <a class="ghost" href="https://www.taptap.cn/app/1089740?os=android" target="_blank" rel="noopener noreferrer" data-en="Play on TapTap ↗" data-zh="TapTap 试玩 ↗">Play on TapTap ↗</a>
-            <button class="ghost wx-btn" type="button" data-en="WeChat ↗" data-zh="微信小游戏 ↗">WeChat ↗</button>
+            <a class="ghost" href="https://www.taptap.cn/app/1089740?os=android" target="_blank" rel="noopener noreferrer">Play on TapTap ↗</a>
+            <button class="ghost wx-btn" type="button">WeChat ↗</button>
           </div>
         </div>
       </article>
@@ -786,15 +745,14 @@ main,.footer{position:relative;z-index:2}
         </div>
         <div class="plot-body">
           <div class="plot-head">
-            <h3 data-en="Fresh Grad Job Hunting" data-zh="文科生秋招模拟器">Fresh Grad Job Hunting</h3>
-            <span class="plot-tag" data-en="Coming soon" data-zh="即将上线">Coming soon</span>
+            <h3>Fresh Grad Job Hunting</h3>
+            <span class="plot-tag live">Playable</span>
           </div>
-          <p data-en="The autumn recruitment season, retold as a small absurd play. Every interview is a scene; every rejection, a punchline."
-             data-zh="把秋招写成一出小小的荒诞剧。每一场面试都是一幕，每一次拒绝都是一个包袱。">
+          <p>
             The autumn recruitment season, retold as a small absurd play. Every interview is a scene; every rejection, a punchline.
           </p>
           <div class="plot-links">
-            <span class="ghost ghost-wait" data-en="TapTap · coming soon" data-zh="TapTap · 即将上线">TapTap · coming soon</span>
+            <a class="ghost" href="https://www.taptap.cn/app/1097350?os=android" target="_blank" rel="noopener noreferrer">Play on TapTap ↗</a>
           </div>
         </div>
       </article>
@@ -809,67 +767,51 @@ main,.footer{position:relative;z-index:2}
   <div class="sec-inner">
 
     <div class="sec-head reveal">
-      <div class="tagline"><span class="num">02</span><span class="lbl" data-en="About" data-zh="关于">About</span><span class="rule"></span></div>
-      <h2 class="sec-title" data-en="About me" data-zh="关于我">About me</h2>
+      <div class="tagline"><span class="num">02</span><span class="lbl">About</span><span class="rule"></span></div>
+      <h2 class="sec-title">About me</h2>
     </div>
 
     <div class="panel reveal">
       <div class="about-grid">
         <div class="prose">
-          <p data-en="I grew up in Hangzhou, where the osmanthus opens every autumn before I’m ready for it. That smell is my first memory of a city — bright, a little romantic, and almost impossible to translate."
-             data-zh="我在杭州长大。每年桂花都赶在我准备好之前开，那股又甜又旧的香气，是我对一座城市最早的记忆——明亮，有点浪漫，而且几乎无法翻译。">
+          <p>
             I grew up in Hangzhou, where the osmanthus opens every autumn before I’m ready for it. That smell is my first memory of a city — bright, a little romantic, and almost impossible to translate.
           </p>
-          <p data-en="At eighteen I went to Macao alone to study English. Two cultures living on the same street taught me to keep a rhythm of my own."
-             data-zh="十八岁，我一个人去澳门读英语。两种文化在同一条街上并排生活，我在那里学会：日子可以按自己的节奏过。">
+          <p>
             At eighteen I went to Macao alone to study English. Two cultures living on the same street taught me to keep a rhythm of my own.
           </p>
-          <p data-en="At twenty-three I came to Hong Kong for an MA in Translation at HKU. Five years of language training didn’t make me cleverer — it taught me to look at very small things: where a full stop sits, how long a pause should last, the exact moment a joke lands."
-             data-zh="二十三岁，我到港大读翻译。五年的语言训练没让我变聪明，只教会我看很小的东西：句号落在哪里、停顿该有多长、一个笑话刚好落地的瞬间。">
+          <p>
             At twenty-three I came to Hong Kong for an MA in Translation at HKU. Five years of language training didn’t make me cleverer — it taught me to look at very small things: where a full stop sits, how long a pause should last, the exact moment a joke lands.
           </p>
-          <p data-en="In between were internships — a startup, an agency, a student ambassador’s office, a short-drama studio, a marketing team in Hong Kong. Translation is where I start, not where I stop."
-             data-zh="中间穿插着几段实习：互联网初创、营销公司、学生大使项目办公室、短剧翻译工作室，还有香港的一支市场团队。翻译是我的起点，但不是终点。">
+
+          <ul class="signs">
+            <li>
+              <img src="assets/hangzhou.webp" width="420" height="420" alt="Hangzhou — osmanthus and an old lane" loading="lazy" decoding="async">
+              <div>
+                <h4>Hangzhou</h4>
+              </div>
+            </li>
+            <li>
+              <img src="assets/macao.webp" width="420" height="420" alt="Macao — a Portuguese old street" loading="lazy" decoding="async">
+              <div>
+                <h4>Macao</h4>
+              </div>
+            </li>
+            <li>
+              <img src="assets/hongkong.webp" width="420" height="420" alt="Hong Kong — dense blocks and the sea" loading="lazy" decoding="async">
+              <div>
+                <h4>Hong Kong</h4>
+              </div>
+            </li>
+          </ul>
+
+          <p>
             In between were internships — a startup, an agency, a student ambassador’s office, a short-drama studio, a marketing team in Hong Kong. Translation is where I start, not where I stop.
           </p>
-          <p data-en="Now I’m making small games of my own: concept, scene, code — walking the whole road from 0 to 1, and learning to be patient with things that grow slowly."
-             data-zh="现在我做自己的小游戏：概念、场景、代码，把一件事从 0 走到 1，也在学着对长得很慢的东西有耐心。">
+          <p>
             Now I’m making small games of my own: concept, scene, code — walking the whole road from 0 to 1, and learning to be patient with things that grow slowly.
           </p>
         </div>
-
-        <ul class="signs">
-          <li>
-            <img src="assets/hangzhou.webp" width="420" height="420" alt="Hangzhou — osmanthus and an old lane" loading="lazy" decoding="async">
-            <div>
-              <h4 data-en="Hangzhou" data-zh="杭州">Hangzhou</h4>
-              <p data-en="Osmanthus, autumn, and a slow childhood."
-                 data-zh="桂花、秋天，和一个比较慢的童年。">
-                Osmanthus, autumn, and a slow childhood.
-              </p>
-            </div>
-          </li>
-          <li>
-            <img src="assets/macao.webp" width="420" height="420" alt="Macao — a Portuguese old street" loading="lazy" decoding="async">
-            <div>
-              <h4 data-en="Macao" data-zh="澳门">Macao</h4>
-              <p data-en="Eighteen, alone, on a very slow street."
-                 data-zh="十八岁，一个人，一条很慢的街。">
-                Eighteen, alone, on a very slow street.
-              </p>
-            </div>
-          </li>
-          <li>
-            <img src="assets/hongkong.webp" width="420" height="420" alt="Hong Kong — dense blocks and the sea" loading="lazy" decoding="async">
-            <div>
-              <h4 data-en="Hong Kong" data-zh="香港">Hong Kong</h4>
-              <p data-en="Twenty-three, a fast city, and translation begins."
-                 data-zh="二十三岁，一座很快的城市，翻译从这里开始。">
-                Twenty-three, a fast city, and translation begins.
-              </p>
-            </div>
-          </li>
-        </ul>
       </div>
 
     </div>
@@ -881,10 +823,8 @@ main,.footer{position:relative;z-index:2}
   <div class="sec-inner">
 
     <div class="sec-head reveal">
-      <div class="tagline"><span class="num">03</span><span class="lbl" data-en="Contact" data-zh="联系">Contact</span><a class="tiny-mail" href="mailto:zoeyeahoh@gmail.com">zoeyeahoh@gmail.com</a><span class="rule"></span></div>
-      <p class="sec-sub lead"
-         data-en="Let’s have a chat."
-         data-zh="我们聊聊吧。">
+      <div class="tagline"><span class="num">03</span><span class="lbl">Contact</span><a class="tiny-mail" href="mailto:zoeyeahoh@gmail.com">zoeyeahoh@gmail.com</a><span class="rule"></span></div>
+      <p class="sec-sub lead">
         Let’s have a chat.
       </p>
     </div>
@@ -893,22 +833,22 @@ main,.footer{position:relative;z-index:2}
       <div class="contact-grid">
         <form id="cf" novalidate>
           <div class="field">
-            <label for="f-name" data-en="Name" data-zh="名字">Name</label>
+            <label for="f-name">Name</label>
             <input id="f-name" type="text" required autocomplete="name"
-                   data-en-ph="Your name" data-zh-ph="你的名字" placeholder="Your name">
+                   placeholder="Your name">
           </div>
           <div class="field">
-            <label for="f-mail" data-en="Email" data-zh="邮箱">Email</label>
+            <label for="f-mail">Email</label>
             <input id="f-mail" type="email" required autocomplete="email"
-                   data-en-ph="you@somewhere.com" data-zh-ph="you@somewhere.com" placeholder="you@somewhere.com">
+                   placeholder="you@somewhere.com">
           </div>
           <div class="field">
-            <label for="f-msg" data-en="Message" data-zh="想说的话">Message</label>
+            <label for="f-msg">Message</label>
             <textarea id="f-msg" required
-                      data-en-ph="Anything you’d like to say" data-zh-ph="想说的话" placeholder="Anything you’d like to say"></textarea>
+                      placeholder="Anything you’d like to say"></textarea>
           </div>
-          <button class="btn" type="submit" data-en="Send" data-zh="发送">Send</button>
-          <p class="hint" data-en="This opens your mail app — nothing is stored here." data-zh="发送会打开你的邮件应用，这里不会保存任何内容。">This opens your mail app — nothing is stored here.</p>
+          <button class="btn" type="submit">Send</button>
+          <p class="hint">This opens your mail app — nothing is stored here.</p>
           <p class="form-msg" id="msg" aria-live="polite"></p>
         </form>
       </div>
@@ -921,24 +861,23 @@ main,.footer{position:relative;z-index:2}
 <!-- ================= 页脚 ================= -->
 <footer class="footer">
   <span>© 2026 Zoe Yang</span>
-  <span data-en="Built by hand" data-zh="手写的代码">Built by hand</span>
-  <a href="#top" data-en="Back to top" data-zh="回到开头">Back to top</a>
+  <a href="#top">Back to top</a>
 </footer>
-<!-- ================= 背景音乐（占位：把 day-after-day.mp3 放进 music/ 文件夹即可） ================= -->
+<!-- ================= background music ================= -->
 <div class="wxtip" id="wxTip" aria-hidden="true">
   <div class="wxtip-card">
     <span class="wxtip-k">WeChat mini game</span>
-    <p class="wxtip-q">外婆的小院子</p>
-    <p class="wxtip-s" data-en="Mini games can’t be opened from a web link. Open WeChat → Discover → Mini Programs, and search this name to play it." data-zh="小游戏不能直接从网页打开。打开微信 → 发现 → 小程序，搜索「外婆的小院子」就能玩。">Mini games can’t be opened from a web link. Open WeChat → Discover → Mini Programs, and search this name to play it.</p>
-    <button class="wxtip-x" id="wxTipClose" type="button" data-en="Got it" data-zh="知道了">Got it</button>
+    <p class="wxtip-q">Grandma’s Garden</p>
+    <p class="wxtip-s">Mini games can’t be opened from a web link. In WeChat, go to Discover → Mini Programs and search “外婆的小院子” (Grandma’s Garden) to play it.</p>
+    <button class="wxtip-x" id="wxTipClose" type="button">Got it</button>
   </div>
 </div>
 
 <div class="bgm" id="bgm">
   <audio id="bgmAudio" loop preload="none">
-    <source src="music/day-after-day.mp3" type="audio/mpeg">
+    <source src="music/day-after-day.m4a" type="audio/mp4">
   </audio>
-  <button class="bgm-btn" id="bgmBtn" type="button" aria-pressed="false" aria-label="Play Day After Day">
+  <button class="bgm-btn" id="bgmBtn" type="button" aria-pressed="false" aria-label="Play day after day by Venoflame">
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <circle cx="7.2" cy="17.4" r="3.3" fill="currentColor"/>
       <path d="M10.5 17.4V4.6l8.6-1.7v3.4l-6.4 1.3v9.8" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
@@ -946,9 +885,12 @@ main,.footer{position:relative;z-index:2}
     </svg>
   </button>
   <div class="bgm-card" aria-hidden="true">
-    <span class="bgm-kicker">Background music / BGM</span>
-    <span class="bgm-title">Day After Day</span>
-    <span class="bgm-artist">Venom Flame</span>
+    <img class="bgm-cover" src="assets/bgm-cover.webp" width="42" height="42" alt="">
+    <div class="bgm-meta">
+      <span class="bgm-kicker">Background music / BGM</span>
+      <span class="bgm-title">day after day <span class="bgm-zh">(日复一日)</span></span>
+      <span class="bgm-artist">Venoflame</span>
+    </div>
   </div>
   <span class="bgm-tip" id="bgmTip" role="status"></span>
 </div>
@@ -958,61 +900,8 @@ main,.footer{position:relative;z-index:2}
 (function(){
   "use strict";
 
-  var TITLES = {
-    en: "Zoe Yang · Welcome to my world",
-    zh: "Zoe Yang · 欢迎来到我的世界"
-  };
-  var DESCRIPTIONS = {
-    en: "Zoe Yang — translator, writer, photographer and game maker in Hong Kong. A floating island, two small games, and a place to say hello.",
-    zh: "Zoe Yang，住在香港的译者、写作者、摄影师与游戏作者。一座漂浮的小岛，两个小游戏，还有一个可以说说话的地方。"
-  };
-
-  var html = document.documentElement;
   var body = document.body;
-  var current = "en";
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* ================= language ================= */
-  function applyLang(lang){
-    current = lang === "zh" ? "zh" : "en";
-
-    document.querySelectorAll("[data-zh]").forEach(function(el){
-      var v = el.getAttribute(current === "zh" ? "data-zh" : "data-en");
-      if (v !== null) el.textContent = v;
-    });
-    document.querySelectorAll("[data-zh-html]").forEach(function(el){
-      var v = el.getAttribute(current === "zh" ? "data-zh-html" : "data-en-html");
-      if (v !== null) el.innerHTML = v;
-    });
-    document.querySelectorAll("[data-zh-ph]").forEach(function(el){
-      var v = el.getAttribute(current === "zh" ? "data-zh-ph" : "data-en-ph");
-      if (v !== null) el.setAttribute("placeholder", v);
-    });
-    document.querySelectorAll(".lang-chip button").forEach(function(b){
-      b.setAttribute("aria-pressed", b.getAttribute("data-lang") === current ? "true" : "false");
-    });
-
-    html.setAttribute("lang", current === "zh" ? "zh-CN" : "en");
-    body.classList.toggle("is-zh", current === "zh");
-    document.title = TITLES[current];
-    var md = document.querySelector('meta[name="description"]');
-    if (md) md.setAttribute("content", DESCRIPTIONS[current]);
-
-    try { localStorage.setItem("zoe-lang", current); } catch(e){}
-  }
-
-  var saved = null;
-  try { saved = localStorage.getItem("zoe-lang"); } catch(e){}
-  var qLang = new URLSearchParams(location.search).get("lang");
-  var initial = (qLang === "zh" || qLang === "en") ? qLang
-              : (saved || ((navigator.language || "en").toLowerCase().indexOf("zh") === 0 ? "zh" : "en"));
-  applyLang(initial);
-
-  document.querySelectorAll(".lang-chip button").forEach(function(b){
-    b.addEventListener("pointerdown", function(e){ e.stopPropagation(); });
-    b.addEventListener("keydown", function(e){ e.stopPropagation(); });
-    b.addEventListener("click", function(){ applyLang(b.getAttribute("data-lang")); });
-  });
 
   /* ================= progress ================= */
   var bar = document.getElementById("progress");
@@ -1084,8 +973,7 @@ main,.footer{position:relative;z-index:2}
         }, 1750);
       }
 
-      function keyIntro(e){
-        if (e.target && e.target.closest && e.target.closest(".lang-chip")) return;
+      function keyIntro(){
         beginIntro();
       }
 
@@ -1100,9 +988,9 @@ main,.footer{position:relative;z-index:2}
   var form = document.getElementById("cf");
   var msg = document.getElementById("msg");
   var COPY = {
-    empty: { en: "All three fields, please.", zh: "三项都填一下吧。" },
-    badMail: { en: "That email doesn’t look right.", zh: "邮箱地址看起来不太对。" },
-    sent: { en: "Your mail app should open — just hit send.", zh: "已打开邮件应用，点发送就好。" }
+    empty: "All three fields, please.",
+    badMail: "That email doesn’t look right.",
+    sent: "Your mail app should open — just hit send."
   };
 
   if (form){
@@ -1118,20 +1006,20 @@ main,.footer{position:relative;z-index:2}
 
       if (!name || !mail || !text){
         msg.classList.add("err");
-        msg.textContent = COPY.empty[current];
+        msg.textContent = COPY.empty;
         (!name ? nameEl : !mail ? mailEl : textEl).focus();
         return;
       }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)){
         msg.classList.add("err");
-        msg.textContent = COPY.badMail[current];
+        msg.textContent = COPY.badMail;
         mailEl.focus();
         return;
       }
 
-      var subject = (current === "zh" ? "来自 " : "Hello from ") + name;
+      var subject = "Hello from " + name;
       var bodyText = text + "\n\n— " + name + " (" + mail + ")";
-      msg.textContent = COPY.sent[current];
+      msg.textContent = COPY.sent;
       window.location.href = "mailto:zoeyeahoh@gmail.com?subject=" + encodeURIComponent(subject) +
                              "&body=" + encodeURIComponent(bodyText);
     });
@@ -1169,13 +1057,11 @@ main,.footer{position:relative;z-index:2}
       bgmWrap.classList.toggle("is-playing", on);
       bgmBtn.setAttribute("aria-pressed", on ? "true" : "false");
       bgmBtn.setAttribute("aria-label",
-        (current === "zh" ? (on ? "暂停" : "播放") : (on ? "Pause" : "Play")) + " Day After Day");
+        (on ? "Pause" : "Play") + " day after day by Venoflame");
     }
 
     function bgmShowTip(){
-      bgmTip.textContent = current === "zh"
-        ? "音乐还没放进来——把 day-after-day.mp3 放进 music 文件夹即可。"
-        : "No audio yet: drop day-after-day.mp3 into the music folder to play it.";
+      bgmTip.textContent = "Audio didn’t load — check music/day-after-day.m4a.";
       bgmWrap.classList.add("show-tip");
       clearTimeout(bgmTimer);
       bgmTimer = setTimeout(function(){ bgmWrap.classList.remove("show-tip"); }, 4800);
@@ -1186,7 +1072,7 @@ main,.footer{position:relative;z-index:2}
       if (bgmAudio.error || bgmAudio.networkState === 3){ bgmShowTip(); bgmSync(); return; }
 
       var started = false;
-      function onPlaying(){ started = true; bgmAudio.removeEventListener("playing", onPlaying); }
+      function onPlaying(){ started = true; bgmSync(); bgmAudio.removeEventListener("playing", onPlaying); }
       bgmAudio.addEventListener("playing", onPlaying);
 
       var p = bgmAudio.play();

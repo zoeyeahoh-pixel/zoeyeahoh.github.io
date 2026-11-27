@@ -23,7 +23,12 @@ The falling layer follows the local month:
 | Oct–Dec | snow |
 
 Preview any season with `?season=spring`, `?season=summer`, `?season=autumn`
-or `?season=winter`; language with `?lang=zh` or `?lang=en`.
+or `?season=winter`.
+
+## Music
+
+The BGM is `music/day-after-day.m4a` (audio extracted from `bgm.mp4`),
+with its vinyl nameplate cover at `assets/bgm-cover.webp`.
 
 ## Local preview
 
