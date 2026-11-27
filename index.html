@@ -513,6 +513,27 @@ form .btn{align-self:flex-start}
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s ease,transform .9s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s)}
 .reveal.in{opacity:1;transform:none}
 
+
+/* ---------- about: centred text, one photo after every two paragraphs ---------- */
+#about .prose{text-align:center}
+#about .prose p{
+  max-width:680px;margin-left:auto;margin-right:auto;
+  text-align:center;text-wrap:pretty;
+}
+#about .prose p:first-child::before{left:50%;transform:translateX(-50%)}
+.about-photo{max-width:420px;margin:clamp(30px,4.2vw,48px) auto;text-align:center}
+.about-photo img{
+  display:block;width:100%;aspect-ratio:1/1;object-fit:cover;
+  border-radius:22px;border:4px solid #fff;background:#fff;
+  box-shadow:0 14px 26px -12px rgba(38,64,31,.32);
+  transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s;
+}
+.about-photo:hover img{transform:translateY(-6px);box-shadow:0 24px 38px -16px rgba(38,64,31,.38)}
+.about-photo figcaption{
+  margin-top:12px;font-family:var(--display);font-weight:600;
+  font-size:clamp(19px,1.9vw,23px);color:var(--ink);letter-spacing:-.01em;
+}
+
 /* ---------- 响应式 ---------- */
 /* ---------- 大屏：右上竖排导航 ---------- */
 @media (max-width:980px){
@@ -780,37 +801,35 @@ main,.footer{position:relative;z-index:2}
           <p>
             At eighteen I went to Macao alone to study English. Two cultures living on the same street taught me to keep a rhythm of my own.
           </p>
+
+          <figure class="about-photo">
+            <img src="assets/hangzhou.webp" width="420" height="420" alt="Hangzhou — osmanthus and an old lane" loading="lazy" decoding="async">
+            <figcaption>Hangzhou</figcaption>
+          </figure>
+
           <p>
             At twenty-three I came to Hong Kong for an MA in Translation at HKU. Five years of language training didn’t make me cleverer — it taught me to look at very small things: where a full stop sits, how long a pause should last, the exact moment a joke lands.
           </p>
-
-          <ul class="signs">
-            <li>
-              <img src="assets/hangzhou.webp" width="420" height="420" alt="Hangzhou — osmanthus and an old lane" loading="lazy" decoding="async">
-              <div>
-                <h4>Hangzhou</h4>
-              </div>
-            </li>
-            <li>
-              <img src="assets/macao.webp" width="420" height="420" alt="Macao — a Portuguese old street" loading="lazy" decoding="async">
-              <div>
-                <h4>Macao</h4>
-              </div>
-            </li>
-            <li>
-              <img src="assets/hongkong.webp" width="420" height="420" alt="Hong Kong — dense blocks and the sea" loading="lazy" decoding="async">
-              <div>
-                <h4>Hong Kong</h4>
-              </div>
-            </li>
-          </ul>
-
           <p>
             In between were internships — a startup, an agency, a student ambassador’s office, a short-drama studio, a marketing team in Hong Kong. Translation is where I start, not where I stop.
           </p>
+
+          <figure class="about-photo">
+            <img src="assets/macao.webp" width="420" height="420" alt="Macao — a Portuguese old street" loading="lazy" decoding="async">
+            <figcaption>Macao</figcaption>
+          </figure>
+
           <p>
-            Now I’m making small games of my own: concept, scene, code — walking the whole road from 0 to 1, and learning to be patient with things that grow slowly.
+            Now I’m making small games of my own: concept, scene, code — walking the whole road from 0 to 1.
           </p>
+          <p>
+            I’m learning to be patient with things that grow slowly.
+          </p>
+
+          <figure class="about-photo">
+            <img src="assets/hongkong.webp" width="420" height="420" alt="Hong Kong — dense blocks and the sea" loading="lazy" decoding="async">
+            <figcaption>Hong Kong</figcaption>
+          </figure>
         </div>
       </div>
 
