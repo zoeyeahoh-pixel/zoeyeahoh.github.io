@@ -671,6 +671,32 @@ main,.footer{position:relative;z-index:2}
 }
 .form-msg.err{color:#A94C3C}
 
+
+/* ---------- vinyl BGM button ---------- */
+.vinyl{
+  position:absolute;inset:4px;border-radius:50%;overflow:hidden;
+  background:#111 url('assets/bgm-cover.webp') center/cover no-repeat;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),inset 0 0 14px rgba(0,0,0,.6);
+  transform:translateZ(0);
+}
+.vinyl::after{
+  content:"";position:absolute;left:50%;top:50%;width:9px;height:9px;border-radius:50%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle,#FBF5E6 0 1.8px,#2B2B2B 2.2px 3.4px,transparent 4px);
+}
+.bgm-btn::before{
+  content:"";position:absolute;inset:4px;border-radius:50%;z-index:2;pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.3),rgba(255,255,255,0) 45%);
+}
+.bgm.is-playing .vinyl{animation:vinylSpin 9s linear infinite}
+@keyframes vinylSpin{to{transform:rotate(360deg)}}
+
+/* ---------- about header centered ---------- */
+#about .sec-head{text-align:center}
+#about .tagline{justify-content:center}
+#about .tagline .rule{display:none}
+#about .sec-title{margin-left:auto;margin-right:auto;text-align:center}
+
 </style>
 <noscript><style>
 .hero-copy h1,.hero-copy .lede{opacity:1!important;transform:none!important}
@@ -678,6 +704,32 @@ main,.footer{position:relative;z-index:2}
 .hot{pointer-events:auto!important}
 .intro-hint{display:none!important}
 .reveal{opacity:1!important;transform:none!important}
+
+/* ---------- vinyl BGM button ---------- */
+.vinyl{
+  position:absolute;inset:4px;border-radius:50%;overflow:hidden;
+  background:#111 url('assets/bgm-cover.webp') center/cover no-repeat;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),inset 0 0 14px rgba(0,0,0,.6);
+  transform:translateZ(0);
+}
+.vinyl::after{
+  content:"";position:absolute;left:50%;top:50%;width:9px;height:9px;border-radius:50%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle,#FBF5E6 0 1.8px,#2B2B2B 2.2px 3.4px,transparent 4px);
+}
+.bgm-btn::before{
+  content:"";position:absolute;inset:4px;border-radius:50%;z-index:2;pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.3),rgba(255,255,255,0) 45%);
+}
+.bgm.is-playing .vinyl{animation:vinylSpin 9s linear infinite}
+@keyframes vinylSpin{to{transform:rotate(360deg)}}
+
+/* ---------- about header centered ---------- */
+#about .sec-head{text-align:center}
+#about .tagline{justify-content:center}
+#about .tagline .rule{display:none}
+#about .sec-title{margin-left:auto;margin-right:auto;text-align:center}
+
 </style></noscript>
 </head>
 <body>
@@ -897,11 +949,7 @@ main,.footer{position:relative;z-index:2}
     <source src="music/day-after-day.m4a" type="audio/mp4">
   </audio>
   <button class="bgm-btn" id="bgmBtn" type="button" aria-pressed="false" aria-label="Play day after day by Venoflame">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="7.2" cy="17.4" r="3.3" fill="currentColor"/>
-      <path d="M10.5 17.4V4.6l8.6-1.7v3.4l-6.4 1.3v9.8" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
-      <circle cx="19.1" cy="14.9" r="3.3" fill="currentColor"/>
-    </svg>
+    <span class="vinyl" aria-hidden="true"></span>
   </button>
   <div class="bgm-card" aria-hidden="true">
     <img class="bgm-cover" src="assets/bgm-cover.webp" width="42" height="42" alt="">
